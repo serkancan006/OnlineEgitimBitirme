@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineEgitimAPI", "OnlineEgitimAPI\OnlineEgitimAPI.csproj", "{BE38C4DA-8D20-4EAF-866F-981AE8DA70E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "EntityLayer\EntityLayer.csproj", "{A459F367-0BC2-4F63-A00B-D2C1C1C46DDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{782F3226-6A47-42CA-A521-0A55D207285B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{ADF9A370-EB66-4555-ACD9-8C1CDD464150}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineEgitimClient", "OnlineEgitimClient\OnlineEgitimClient.csproj", "{2A6EE507-05BA-4AE0-BC50-05088C0417A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE38C4DA-8D20-4EAF-866F-981AE8DA70E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE38C4DA-8D20-4EAF-866F-981AE8DA70E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE38C4DA-8D20-4EAF-866F-981AE8DA70E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE38C4DA-8D20-4EAF-866F-981AE8DA70E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A459F367-0BC2-4F63-A00B-D2C1C1C46DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A459F367-0BC2-4F63-A00B-D2C1C1C46DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A459F367-0BC2-4F63-A00B-D2C1C1C46DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A459F367-0BC2-4F63-A00B-D2C1C1C46DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{782F3226-6A47-42CA-A521-0A55D207285B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782F3226-6A47-42CA-A521-0A55D207285B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782F3226-6A47-42CA-A521-0A55D207285B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782F3226-6A47-42CA-A521-0A55D207285B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF9A370-EB66-4555-ACD9-8C1CDD464150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF9A370-EB66-4555-ACD9-8C1CDD464150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF9A370-EB66-4555-ACD9-8C1CDD464150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF9A370-EB66-4555-ACD9-8C1CDD464150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D259507-21D5-400A-B77C-BEB38F0557AF}
+	EndGlobalSection
+EndGlobal
