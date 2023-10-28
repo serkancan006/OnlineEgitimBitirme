@@ -8,5 +8,11 @@ namespace OnlineEgitimClient.Controllers
         {
             return View();
         }
+
+        public IActionResult CourseDetails(int id)
+        {
+            return View();
+        }
+
     }
 }
