@@ -41,51 +41,7 @@
                         sea no sed dolores diam nonumy, gubergren sit stet no diam kasd vero.</p>
                 </div>
                 <!-- İlgili Kurslar-->
-                <h2 class="mb-3">İlgili Kurslar</h2>
-                <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-                        <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
-                        <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Web design & development courses for
-                                beginners</h4>
-                            <div class="border-top w-100 mt-3">
-                                <div class="d-flex justify-content-between p-4">
-                                    <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                    <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                        <small>(250)</small></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-                        <img class="img-fluid" src="~/online-education/img/courses-2.jpg" alt="">
-                        <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Web design & development courses for
-                                beginners</h4>
-                            <div class="border-top w-100 mt-3">
-                                <div class="d-flex justify-content-between p-4">
-                                    <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                    <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                        <small>(250)</small></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-                        <img class="img-fluid" src="~/online-education/img/courses-3.jpg" alt="">
-                        <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Web design & development courses for
-                                beginners</h4>
-                            <div class="border-top w-100 mt-3">
-                                <div class="d-flex justify-content-between p-4">
-                                    <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
-                                    <span class="text-white"><i class="fa fa-star mr-2"></i>4.5
-                                        <small>(250)</small></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")
                 <!-- ilgili Kurslar-->
             </div>
             <!-- Kurs Özellikleri-->
@@ -116,12 +72,16 @@
                         <h6 class="text-white my-3">Dil</h6>
                         <h6 class="text-white my-3">Türkçe</h6>
                     </div>
+                    <div class="d-flex justify-content-between px-4">
+                        <h6 class="text-white my-3">Konum</h6>
+                        <h6 class="text-white my-3">Ankara</h6>
+                    </div>
                     <h5 class="text-white py-3 px-4 m-0">Kurs Fiyatı: ₺199</h5>
                     <div class="py-3 px-4">
                         <a class="btn btn-block btn-secondary py-3 px-5" href="">Satın al</a>
                     </div>
                 </div>
-                <!-- Kategoriler-->
+                <!-- Kategoriler 
                 <div class="mb-5">
                     <h2 class="mb-3">Kategoriler</h2>
                     <ul class="list-group list-group-flush">
@@ -147,7 +107,7 @@
                         </li>
                     </ul>
                 </div>
-
+                -->
                 <!-- Son Kurslar
                 <div class="mb-5">
                     <h2 class="mb-4">Recent Courses</h2>

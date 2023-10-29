@@ -16,10 +16,6 @@ namespace OnlineEgitimClient.Controllers
         {
             return PartialView();
         }
-        public PartialViewResult About2Partial()
-        {
-            return PartialView();
-        }
         public PartialViewResult NewCoursesPartial()
         {
             return PartialView();
