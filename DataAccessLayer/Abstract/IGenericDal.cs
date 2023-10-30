@@ -12,8 +12,8 @@ namespace DataAccessLayer.Abstract
 		void Insert(T t);
 		void Delete(T t);
 		void Update(T t);
-		List<T> GetList();
-		T GetByID(int id);
-		List<T> GetListByFilter(Expression<Func<T, bool>> filter);
+		List<T> GetList(bool tracking = true);
+		T GetByID(int id, bool tracking = true);
+		List<T> GetListByFilter(Expression<Func<T, bool>> filter, bool tracking = true);
 	}
 }

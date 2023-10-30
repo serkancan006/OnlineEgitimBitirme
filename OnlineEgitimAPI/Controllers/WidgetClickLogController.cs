@@ -27,7 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             _widgetClickLogService.TAdd(widgetClickLog);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteWidgetClickLog(int id)
         {
             var values = _widgetClickLogService.TGetByID(id);

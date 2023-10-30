@@ -24,12 +24,12 @@ namespace BusinessLayer.Concrete
 
         public WidgetClickLog TGetByID(int id)
         {
-            return _widgetClickLogDal.GetByID(id);
+            return _widgetClickLogDal.GetByID(id, false);
         }
 
         public List<WidgetClickLog> TGetList()
         {
-            return _widgetClickLogDal.GetList();
+            return _widgetClickLogDal.GetList(false);
         }
 
         public void TUpdate(WidgetClickLog t)

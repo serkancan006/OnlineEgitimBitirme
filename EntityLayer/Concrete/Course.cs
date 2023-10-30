@@ -19,7 +19,7 @@ namespace EntityLayer.Concrete
         public int Duration { get; set; } // eğitim süresi
 		public string ImageUrl { get; set; }
 		public int SubjectCount { get; set; }
-		public string level { get; set; }
+		public string Level { get; set; }
 		public string Language { get; set; }
 
         public int CourseLike { get; set; }
@@ -27,13 +27,13 @@ namespace EntityLayer.Concrete
         public int CoursePuan { get; set; }
         public int CourseViewCountLog { get; set; }
 
-        public int LocationID { get; set; }
-		public Location Location { get; set; }
-        public int AppUserID { get; set; } //InstructorID
-		public AppUser AppUser { get; set; }
+        //public int LocationID { get; set; }
+		//public Location Location { get; set; }
+        //public int AppUserID { get; set; } //InstructorID
+		//public AppUser AppUser { get; set; }
 
-		public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
-		public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
+		//public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
+		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
 	}
 }
 

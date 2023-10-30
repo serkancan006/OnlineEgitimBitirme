@@ -21,7 +21,7 @@ namespace OnlineEgitimAPI.Controllers
             var values = _purchasedCourseService.TGetList();
             return Ok(values);
         }
-        [HttpPost]
+        [HttpPost("{id}")]
         public IActionResult AddPurchasedCourse(PurchasedCourse purchasedCourse)
         {
             _purchasedCourseService.TAdd(purchasedCourse);

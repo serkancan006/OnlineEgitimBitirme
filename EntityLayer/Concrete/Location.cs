@@ -10,6 +10,6 @@ namespace EntityLayer.Concrete
 	public class Location: BaseEntity
 	{
 		public string Address { get; set; }
-		public ICollection<Course> Courses { get; set; }
+		//public ICollection<Course> Courses { get; set; }
 	}
 }

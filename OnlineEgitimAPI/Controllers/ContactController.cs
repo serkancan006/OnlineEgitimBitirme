@@ -27,7 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             _contactService.TAdd(contact);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteContact(int id)
         {
             var values = _contactService.TGetByID(id);

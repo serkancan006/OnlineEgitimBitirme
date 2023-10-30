@@ -27,7 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             _aboutService.TAdd(about);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteAbout(int id)
         {
             var values = _aboutService.TGetByID(id);

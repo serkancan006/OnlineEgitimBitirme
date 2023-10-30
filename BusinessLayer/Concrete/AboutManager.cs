@@ -28,13 +28,13 @@ namespace BusinessLayer.Concrete
 		}
 
 		public About TGetByID(int id)
-		{
-			return _aboutDal.GetByID(id);
+        {
+			return _aboutDal.GetByID(id, false);
 		}
 
 		public List<About> TGetList()
 		{
-			return _aboutDal.GetList();
+			return _aboutDal.GetList(false);
 		}
 
 		public void TUpdate(About t)

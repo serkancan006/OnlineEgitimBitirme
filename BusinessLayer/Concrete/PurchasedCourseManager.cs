@@ -30,12 +30,12 @@ namespace BusinessLayer.Concrete
 
         public PurchasedCourse TGetByID(int id)
         {
-            return _purchasedCourseDal.GetByID(id);
+            return _purchasedCourseDal.GetByID(id, false);
         }
 
         public List<PurchasedCourse> TGetList()
         {
-            return _purchasedCourseDal.GetList();
+            return _purchasedCourseDal.GetList(false);
         }
 
         public void TUpdate(PurchasedCourse t)

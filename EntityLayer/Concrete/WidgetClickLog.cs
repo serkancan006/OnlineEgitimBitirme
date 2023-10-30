@@ -11,8 +11,8 @@ namespace EntityLayer.Concrete
 	public class WidgetClickLog: BaseEntity
 	{
 		public int AppUserID { get; set; }
-		public AppUser AppUser { get; set; }
+		//public AppUser AppUser { get; set; }
 		public int CourseID { get; set; }
-		public Course Course { get; set; }
+		//public Course Course { get; set; }
 	}
 }

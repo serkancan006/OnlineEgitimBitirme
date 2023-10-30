@@ -14,7 +14,7 @@ namespace EntityLayer.Concrete.identity
         public string ImageUrl { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public bool Status { get; set; }
-		public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
-		public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
+		//public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
+		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
 	}
 }

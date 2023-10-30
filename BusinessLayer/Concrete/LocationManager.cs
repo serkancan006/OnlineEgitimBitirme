@@ -30,12 +30,12 @@ namespace BusinessLayer.Concrete
 
         public Location TGetByID(int id)
         {
-            return _locationDal.GetByID(id);
+            return _locationDal.GetByID(id, false);
         }
 
         public List<Location> TGetList()
         {
-            return _locationDal.GetList();
+            return _locationDal.GetList(false);
         }
 
         public void TUpdate(Location t)

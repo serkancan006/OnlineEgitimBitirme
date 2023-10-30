@@ -1,0 +1,34 @@
+﻿@model AddAboutViewModel
+@{
+    ViewData["Title"] = "AdminAddAbout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <label>Hakkımızda Resim 1</label>
+    <input type="text" asp-for="Image1" class="form-control" />
+    <br />
+
+    <label>Hakkımızda Başlık</label>
+    <input type="text" asp-for="Title" class="form-control" />
+    <br />
+
+    <label>Hakkımızda Açıklama 1</label>
+    <input type="text" asp-for="Description" class="form-control" />
+    <br />
+
+    <label>Hakkımızda Resim 2</label>
+    <input type="text" asp-for="Image2" class="form-control" />
+    <br />
+
+    <label>Hakkımızda Başlık 2</label>
+    <input type="text" asp-for="Title2" class="form-control" />
+    <br />
+
+    <label>Hakkımızda Açıklama 2</label>
+    <input type="text" asp-for="Description2" class="form-control" />
+    <br />
+
+    <button class="btn btn-primary">Hakkımızda Ekle</button>
+</form>
+

@@ -27,7 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             _locationService.TAdd(location);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteLocation(int id)
         {
             var values = _locationService.TGetByID(id);

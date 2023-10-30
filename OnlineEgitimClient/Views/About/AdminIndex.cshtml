@@ -1,0 +1,44 @@
+﻿@model List<AboutViewModel>
+@{
+    ViewData["Title"] = "AdminIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Hakkımızda Resim</th>
+        <th>Hakkımızda Title</th>
+        <th>Hakkımızda Açıklama</th>
+        <th>Hakkımızda Resim2</th>
+        <th>Hakkımızda Title2</th>
+        <th>Hakkımızda Açıklama2</th>
+        <th>Oluşturulma tarihi</th>
+        <th>Güncellenme Tarihi</th>
+        <th>Durumu</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+        <th>Detaylar</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Image1</td>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
+            <td>@item.Image2</td>
+            <td>@item.Title2</td>
+            <td>@item.Description2</td>
+            <td>@item.CreatedDate</td>
+            <td>@item.UpdatedDate</td>
+            <td>@item.Status</td>
+            <td><a href="/About/AdminDeleteAbout/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
+            <td><a href="/About/AdminUpdateAbout/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
+            <td><a href="#" class="btn mb-1 btn-rounded btn-outline-warning">Detaylar</a></td>
+        </tr>
+    }
+</table>
+<a href="/About/AdminAddAbout/" class="btn mb-1 btn-rounded btn-outline-primary">Yeni Hakkımızda Oluştur</a>
+

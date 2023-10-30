@@ -34,6 +34,14 @@ builder.Services.AddScoped<IPurchasedCourseService, PurchasedCourseManager>();
 builder.Services.AddScoped<IWidgetClickLogDal, EfWidgetClickLogDal>();
 builder.Services.AddScoped<IWidgetClickLogService, WidgetClickLogManager>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("E-EgitimApiCors", opts =>
+    {
+        opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +52,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("E-EgitimApiCors");
 
 app.UseAuthorization();
 

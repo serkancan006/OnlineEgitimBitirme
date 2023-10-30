@@ -30,12 +30,12 @@ namespace BusinessLayer.Concrete
 
         public Contact TGetByID(int id)
         {
-            return _contactDal.GetByID(id);
+            return _contactDal.GetByID(id, false);
         }
 
         public List<Contact> TGetList()
         {
-            return _contactDal.GetList();
+            return _contactDal.GetList(false);
         }
 
         public void TUpdate(Contact t)
