@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Abstract;
+﻿using AutoMapper;
+using BusinessLayer.Abstract;
+using DtoLayer.DTOs.AboutDto;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +12,13 @@ namespace OnlineEgitimAPI.Controllers
     public class AboutController : ControllerBase
     {
         private readonly IAboutService _aboutService;
-
-        public AboutController(IAboutService aboutService)
+        private readonly IMapper _mapper;
+        public AboutController(IAboutService aboutService, IMapper mapper)
         {
             _aboutService = aboutService;
+            _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult AboutList()
         {
@@ -22,9 +26,14 @@ namespace OnlineEgitimAPI.Controllers
             return Ok(values);
         }
         [HttpPost]
-        public IActionResult AddAbout(About about)
+        public IActionResult AddAbout(AddAboutDto addAboutDto)
         {
-            _aboutService.TAdd(about);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<About>(addAboutDto);
+            _aboutService.TAdd(values);
             return Ok();
         }
         [HttpDelete("{id}")]
@@ -35,9 +44,14 @@ namespace OnlineEgitimAPI.Controllers
             return Ok();
         }
         [HttpPut]
-        public IActionResult UpdateAbout(About about)
+        public IActionResult UpdateAbout(UpdateAboutDto updateAboutDto)
         {
-            _aboutService.TUpdate(about);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<About>(updateAboutDto);
+            _aboutService.TUpdate(values);
             return Ok();
         }
         [HttpGet("{id}")]

@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Abstract;
+﻿using AutoMapper;
+using BusinessLayer.Abstract;
+using DtoLayer.DTOs.CourseDto;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,41 +11,53 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private readonly ICourseService _courseService;
-
-        public CourseController(ICourseService courseService)
+        private readonly ICourseService _CourseService;
+        private readonly IMapper _mapper;
+        public CourseController(ICourseService CourseService, IMapper mapper)
         {
-            _courseService = courseService;
+            _CourseService = CourseService;
+            _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult CourseList()
         {
-            var values = _courseService.TGetList();
+            var values = _CourseService.TGetList();
             return Ok(values);
         }
         [HttpPost]
-        public IActionResult AddCourse(Course course)
+        public IActionResult AddCourse(AddCourseDto addCourseDto)
         {
-            _courseService.TAdd(course);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<Course>(addCourseDto);
+            _CourseService.TAdd(values);
             return Ok();
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteCourse(int id)
         {
-            var values = _courseService.TGetByID(id);
-            _courseService.TDelete(values);
+            var values = _CourseService.TGetByID(id);
+            _CourseService.TDelete(values);
             return Ok();
         }
         [HttpPut]
-        public IActionResult UpdateCourse(Course course)
+        public IActionResult UpdateCourse(UpdateCourseDto updateCourseDto)
         {
-            _courseService.TUpdate(course);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<Course>(updateCourseDto);
+            _CourseService.TUpdate(values);
             return Ok();
         }
         [HttpGet("{id}")]
         public IActionResult GetCourse(int id)
         {
-            var values = _courseService.TGetByID(id);
+            var values = _CourseService.TGetByID(id);
             return Ok(values);
         }
     }

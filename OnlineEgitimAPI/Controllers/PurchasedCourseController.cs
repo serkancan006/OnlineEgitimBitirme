@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Abstract;
+﻿using AutoMapper;
+using BusinessLayer.Abstract;
+using DtoLayer.DTOs.PurchasedCourseDto;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,41 +11,53 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class PurchasedCourseController : ControllerBase
     {
-        private readonly IPurchasedCourseService _purchasedCourseService;
-
-        public PurchasedCourseController(IPurchasedCourseService purchasedCourseService)
+        private readonly IPurchasedCourseService _PurchasedCourseService;
+        private readonly IMapper _mapper;
+        public PurchasedCourseController(IPurchasedCourseService PurchasedCourseService, IMapper mapper)
         {
-            _purchasedCourseService = purchasedCourseService;
+            _PurchasedCourseService = PurchasedCourseService;
+            _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult PurchasedCourseList()
         {
-            var values = _purchasedCourseService.TGetList();
+            var values = _PurchasedCourseService.TGetList();
             return Ok(values);
         }
-        [HttpPost("{id}")]
-        public IActionResult AddPurchasedCourse(PurchasedCourse purchasedCourse)
+        [HttpPost]
+        public IActionResult AddPurchasedCourse(AddPurchasedCourseDto addPurchasedCourseDto)
         {
-            _purchasedCourseService.TAdd(purchasedCourse);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<PurchasedCourse>(addPurchasedCourseDto);
+            _PurchasedCourseService.TAdd(values);
             return Ok();
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeletePurchasedCourse(int id)
         {
-            var values = _purchasedCourseService.TGetByID(id);
-            _purchasedCourseService.TDelete(values);
+            var values = _PurchasedCourseService.TGetByID(id);
+            _PurchasedCourseService.TDelete(values);
             return Ok();
         }
         [HttpPut]
-        public IActionResult UpdatePurchasedCourse(PurchasedCourse purchasedCourse)
+        public IActionResult UpdatePurchasedCourse(UpdatePurchasedCourseDto updatePurchasedCourseDto)
         {
-            _purchasedCourseService.TUpdate(purchasedCourse);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<PurchasedCourse>(updatePurchasedCourseDto);
+            _PurchasedCourseService.TUpdate(values);
             return Ok();
         }
         [HttpGet("{id}")]
         public IActionResult GetPurchasedCourse(int id)
         {
-            var values = _purchasedCourseService.TGetByID(id);
+            var values = _PurchasedCourseService.TGetByID(id);
             return Ok(values);
         }
     }

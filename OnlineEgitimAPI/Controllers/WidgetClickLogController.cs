@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Abstract;
+﻿using AutoMapper;
+using BusinessLayer.Abstract;
+using DtoLayer.DTOs.WidgetClickLogDto;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,41 +11,53 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class WidgetClickLogController : ControllerBase
     {
-        private readonly IWidgetClickLogService _widgetClickLogService;
-
-        public WidgetClickLogController(IWidgetClickLogService widgetClickLogService)
+        private readonly IWidgetClickLogService _WidgetClickLogService;
+        private readonly IMapper _mapper;
+        public WidgetClickLogController(IWidgetClickLogService WidgetClickLogService, IMapper mapper)
         {
-            _widgetClickLogService = widgetClickLogService;
+            _WidgetClickLogService = WidgetClickLogService;
+            _mapper = mapper;
         }
+
         [HttpGet]
         public IActionResult WidgetClickLogList()
         {
-            var values = _widgetClickLogService.TGetList();
+            var values = _WidgetClickLogService.TGetList();
             return Ok(values);
         }
         [HttpPost]
-        public IActionResult AddWidgetClickLog(WidgetClickLog widgetClickLog)
+        public IActionResult AddWidgetClickLog(AddWidgetClickLogDto addWidgetClickLogDto)
         {
-            _widgetClickLogService.TAdd(widgetClickLog);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<WidgetClickLog>(addWidgetClickLogDto);
+            _WidgetClickLogService.TAdd(values);
             return Ok();
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteWidgetClickLog(int id)
         {
-            var values = _widgetClickLogService.TGetByID(id);
-            _widgetClickLogService.TDelete(values);
+            var values = _WidgetClickLogService.TGetByID(id);
+            _WidgetClickLogService.TDelete(values);
             return Ok();
         }
         [HttpPut]
-        public IActionResult UpdateWidgetClickLog(WidgetClickLog widgetClickLog)
+        public IActionResult UpdateWidgetClickLog(UpdateWidgetClickLogDto updateWidgetClickLogDto)
         {
-            _widgetClickLogService.TUpdate(widgetClickLog);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var values = _mapper.Map<WidgetClickLog>(updateWidgetClickLogDto);
+            _WidgetClickLogService.TUpdate(values);
             return Ok();
         }
         [HttpGet("{id}")]
         public IActionResult GetWidgetClickLog(int id)
         {
-            var values = _widgetClickLogService.TGetByID(id);
+            var values = _WidgetClickLogService.TGetByID(id);
             return Ok(values);
         }
     }
