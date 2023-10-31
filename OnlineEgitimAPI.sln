@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{ADF9A370-EB66-4555-ACD9-8C1CDD464150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineEgitimClient", "OnlineEgitimClient\OnlineEgitimClient.csproj", "{2A6EE507-05BA-4AE0-BC50-05088C0417A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineEgitimClient", "OnlineEgitimClient\OnlineEgitimClient.csproj", "{2A6EE507-05BA-4AE0-BC50-05088C0417A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtoLayer", "DtoLayer\DtoLayer.csproj", "{2DC8B11D-A0DC-4A8A-9741-2DD893893EA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A6EE507-05BA-4AE0-BC50-05088C0417A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC8B11D-A0DC-4A8A-9741-2DD893893EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC8B11D-A0DC-4A8A-9741-2DD893893EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC8B11D-A0DC-4A8A-9741-2DD893893EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC8B11D-A0DC-4A8A-9741-2DD893893EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

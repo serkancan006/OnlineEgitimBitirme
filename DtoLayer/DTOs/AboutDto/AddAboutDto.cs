@@ -1,6 +1,12 @@
-﻿namespace OnlineEgitimClient.Models.About
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DtoLayer.DTOs.AboutDto
 {
-    public class AddAboutViewModel
+    public class AddAboutDto
     {
         public string Title { get; set; }
         public string Description { get; set; }
