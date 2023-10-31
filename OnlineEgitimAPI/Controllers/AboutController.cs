@@ -52,7 +52,7 @@ namespace OnlineEgitimAPI.Controllers
             }
             var values = _mapper.Map<About>(updateAboutDto);
             _aboutService.TUpdate(values);
-            return Ok();
+            return Ok("Başarıyla GÜncellendi");
         }
         [HttpGet("{id}")]
         public IActionResult GetAbout(int id)

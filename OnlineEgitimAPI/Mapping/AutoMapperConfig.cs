@@ -14,22 +14,22 @@ namespace OnlineEgitimAPI.Mapping
         public AutoMapperConfig()
         {
             CreateMap<AddAboutDto, About>().ReverseMap();
-            CreateMap<UpdateAboutDto, AddAboutDto>().ReverseMap();
+            CreateMap<UpdateAboutDto, About>().ReverseMap();
 
             CreateMap<AddContactDto, Contact>().ReverseMap();
-            CreateMap<UpdateContactDto, AddContactDto>().ReverseMap();
+            CreateMap<UpdateContactDto, Contact>().ReverseMap();
 
             CreateMap<AddCourseDto, Course>().ReverseMap();
-            CreateMap<UpdateCourseDto, AddCourseDto>().ReverseMap();
+            CreateMap<UpdateCourseDto, Course>().ReverseMap();
 
             CreateMap<AddLocationDto, Location>().ReverseMap();
-            CreateMap<UpdateLocationDto, AddLocationDto>().ReverseMap();
+            CreateMap<UpdateLocationDto, Location>().ReverseMap();
 
             CreateMap<AddPurchasedCourseDto, PurchasedCourse>().ReverseMap();
-            CreateMap<UpdatePurchasedCourseDto, AddPurchasedCourseDto>().ReverseMap();
+            CreateMap<UpdatePurchasedCourseDto, PurchasedCourse>().ReverseMap();
 
             CreateMap<AddWidgetClickLogDto, WidgetClickLog>().ReverseMap();
-            CreateMap<UpdateWidgetClickLogDto, AddWidgetClickLogDto>().ReverseMap();
+            CreateMap<UpdateWidgetClickLogDto, WidgetClickLog>().ReverseMap();
 
         }
     }

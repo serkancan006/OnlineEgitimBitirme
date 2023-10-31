@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using OnlineEgitimClient.Dtos.AboutDto;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Models.About;
 using System.Text;
@@ -25,7 +26,7 @@ namespace OnlineEgitimClient.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<AboutViewModel>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ListAboutDto>>(jsonData);
                 return View(values);
             }
 
@@ -38,8 +39,12 @@ namespace OnlineEgitimClient.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AdminAddAbout(AddAboutViewModel model)
+        public async Task<IActionResult> AdminAddAbout(ListAboutDto model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(model);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -69,13 +74,13 @@ namespace OnlineEgitimClient.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateAboutViewModel>(jsonData);
+                var values = JsonConvert.DeserializeObject<UpdateAboutDto>(jsonData);
                 return View(values);
             }
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AdminUpdateAbout(UpdateAboutViewModel model)
+        public async Task<IActionResult> AdminUpdateAbout(UpdateAboutDto model)
         {
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(model);
