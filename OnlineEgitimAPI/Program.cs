@@ -3,6 +3,7 @@ using BusinessLayer.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IPurchasedCourseService, PurchasedCourseManager>();
 
 builder.Services.AddScoped<IWidgetClickLogDal, EfWidgetClickLogDal>();
 builder.Services.AddScoped<IWidgetClickLogService, WidgetClickLogManager>();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(opt =>
 {
