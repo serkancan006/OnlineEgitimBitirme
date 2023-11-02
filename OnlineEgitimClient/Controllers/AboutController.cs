@@ -4,94 +4,89 @@ using Newtonsoft.Json;
 using OnlineEgitimClient.Models.About;
 using System.Text;
 using OnlineEgitimClient.Service;
+using System.Net.Http;
 
 namespace OnlineEgitimClient.Controllers
 {
     public class AboutController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;
-        public AboutController(IHttpClientFactory clientFactory, IConfiguration configuration)
+        public AboutController(CustomHttpClient customHttpClient)
         {
-            _customHttpClient = new CustomHttpClient(clientFactory, configuration);
+            _customHttpClient = customHttpClient;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
+
         public async Task<IActionResult> AdminIndex()
         {
-            //var client = _httpClientFactory.CreateClient();
-            //var responseMessage = await client.GetAsync("https://localhost:7064/api/About");
-            //if (responseMessage.IsSuccessStatusCode)
-            //{
-            //    var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            //    var values = JsonConvert.DeserializeObject<List<ListAboutDto>>(jsonData);
-            //    return View(values);
-            //}
-            
-            var values = await _customHttpClient.Get<ListAboutDto>(new() { Controller = "About" });
-            return View(values);
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "About" });
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ListAboutDto>>(jsonData);
+                return View(values);
+            }
+
+            return View();
         }
 
-        //[HttpGet]
-        //public IActionResult AdminAddAbout()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> AdminAddAbout(ListAboutDto model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-        //    var client = _httpClientFactory.CreateClient();
-        //    var jsonData = JsonConvert.SerializeObject(model);
-        //    StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        //    var responseMessage = await client.PostAsync("https://localhost:7064/api/About", stringContent);
-        //    if (responseMessage.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("AdminIndex");
-        //    }
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult AdminAddAbout()
+        {
+            return View();
+        }
 
-        //public async Task<IActionResult> AdminDeleteAbout(int id)
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    var responseMessage = await client.DeleteAsync($"https://localhost:7064/api/About/{id}");
-        //    if (responseMessage.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("AdminIndex");
-        //    }
-        //    return View();
-        //}
-        //[HttpGet]
-        //public async Task<IActionResult> AdminUpdateAbout(int id)
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    var responseMessage = await client.GetAsync($"https://localhost:7064/api/About/{id}");
-        //    if (responseMessage.IsSuccessStatusCode)
-        //    {
-        //        var jsonData = await responseMessage.Content.ReadAsStringAsync();
-        //        var values = JsonConvert.DeserializeObject<UpdateAboutDto>(jsonData);
-        //        return View(values);
-        //    }
-        //    return View();
-        //}
-        //[HttpPost]
-        //public async Task<IActionResult> AdminUpdateAbout(UpdateAboutDto model)
-        //{
-        //    var client = _httpClientFactory.CreateClient();
-        //    var jsonData = JsonConvert.SerializeObject(model);
-        //    StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        //    var responseMessage = await client.PutAsync("https://localhost:7064/api/About/", stringContent);
-        //    if (responseMessage.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("AdminIndex");
-        //    }
-        //    return View();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AdminAddAbout(AddAboutDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var responseMessage = await _customHttpClient.Post<AddAboutDto>(new() { Controller = "About" }, model);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("AdminIndex");
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> AdminDeleteAbout(int id)
+        {
+            var responseMessage = await _customHttpClient.Delete(new() { Controller="About" }, id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("AdminIndex");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AdminUpdateAbout(int id)
+        {
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "About" }, id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<UpdateAboutDto>(jsonData);
+                return View(values);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AdminUpdateAbout(UpdateAboutDto model)
+        {
+            var responseMessage = await _customHttpClient.Put<UpdateAboutDto>(new() { Controller = "About" }, model);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("AdminIndex");
+            }
+            return View();
+        }
     }
 }

@@ -1,3 +1,5 @@
+using OnlineEgitimClient.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
@@ -6,6 +8,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddSingleton<CustomHttpClient>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

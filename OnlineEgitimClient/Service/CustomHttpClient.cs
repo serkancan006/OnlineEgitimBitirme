@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace OnlineEgitimClient.Service
 {
     public class CustomHttpClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _baseUrl;
+        private readonly string? _baseUrl;
 
         public CustomHttpClient(IHttpClientFactory clientFactory, IConfiguration configuration)
         {
@@ -19,9 +20,9 @@ namespace OnlineEgitimClient.Service
             return $"{requestParameters.BaseUrl ?? _baseUrl}/{requestParameters.Controller}{(requestParameters.Action != null ? $"/{requestParameters.Action}" : "")}";
         }
 
-        public async Task<List<T>> Get<T>(RequestParameters requestParameters, string id = null)
+        public async Task<HttpResponseMessage> Get(RequestParameters requestParameters, int? id = null)
         {
-            var url = "";
+            string url;
             if (requestParameters.FullEndPoint != null)
             {
                 url = requestParameters.FullEndPoint;
@@ -32,48 +33,39 @@ namespace OnlineEgitimClient.Service
             }
 
             var responseMessage = await _httpClient.GetAsync(url);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<List<T>>(jsonData);
-            }
-            else
-                return null;
-            //throw new Exception("API request failed.");
-            //return ViewResult();  return View("Error");
+            return responseMessage;
         }
 
-        //public async Task<T> Post<T>(RequestParameters requestParameters, T content)
-        //{
-        //    var url = requestParameters.FullEndPoint ?? Url(requestParameters);
+        public async Task<HttpResponseMessage> Post<T>(RequestParameters requestParameters, T content)
+        {
+            var url = requestParameters.FullEndPoint ?? Url(requestParameters);
 
-        //    var response = await _httpClient.PostAsJsonAsync(url, content);
-        //    response.EnsureSuccessStatusCode();
+            var jsonData = JsonConvert.SerializeObject(content);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await _httpClient.PostAsync(url, stringContent);
+            return responseMessage;
+        }
 
-        //    return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
-        //}
+        public async Task<HttpResponseMessage> Put<T>(RequestParameters requestParameters, T content)
+        {
+            var url = requestParameters.FullEndPoint ?? Url(requestParameters);
 
-        //public async Task<T> Put<T>(RequestParameters requestParameters, T content)
-        //{
-        //    var url = requestParameters.FullEndPoint ?? Url(requestParameters);
+            var jsonData = JsonConvert.SerializeObject(content);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await _httpClient.PutAsync(url, stringContent);
+            return responseMessage;
+        }
 
-        //    var response = await _httpClient.PutAsJsonAsync(url, content);
-        //    response.EnsureSuccessStatusCode();
+        public async Task<HttpResponseMessage> Delete(RequestParameters requestParameters, int id)
+        {
+            var url = requestParameters.FullEndPoint ?? $"{Url(requestParameters)}/{id}";
 
-        //    return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
-        //}
-
-        //public async Task Delete(RequestParameters requestParameters, string id)
-        //{
-        //    var url = requestParameters.FullEndPoint ?? $"{Url(requestParameters)}/{id}";
-
-        //    var response = await _httpClient.DeleteAsync(url);
-        //    response.EnsureSuccessStatusCode();
-        //}
-
+            var responseMessage = await _httpClient.DeleteAsync(url);
+            return responseMessage;
+            //response.EnsureSuccessStatusCode();
+        }
 
     }
-
 
     public partial class RequestParameters
     {
