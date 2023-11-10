@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using DtoLayer.DTOs.AboutDto;
+using DtoLayer.DTOs.AppUserDto;
 using DtoLayer.DTOs.ContactDto;
 using DtoLayer.DTOs.CourseDto;
 using DtoLayer.DTOs.LocationDto;
 using DtoLayer.DTOs.PurchasedCourseDto;
 using DtoLayer.DTOs.WidgetClickLogDto;
 using EntityLayer.Concrete;
+using EntityLayer.Concrete.identity;
 
 namespace OnlineEgitimAPI.Mapping
 {
@@ -30,6 +32,9 @@ namespace OnlineEgitimAPI.Mapping
 
             CreateMap<AddWidgetClickLogDto, WidgetClickLog>().ReverseMap();
             CreateMap<UpdateWidgetClickLogDto, WidgetClickLog>().ReverseMap();
+
+            // Login - Register işlemleri
+            CreateMap<RegisterAppUserDto, AppUser>().ReverseMap();
 
         }
     }

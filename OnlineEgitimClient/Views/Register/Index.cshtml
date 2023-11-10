@@ -25,29 +25,30 @@
     <div class="container">
         <br />
         <h2 class="text-lg-center">Kayıt Ol Sayfası</h2>
+
         <form method="post">
             <div class="form-group">
                 <label for="name">Adınız</label>
                 <input type="text" class="form-control" id="name" aria-describedby="namelHelp" placeholder="Adınız" asp-for="Name">
-                <small asp-validation-for="Name" id="namelHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="Name" id="namelHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label for="surname">Soyadınız</label>
                 <input type="text" class="form-control" id="surname" aria-describedby="surnameHelp" placeholder="Soyadınız" asp-for="Surname">
-                <small asp-validation-for="Surname" id="surnamelHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="Surname" id="surnamelHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label for="username">Kullanıcı Adınız</label>
                 <input type="text" class="form-control" id="username" aria-describedby="usernamelHelp" placeholder="Kullanıcı Adınız" asp-for="UserName">
-                <small asp-validation-for="UserName" id="usernamelHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="UserName" id="usernamelHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label for="email">Mail Adresiniz</label>
                 <input type="" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Mailiniz" asp-for="Mail">
-                <small asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -60,7 +61,7 @@
                         </span>
                     </div>
                 </div>
-                <small asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -73,7 +74,7 @@
                         </span>
                     </div>
                 </div>
-                <small asp-validation-for="ConfirmPassword" id="confirmPasswordHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="ConfirmPassword" id="confirmPasswordHelp" class="form-text text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Kayıt Ol</button>
