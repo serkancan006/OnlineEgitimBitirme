@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231027121210_mig_4")]
-    partial class mig_4
+    [Migration("20231102183745_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,9 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Abouts");
@@ -98,6 +101,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Contacts");
@@ -110,9 +116,6 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppUserID")
-                        .HasColumnType("int");
 
                     b.Property<int>("CourseDisLike")
                         .HasColumnType("int");
@@ -140,11 +143,13 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LocationID")
-                        .HasColumnType("int");
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
@@ -152,17 +157,17 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<int>("SubjectCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserID");
-
-                    b.HasIndex("InstructorId");
-
-                    b.HasIndex("LocationID");
 
                     b.ToTable("Courses");
                 });
@@ -184,6 +189,9 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -210,11 +218,10 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserID");
-
-                    b.HasIndex("CourseID");
 
                     b.ToTable("PurchasedCourses");
                 });
@@ -239,11 +246,10 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserID");
-
-                    b.HasIndex("CourseID");
 
                     b.ToTable("WidgetClickLogs");
                 });
@@ -512,67 +518,6 @@ namespace DataAccessLayer.Migrations
                     b.HasDiscriminator().HasValue("Instructor");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Course", b =>
-                {
-                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EntityLayer.Concrete.identity.Instructor", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("InstructorId");
-
-                    b.HasOne("EntityLayer.Concrete.Location", "Location")
-                        .WithMany("Courses")
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.PurchasedCourse", b =>
-                {
-                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
-                        .WithMany("PurchasedCourses")
-                        .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("EntityLayer.Concrete.Course", "Course")
-                        .WithMany("PurchasedCourses")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.WidgetClickLog", b =>
-                {
-                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
-                        .WithMany("WidgetClickLogs")
-                        .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("EntityLayer.Concrete.Course", "Course")
-                        .WithMany("WidgetClickLogs")
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.identity.AppRole", null)
@@ -622,30 +567,6 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Course", b =>
-                {
-                    b.Navigation("PurchasedCourses");
-
-                    b.Navigation("WidgetClickLogs");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Location", b =>
-                {
-                    b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.identity.AppUser", b =>
-                {
-                    b.Navigation("PurchasedCourses");
-
-                    b.Navigation("WidgetClickLogs");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.identity.Instructor", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

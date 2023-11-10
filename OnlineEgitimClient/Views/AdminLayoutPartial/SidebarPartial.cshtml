@@ -1,0 +1,25 @@
+﻿@{
+    string controllerName = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link @(controllerName == "About" ? "active" : "")" href="/About/AdminIndex/">
+                    Hakkımızda
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(controllerName == "Contact" ? "active" : "")" href="/Contact/AdminIndex/">
+                    İletişim
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(controllerName == "Course" ? "active" : "")" href="/Course/AdminIndex/">
+                    Kurslar
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

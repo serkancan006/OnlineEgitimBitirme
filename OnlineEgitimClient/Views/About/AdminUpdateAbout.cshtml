@@ -1,41 +1,45 @@
 ﻿@model UpdateAboutDto
 @{
     ViewData["Title"] = "AdminUpdateAbout";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form method="post">
-    <input type="hidden" asp-for="Id" />
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
 
-    <label>Hakkımızda Resim 1</label>
-    <input type="text" asp-for="Image1" class="form-control" />
-    <br />
+        <label>Hakkımızda Resim 1</label>
+        <input type="text" asp-for="Image1" class="form-control" />
+        <br />
 
-    <label>Hakkımızda Başlık</label>
-    <input type="text" asp-for="Title" class="form-control" />
-    <br />
+        <label>Hakkımızda Başlık</label>
+        <input type="text" asp-for="Title" class="form-control" />
+        <br />
 
-    <label>Hakkımızda Açıklama 1</label>
-    <input type="text" asp-for="Description" class="form-control" />
-    <br />
+        <label>Hakkımızda Açıklama 1</label>
+        <input type="text" asp-for="Description" class="form-control" />
+        <br />
 
-    <label>Hakkımızda Resim 2</label>
-    <input type="text" asp-for="Image2" class="form-control" />
-    <br />
+        <label>Hakkımızda Resim 2</label>
+        <input type="text" asp-for="Image2" class="form-control" />
+        <br />
 
-    <label>Hakkımızda Başlık 2</label>
-    <input type="text" asp-for="Title2" class="form-control" />
-    <br />
+        <label>Hakkımızda Başlık 2</label>
+        <input type="text" asp-for="Title2" class="form-control" />
+        <br />
 
-    <label>Hakkımızda Açıklama 2</label>
-    <input type="text" asp-for="Description2" class="form-control" />
-    <br />
+        <label>Hakkımızda Açıklama 2</label>
+        <input type="text" asp-for="Description2" class="form-control" />
+        <br />
 
-    <label>Durumu</label>
-    <input type="text" asp-for="Status" class="form-control" />
-    <br />
+        <label>Durumu</label>
+        <select asp-for="Status" class="form-control">
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+        <br />
 
-    <button class="btn btn-primary">Hakkımızda Güncelle</button>
-</form>
-
+        <button class="btn btn-primary">Hakkımızda Güncelle</button>
+    </form>
+</div>
 

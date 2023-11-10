@@ -1,0 +1,36 @@
+﻿@model UpdateContactDto
+@{
+    ViewData["Title"] = "AdminUpdateContact";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <label>İletişim Adres Bilgisi</label>
+        <input type="text" asp-for="Adress" class="form-control" />
+        <br />
+
+        <label>İletişim Mal Bilgisi</label>
+        <input type="text" asp-for="Mail" class="form-control" />
+        <br />
+
+        <label>İletişim Telefon No Bilgisi</label>
+        <input type="text" asp-for="Phone" class="form-control" />
+        <br />
+
+        <label>İletişim Harika Lokasyon Bilgisi</label>
+        <input type="text" asp-for="MapLocation" class="form-control" />
+        <br />
+
+        <label>Durumu</label>
+        <select asp-for="Status" class="form-control">
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+        <br />
+
+        <button class="btn btn-primary">İleşim Bilgisini Güncelle</button>
+    </form>
+</div>

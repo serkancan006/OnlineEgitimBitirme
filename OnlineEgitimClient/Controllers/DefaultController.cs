@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineEgitimClient.Service;
 
 namespace OnlineEgitimClient.Controllers
 {

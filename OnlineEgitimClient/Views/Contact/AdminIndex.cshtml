@@ -1,0 +1,41 @@
+﻿@model List<ListContactDto>
+@{
+    ViewData["Title"] = "AdminIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Adresimiz</th>
+            <th>Mail Adresimiz</th>
+            <th>Telefonumuz</th>
+            <th>Map bilgisi</th>
+            <th>Oluşturulma tarihi</th>
+            <th>Güncellenme Tarihi</th>
+            <th>Durumu</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+            <th>Detaylar</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Adress</td>
+                <td>@item.Mail</td>
+                <td>@item.Phone</td>
+                <td>@item.MapLocation</td>
+                <td>@item.CreatedDate</td>
+                <td>@item.UpdatedDate</td>
+                <td>@item.Status</td>
+                <td><a href="/Contact/AdminDeleteContact/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
+                <td><a href="/Contact/AdminUpdateContact/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
+                <td><a href="#" class="btn mb-1 btn-rounded btn-outline-warning">Detaylar</a></td>
+            </tr>
+        }
+    </table>
+</div>
+<br />
+<a href="/Contact/AdminAddContact/" class="btn mb-1 btn-rounded btn-outline-primary">Yeni İletişim Oluştur</a>

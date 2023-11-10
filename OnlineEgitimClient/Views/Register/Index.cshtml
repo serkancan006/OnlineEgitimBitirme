@@ -1,0 +1,104 @@
+﻿@model RegisterAppUserDto
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kayıt Ol Sayfası</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <br />
+        <h2 class="text-lg-center">Kayıt Ol Sayfası</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="name">Adınız</label>
+                <input type="text" class="form-control" id="name" aria-describedby="namelHelp" placeholder="Adınız" asp-for="Name">
+                <small asp-validation-for="Name" id="namelHelp" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Soyadınız</label>
+                <input type="text" class="form-control" id="surname" aria-describedby="surnameHelp" placeholder="Soyadınız" asp-for="Surname">
+                <small asp-validation-for="Surname" id="surnamelHelp" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Kullanıcı Adınız</label>
+                <input type="text" class="form-control" id="username" aria-describedby="usernamelHelp" placeholder="Kullanıcı Adınız" asp-for="UserName">
+                <small asp-validation-for="UserName" id="usernamelHelp" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Mail Adresiniz</label>
+                <input type="" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Mailiniz" asp-for="Mail">
+                <small asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifreniz</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
+                    <div class="input-group-append" style="cursor:pointer">
+                        <span class="input-group-text">
+                            <i class="fa fa-eye" id="togglePassword"></i>
+                        </span>
+                    </div>
+                </div>
+                <small asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Şifre Tekrar</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Şifre tekrar" aria-describedby="confirmPasswordHelp" asp-for="ConfirmPassword">
+                    <div class="input-group-append" style="cursor:pointer">
+                        <span class="input-group-text">
+                            <i class="fa fa-eye" id="toggleConfirmPassword"></i>
+                        </span>
+                    </div>
+                </div>
+                <small asp-validation-for="ConfirmPassword" id="confirmPasswordHelp" class="form-text text-danger"></small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        </form>
+        <br />
+        <br />
+        <a href="/Login/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabınız var mı? Hemen Oturum aç.</a>
+    </div>
+
+
+    <script>
+        // Şifreleri göster/gizle
+        $(document).ready(function () {
+            $("#togglePassword").click(function () {
+                var passwordField = $("#password");
+                var passwordFieldType = passwordField.attr("type");
+                passwordField.attr("type", passwordFieldType === "password" ? "text" : "password");
+            });
+
+            $("#toggleConfirmPassword").click(function () {
+                var confirmPasswordField = $("#confirmPassword");
+                var confirmPasswordFieldType = confirmPasswordField.attr("type");
+                confirmPasswordField.attr("type", confirmPasswordFieldType === "password" ? "text" : "password");
+            });
+        });
+    </script>
+</body>
+</html>

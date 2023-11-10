@@ -6,6 +6,8 @@ using OnlineEgitimClient.Dtos.LocationDto;
 using OnlineEgitimClient.Dtos.PurchasedCourseDto;
 using OnlineEgitimClient.Dtos.WidgetClickLogDto;
 using EntityLayer.Concrete;
+using OnlineEgitimClient.Dtos.AppUserDto;
+using EntityLayer.Concrete.identity;
 
 namespace OnlineEgitimClient.Mapping
 {
@@ -36,6 +38,11 @@ namespace OnlineEgitimClient.Mapping
             CreateMap<ListWidgetClickLogDto, WidgetClickLog>().ReverseMap();
             CreateMap<UpdateWidgetClickLogDto, WidgetClickLog>().ReverseMap();
             CreateMap<AddWidgetClickLogDto, WidgetClickLog>().ReverseMap();
+
+            //Kullanıcı kayıt ve giriş
+            CreateMap<RegisterAppUserDto, AppUser>().ReverseMap();
+            CreateMap<LoginAppUserDto, AppUser>().ReverseMap();
+
         }
     }
 }

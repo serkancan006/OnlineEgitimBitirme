@@ -1,16 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using OnlineEgitimClient.Service;
 
 namespace OnlineEgitimClient.Controllers
 {
-    public class LayoutPartialController : Controller
+    public class AdminLayoutPartialController : Controller
     {
         public PartialViewResult HeadPartial()
-        {
-            return PartialView();
-        }
-        public PartialViewResult TopbarPartial()
         {
             return PartialView();
         }
@@ -18,7 +12,7 @@ namespace OnlineEgitimClient.Controllers
         {
             return PartialView();
         }
-        public PartialViewResult FooterPartial()
+        public PartialViewResult SidebarPartial()
         {
             return PartialView();
         }
