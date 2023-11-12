@@ -35,6 +35,7 @@ namespace OnlineEgitimAPI.Mapping
 
             // Login - Register işlemleri
             CreateMap<RegisterAppUserDto, AppUser>().ReverseMap();
+            CreateMap<LoginUserDto, AppUser>().ReverseMap();
 
         }
     }

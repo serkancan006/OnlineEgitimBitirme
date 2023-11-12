@@ -13,11 +13,9 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
-        public RegisterController(IMapper mapper, UserManager<AppUser> userManager)
+        public RegisterController(UserManager<AppUser> userManager)
         {
-            _mapper = mapper;
             _userManager = userManager;
         }
 

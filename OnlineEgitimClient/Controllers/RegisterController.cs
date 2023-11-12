@@ -28,16 +28,16 @@ namespace OnlineEgitimClient.Controllers
             var responseMessage = await _customHttpClient.Post<RegisterAppUserDto>(new() { Controller = "Register" }, model);
             if (responseMessage.IsSuccessStatusCode)
                 return RedirectToAction("Index","Login");
-            //else
-            //{
-            //    // Hata durumunda konsola hataları yazdırma
-            //    var errorContent = await responseMessage.Content.ReadAsStringAsync();
-            //    Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
-            //    Console.WriteLine($"Hata Detayları: {errorContent}");
+            else
+            {
+                // Hata durumunda konsola hataları yazdırma
+                var errorContent = await responseMessage.Content.ReadAsStringAsync();
+                Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
+                Console.WriteLine($"Hata Detayları: {errorContent}");
 
-            //    return View();
-            //}
-            return View();
+                return View();
+            }
+            //return View();
         }
     }
 }

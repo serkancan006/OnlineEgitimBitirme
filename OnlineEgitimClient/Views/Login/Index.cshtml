@@ -26,9 +26,9 @@
         <h2 class="text-lg-center">Giriş Sayfası</h2>
         <form method="post">
             <div class="form-group">
-                <label for="email">Mail Adresiniz</label>
-                <input type="" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Mailiniz" asp-for="Mail">
-                <small asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></small>
+                <label for="username">Kullanıcı Adınız</label>
+                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Kullanıcı adınız" asp-for="UserName">
+                <span asp-validation-for="UserName" id="usernameHelp" class="form-text text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -41,7 +41,7 @@
                         </span>
                     </div>
                 </div>
-                <small asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></small>
+                <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-primary">Giriş Yap</button>
