@@ -4,20 +4,41 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete.identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>();
+// Add Jwt Bearer Token
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(opt =>
+{
+    opt.RequireHttpsMetadata = true;
+    opt.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidIssuer = "https://localhost",
+        ValidAudience = "https://localhost",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aspnetcoreapiapi")),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 builder.Services.AddScoped<IAboutDal, EfAboutDal>();
 builder.Services.AddScoped<IAboutService, AboutManager>();
@@ -37,6 +58,8 @@ builder.Services.AddScoped<IPurchasedCourseService, PurchasedCourseManager>();
 builder.Services.AddScoped<IWidgetClickLogDal, EfWidgetClickLogDal>();
 builder.Services.AddScoped<IWidgetClickLogService, WidgetClickLogManager>();
 
+builder.Services.AddScoped<ICreateTokenService, CreateTokenManager>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddCors(opt =>
@@ -46,6 +69,7 @@ builder.Services.AddCors(opt =>
         opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
+
 
 var app = builder.Build();
 
@@ -58,6 +82,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseCors("E-EgitimApiCors");
 
 app.UseAuthorization();
