@@ -1,0 +1,16 @@
+﻿@model AddLocationDto
+@{
+    ViewData["Title"] = "AdminAddLocation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <form method="post">
+        <label>Lokasyon Bilgisi</label>
+        <textarea type="text" asp-for="Address" class="form-control"></textarea>
+        <br />
+
+        <button class="btn btn-primary">Lokasyon Ekle</button>
+    </form>
+</div>
+

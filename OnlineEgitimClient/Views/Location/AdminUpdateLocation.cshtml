@@ -1,0 +1,26 @@
+﻿@model UpdateLocationDto
+
+    @{
+        ViewData["Title"] = "AdminUpdateLocation";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    <div class="container">
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <label>Lokasyon Bilgisi</label>
+            <input type="text" asp-for="Address" class="form-control" />
+            <br />
+
+            <label>Durumu</label>
+            <select asp-for="Status" class="form-control">
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+            <br />
+
+            <button class="btn btn-primary">Lokasyonu Güncelle</button>
+        </form>
+    </div>
+
