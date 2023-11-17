@@ -35,10 +35,19 @@ namespace OnlineEgitimClient.Service
             var responseMessage = await _httpClient.GetAsync(url);
             return responseMessage;
         }
-
-        public async Task<HttpResponseMessage> Post<T>(RequestParameters requestParameters, T content)
+        //queryString: `imageId=${imageId}`
+        public async Task<HttpResponseMessage> Post<T>(RequestParameters requestParameters, T content, int? id = null)
         {
-            var url = requestParameters.FullEndPoint ?? Url(requestParameters);
+            //var url = requestParameters.FullEndPoint ?? Url(requestParameters);
+            string url;
+            if (requestParameters.FullEndPoint != null)
+            {
+                url = requestParameters.FullEndPoint;
+            }
+            else
+            {
+                url = $"{Url(requestParameters)}{(id != null ? $"/{id}" : "")}{(requestParameters.QueryString != null ? $"?{requestParameters.QueryString}" : "")}";
+            }
 
             var jsonData = JsonConvert.SerializeObject(content);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");

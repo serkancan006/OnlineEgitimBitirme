@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete.Common;
+using EntityLayer.Concrete.File;
 using EntityLayer.Concrete.identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -34,8 +35,7 @@ namespace EntityLayer.Concrete
 
 		//public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
 		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
+		//public ICollection<CourseVideoFile> CourseVideoFiles { get; set; }
 	}
 }
 
-//favori kurslar, eğitmen yorum, kurs yorum, video yorum
-// kategoriler, Kurs Ana başlıklar/İçerik, video başlık/veya ismi

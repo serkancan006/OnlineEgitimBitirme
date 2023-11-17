@@ -58,6 +58,13 @@ builder.Services.AddScoped<IPurchasedCourseService, PurchasedCourseManager>();
 builder.Services.AddScoped<IWidgetClickLogDal, EfWidgetClickLogDal>();
 builder.Services.AddScoped<IWidgetClickLogService, WidgetClickLogManager>();
 
+builder.Services.AddScoped<IFileDal, EfFileDal>();
+builder.Services.AddScoped<IFileService, FileManager>();
+builder.Services.AddScoped<ICourseImageFileDal, EfCourseImageFileDal>();
+builder.Services.AddScoped<ICourseImageFileService, CourseImageFileManager>();
+builder.Services.AddScoped<ICourseVideoFileDal, EfCourseVideoFile>();
+builder.Services.AddScoped<ICourseVideoFileService, CourseVideoFileManager>();
+
 builder.Services.AddScoped<ICreateTokenService, CreateTokenManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -79,7 +86,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -1,0 +1,42 @@
+Online Eğitim Satış Uygulaması
+
+Kullanıcılar Tablosu:
+Kullanıcı Kimlik Numarası (ID)
+Ad
+Soyad
+E-posta
+Şifre
+Sosyal Medya Hesapları (opsiyonel)
+KullanıcıRol
+
+Eğitimler Tablosu:
+Eğitim Kimlik Numarası (ID)
+Konum Bilgisi
+Ücreti
+Eğitim Süresi
+Görsel URL
+Eğitmen ID'si (Bu ID kullanıcılar tablosundaki rolü eğitmen olan)
+Eğitim İçeriği
+
+Sepet Tablosu:
+Sepet Kimlik Numarası (ID)
+Kullanıcı ID'si
+Eğitim ID'si
+Tarih
+
+Satın Alınan Eğitimler Tablosu:
+Satın Alınan Eğitimler Kimlik Numarası (ID)
+Kullanıcı ID'si
+Eğitim ID'si
+Tarih
+
+Widget Tıklama Logları Tablosu:
+Log Kimlik Numarası (ID)
+Kullanıcı ID'si
+Eğitim ID'si
+Tarih
+
+
+mobil uyumluluk ? olacak
+admin kategori sorulmadı
+video(youtube ?) sunucuda depolanacak

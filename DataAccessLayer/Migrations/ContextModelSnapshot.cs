@@ -170,6 +170,45 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.File.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileDisplayName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -354,6 +393,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -476,6 +518,23 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.File.CourseImageFile", b =>
+                {
+                    b.HasBaseType("EntityLayer.Concrete.File.File");
+
+                    b.HasDiscriminator().HasValue("CourseImageFile");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.File.CourseVideoFile", b =>
+                {
+                    b.HasBaseType("EntityLayer.Concrete.File.File");
+
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CourseVideoFile");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.identity.Instructor", b =>

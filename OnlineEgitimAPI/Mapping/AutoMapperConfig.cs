@@ -3,10 +3,12 @@ using DtoLayer.DTOs.AboutDto;
 using DtoLayer.DTOs.AppUserDto;
 using DtoLayer.DTOs.ContactDto;
 using DtoLayer.DTOs.CourseDto;
+using DtoLayer.DTOs.CourseVideoFileDto;
 using DtoLayer.DTOs.LocationDto;
 using DtoLayer.DTOs.PurchasedCourseDto;
 using DtoLayer.DTOs.WidgetClickLogDto;
 using EntityLayer.Concrete;
+using EntityLayer.Concrete.File;
 using EntityLayer.Concrete.identity;
 
 namespace OnlineEgitimAPI.Mapping
@@ -37,6 +39,10 @@ namespace OnlineEgitimAPI.Mapping
             CreateMap<RegisterAppUserDto, AppUser>().ReverseMap();
             CreateMap<LoginUserDto, AppUser>().ReverseMap();
 
+            //VideoFİle
+            CreateMap<ListCourseVideoFileDto, CourseVideoFile>().ReverseMap();
+            CreateMap<UpdateCourseVideoFileDto, CourseVideoFile>().ReverseMap();
+            CreateMap<AddCourseVideoFileDto, CourseVideoFile>().ReverseMap();
         }
     }
 }
