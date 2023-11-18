@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface ICourseVideoFileService : IGenericService<CourseVideoFile>
     {
+        public List<CourseVideoFile> CourseGetVideoFiles(int id);
     }
 }
