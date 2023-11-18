@@ -24,7 +24,9 @@ namespace OnlineEgitimAPI.Controllers
                 var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, false, false);
 
                 if (result.Succeeded)
-                    return Ok(new { message = "Kullanıcı adı ve şifre dogru.", status = true });
+                    //return Ok(new { message = "Kullanıcı adı ve şifre dogru.", status = true });
+                    return Ok();
+
                 else
                     return BadRequest(new { message = "Kullanıcı adı veya şifre hatalı.", status = false, error = result });
             }

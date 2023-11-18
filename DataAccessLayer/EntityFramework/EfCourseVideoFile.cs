@@ -12,10 +12,5 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfCourseVideoFile : GenericRepository<CourseVideoFile>, ICourseVideoFileDal
     {
-        public List<CourseVideoFile> GetVideoFiles(int id)
-        {
-            var context = new Context();
-            return context.CourseVideoFiles.Where(x => x.CourseID == id).ToList();
-        }
     }
 }

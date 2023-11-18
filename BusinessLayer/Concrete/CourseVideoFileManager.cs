@@ -18,11 +18,6 @@ namespace BusinessLayer.Concrete
             _CourseVideoFileDal = CourseVideoFileDal;
         }
 
-        public List<CourseVideoFile> CourseGetVideoFiles(int id)
-        {
-            return _CourseVideoFileDal.GetVideoFiles(id);
-        }
-
         public void TAdd(CourseVideoFile t)
         {
             _CourseVideoFileDal.Insert(t);

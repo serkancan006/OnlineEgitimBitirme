@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class CourseCourseVideoFileManager : IGenericService<CourseCourseVideoFile>
+    public class CourseCourseVideoFileManager : ICourseCourseVideoFileService
     {
         ICourseCourseVideoFileDal _CourseCourseVideoFileDal;
         public CourseCourseVideoFileManager(ICourseCourseVideoFileDal CourseCourseVideoFileDal)

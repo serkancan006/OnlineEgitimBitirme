@@ -9,6 +9,5 @@ namespace DataAccessLayer.Abstract
 {
     public interface ICourseVideoFileDal : IGenericDal<CourseVideoFile>
     {
-        public List<CourseVideoFile> GetVideoFiles(int id);
     }
 }

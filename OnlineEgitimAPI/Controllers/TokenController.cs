@@ -10,38 +10,38 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly ICreateTokenService _createTokenService;
+        //private readonly ICreateTokenService _createTokenService;
 
-        public TokenController(ICreateTokenService createTokenService)
-        {
-            _createTokenService = createTokenService;
-        }
+        //public TokenController(ICreateTokenService createTokenService)
+        //{
+        //    _createTokenService = createTokenService;
+        //}
 
-        [HttpGet("[action]")]
-        public IActionResult TokenOlustur()
-        {
-            return Ok(_createTokenService.TokenCreate());
-        }
+        //[HttpGet("[action]")]
+        //public IActionResult TokenOlustur()
+        //{
+        //    return Ok(_createTokenService.TokenCreate());
+        //}
 
-        [HttpGet("[action]")]
-        public IActionResult AdminTokenOlustur()
-        {
-            return Ok(_createTokenService.TokenCreateAdmin());
-        }
+        //[HttpGet("[action]")]
+        //public IActionResult AdminTokenOlustur()
+        //{
+        //    return Ok(_createTokenService.TokenCreateAdmin());
+        //}
 
-        [HttpGet("[action]")]
-        [Authorize]
-        //[Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult Test()
-        {
-            return Ok("Hoşgeldiniz");
-        }
+        //[HttpGet("[action]")]
+        //[Authorize]
+        ////[Authorize(AuthenticationSchemes = "Bearer")]
+        //public IActionResult Test()
+        //{
+        //    return Ok("Hoşgeldiniz");
+        //}
 
-        [HttpGet("[action]")]
-        [Authorize(Roles = "Admin,Instructor,Visitor")]
-        public IActionResult TestAdmin()
-        {
-            return Ok("Token başarılı bir şekilde giriş yaptı");
-        }
+        //[HttpGet("[action]")]
+        //[Authorize(Roles = "Admin,Instructor")]
+        //public IActionResult TestAdmin()
+        //{
+        //    return Ok("Token başarılı bir şekilde giriş yaptı");
+        //}
     }
 }

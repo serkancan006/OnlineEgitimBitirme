@@ -64,6 +64,8 @@ builder.Services.AddScoped<ICourseImageFileDal, EfCourseImageFileDal>();
 builder.Services.AddScoped<ICourseImageFileService, CourseImageFileManager>();
 builder.Services.AddScoped<ICourseVideoFileDal, EfCourseVideoFile>();
 builder.Services.AddScoped<ICourseVideoFileService, CourseVideoFileManager>();
+//builder.Services.AddScoped<ICourseCourseVideoFileDal, EfCourseCourseVideoFileDal>();
+//builder.Services.AddScoped<ICourseCourseVideoFileService, CourseCourseVideoFileManager>();
 
 builder.Services.AddScoped<ICreateTokenService, CreateTokenManager>();
 
