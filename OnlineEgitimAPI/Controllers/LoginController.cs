@@ -22,45 +22,48 @@ namespace OnlineEgitimAPI.Controllers
             _userManager = userManager;
         }
 
+
         [HttpPost]
         public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, false, false);
+                var user = await _userManager.FindByNameAsync(loginUserDto.UsernameOrEmail) ?? await _userManager.FindByEmailAsync(loginUserDto.UsernameOrEmail);
 
-                if (result.Succeeded)
+                if(user != null)
                 {
-                    var user = await _userManager.FindByNameAsync(loginUserDto.Username);
-                    if (user != null)
+                    var result = await _signInManager.PasswordSignInAsync(user, loginUserDto.Password, false, false);
+                    if (result.Succeeded)
                     {
-                        var userRoles = await _userManager.GetRolesAsync(user);
-                        //if (userRoles.Any(r => r == "Admin"))
-                        if (userRoles.Contains("Admin"))
+                        if (user != null)
                         {
-                            // Kullanıcı Admin içeriği içeriyorsa 
-                            var value = _createTokenService.TokenCreateAdmin();
-                            return Ok(new { message = "Admini girişi başarılı.", value });
+                            var userRoles = await _userManager.GetRolesAsync(user);
+                            //if (userRoles.Any(r => r == "Admin"))
+                            if (userRoles.Contains("Admin"))
+                            {
+                                // Kullanıcı Admin içeriği içeriyorsa 
+                                var value = _createTokenService.TokenCreateAdmin();
+                                return Ok(new { message = "Admini girişi başarılı.", value });
+                            }
+                            else if (userRoles.Contains("Instructor"))
+                            {
+                                // Kullanıcı Instructor içeriği içeriyorsa 
+                                var value = _createTokenService.TokenCreateInstructor();
+                                return Ok(new { message = "Eğitmen girişi başarılı.", value });
+                            }
+                            else
+                            {
+                                var value = _createTokenService.TokenCreate();
+                                return Ok(new { message = "Kullanıcı girişi başarılı.", value });
+                            }
                         }
-                        else if (userRoles.Contains("Instructor"))
-                        {
-                            // Kullanıcı Instructor içeriği içeriyorsa 
-                            var value = _createTokenService.TokenCreateInstructor();
-                            return Ok(new { message = "Eğitmen girişi başarılı.", value });
-                        }
-                        else
-                        {
-                            var value = _createTokenService.TokenCreate();
-                            return Ok(new { message = "Kullanıcı girişi başarılı.", value });
-                        }
+                        //return Ok(value);
                     }
-                    //return Ok(value);
+                    else
+                        return BadRequest(new { message = "Kullanıcı adı veya şifre hatalı.", status = false, error = result });
                 }
-                else
-                    return BadRequest(new { message = "Kullanıcı adı veya şifre hatalı.", status = false, error = result });
             }
-
-            return BadRequest(new { message = "Gönderilen veri hatalı.", status = false });
+            return BadRequest(new { message = "Gönderilen veriler hatalı.", status = false });
         }
     }
 }

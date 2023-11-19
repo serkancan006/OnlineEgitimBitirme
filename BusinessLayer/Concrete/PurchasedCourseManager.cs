@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _purchasedCourseDal.GetList(false);
         }
 
+        public List<PurchasedCourse> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(PurchasedCourse t)
         {
             _purchasedCourseDal.Update(t);

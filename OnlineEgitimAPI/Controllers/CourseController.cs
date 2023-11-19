@@ -65,5 +65,11 @@ namespace OnlineEgitimAPI.Controllers
             var values = _CourseService.TGetByID(id);
             return Ok(values);
         }
+        [HttpGet("[action]")]
+        public IActionResult CourseListByStatus()
+        {
+            var values = _CourseService.TGetListTrueStatus();
+            return Ok(values);
+        }
     }
 }

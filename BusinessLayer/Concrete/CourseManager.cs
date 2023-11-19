@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _courseDal.GetList(false);
         }
 
+        public List<Course> TGetListTrueStatus()
+        {
+            return _courseDal.GetListByFilter(x => x.Status == true);
+        }
+
         public void TUpdate(Course t)
         {
             _courseDal.Update(t);

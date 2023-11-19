@@ -37,6 +37,11 @@ namespace BusinessLayer.Concrete
             return _FileDal.GetList(false);
         }
 
+        public List<EntityLayer.Concrete.File.File> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(EntityLayer.Concrete.File.File t)
         {
             _FileDal.Update(t);

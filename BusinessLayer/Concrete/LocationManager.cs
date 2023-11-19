@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _locationDal.GetList(false);
         }
 
+        public List<Location> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(Location t)
         {
             _locationDal.Update(t);

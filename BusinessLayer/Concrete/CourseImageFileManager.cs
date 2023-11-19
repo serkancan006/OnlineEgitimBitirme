@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _CourseImageFileDal.GetList(false);
         }
 
+        public List<CourseImageFile> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(CourseImageFile t)
         {
             _CourseImageFileDal.Update(t);

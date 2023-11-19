@@ -32,6 +32,11 @@ namespace BusinessLayer.Concrete
             return _widgetClickLogDal.GetList(false);
         }
 
+        public List<WidgetClickLog> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(WidgetClickLog t)
         {
             _widgetClickLogDal.Update(t);

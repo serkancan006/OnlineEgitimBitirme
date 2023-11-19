@@ -43,6 +43,11 @@ namespace BusinessLayer.Concrete
             return _CourseVideoFileDal.GetList(false);
         }
 
+        public List<CourseVideoFile> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TUpdate(CourseVideoFile t)
         {
             _CourseVideoFileDal.Update(t);

@@ -37,7 +37,12 @@ namespace BusinessLayer.Concrete
 			return _aboutDal.GetList(false);
 		}
 
-		public void TUpdate(About t)
+        public List<About> TGetListTrueStatus()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TUpdate(About t)
 		{
 			_aboutDal.Update(t);
 		}

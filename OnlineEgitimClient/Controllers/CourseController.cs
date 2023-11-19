@@ -13,13 +13,29 @@ namespace OnlineEgitimClient.Controllers
             _customHttpClient = customHttpClient;
         }
       
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action = "CourseListByStatus" });
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ListCourseDto>>(jsonData);
+                return View(values);
+            }
+
             return View();
         }
 
-        public IActionResult CourseDetails(int id)
+        public async Task<IActionResult> CourseDetails(int id)
         {
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course" },id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
+                return View(values);
+            }
+
             return View();
         }
         public PartialViewResult RelatedCourses()

@@ -1,4 +1,4 @@
-﻿
+﻿@model ListCourseDto
 @{
     ViewData["Title"] = "CourseDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,143 +19,152 @@
     </div>
 </div>
 <!-- Header End -->
+@if (Model.Status)
+{
+    <!-- Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        <div class="section-title position-relative mb-5">
+                            <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Kurs Detayı</h6>
+                            <h1 class="display-4">@Model.Title</h1>
+                        </div>
+                        <img class="img-fluid rounded w-100 mb-4" src="~/online-education/img/header.jpg" alt="Image">
+                        <p>@Model.Description</p>
+                        <div class="d-flex justify-content-between px-2">
+                            <i class="fa fa-eye text-primary"> @Model.CourseViewCountLog</i>
+                            <i class="fas fa-thumbs-up text-secondary"> @Model.CourseLike</i>
+                            <i class="fas fa-thumbs-down text-truncate"> @Model.CourseDisLike</i>
+                            <i class="fa fa-star text-warning"> @Model.CoursePuan</i>
+                        </div>
+                    </div>
+                    <!-- İlgili Kurslar-->
+                    @await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")
+                    <!-- ilgili Kurslar-->
+                </div>
+                <!-- Kurs Özellikleri-->
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <div class="bg-primary mb-5 py-3">
+                        <h3 class="text-white py-3 px-4 m-0">Kurs Özellikleri</h3>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Eğitmen</h6>
+                            <h6 class="text-white my-3">John Doe</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Konu Sayısı</h6>
+                            <h6 class="text-white my-3">@Model.SubjectCount</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Süre</h6>
+                            <h6 class="text-white my-3">@Model.Duration saat</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Seviye</h6>
+                            <h6 class="text-white my-3">@Model.Level.ToUpper() SEVİYE</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Dil</h6>
+                            <h6 class="text-white my-3">@Model.Language.ToUpper()</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Konum</h6>
+                            <h6 class="text-white my-3">City</h6>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Oluşturulma</h6>
+                            <h6 class="text-white my-3">@Model.CreatedDate.ToString("dd-MMM-yyyy")</h6>
+                        </div>
+                        <div class="d-flex justify-content-between px-4">
+                            <h6 class="text-white my-3">Güncelleme</h6>
+                            <h6 class="text-white my-3">@Model.UpdatedDate.ToString("dd-MMM-yyyy")</h6>
+                        </div>
 
-
-<!-- Detail Start -->
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="mb-5">
-                    <div class="section-title position-relative mb-5">
-                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Kurs Detayı</h6>
-                        <h1 class="display-4">Web Tasarımı ve Geliştiricisi Kursu Temel Seviye</h1>
-                    </div>
-                    <img class="img-fluid rounded w-100 mb-4" src="~/online-education/img/header.jpg" alt="Image">
-                    <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt magna dolores aliquyam dolores dolore. Amet erat amet et magna</p>
-                        
-                    <p>Sadipscing labore amet rebum est et justo gubergren. Et eirmod ipsum sit diam ut magna lorem.
-                        Nonumy vero labore lorem sanctus rebum et lorem magna kasd, stet amet magna accusam
-                        consetetur eirmod. Kasd accusam sit ipsum sadipscing et at at sanctus et. Ipsum sit
-                        gubergren dolores et, consetetur justo invidunt at et aliquyam ut et vero clita. Diam sea
-                        sea no sed dolores diam nonumy, gubergren sit stet no diam kasd vero.</p>
-                </div>
-                <!-- İlgili Kurslar-->
-                @await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")
-                <!-- ilgili Kurslar-->
-            </div>
-            <!-- Kurs Özellikleri-->
-            <div class="col-lg-4 mt-5 mt-lg-0">
-                <div class="bg-primary mb-5 py-3">
-                    <h3 class="text-white py-3 px-4 m-0">Kurs Özellikleri</h3>
-                    <div class="d-flex justify-content-between border-bottom px-4">
-                        <h6 class="text-white my-3">Eğitmen</h6>
-                        <h6 class="text-white my-3">John Doe</h6>
-                    </div>
-                    <div class="d-flex justify-content-between border-bottom px-4">
-                        <h6 class="text-white my-3">Puan</h6>
-                        <h6 class="text-white my-3">4.5 <small>(250)</small></h6>
-                    </div>
-                    <div class="d-flex justify-content-between border-bottom px-4">
-                        <h6 class="text-white my-3">Dersler</h6>
-                        <h6 class="text-white my-3">15</h6>
-                    </div>
-                    <div class="d-flex justify-content-between border-bottom px-4">
-                        <h6 class="text-white my-3">Süre</h6>
-                        <h6 class="text-white my-3">10.00 saat</h6>
-                    </div>
-                    <div class="d-flex justify-content-between border-bottom px-4">
-                        <h6 class="text-white my-3">Seviye</h6>
-                        <h6 class="text-white my-3">All Level</h6>
-                    </div>
-                    <div class="d-flex justify-content-between px-4">
-                        <h6 class="text-white my-3">Dil</h6>
-                        <h6 class="text-white my-3">Türkçe</h6>
-                    </div>
-                    <div class="d-flex justify-content-between px-4">
-                        <h6 class="text-white my-3">Konum</h6>
-                        <h6 class="text-white my-3">Ankara</h6>
-                    </div>
-                    <h5 class="text-white py-3 px-4 m-0">Kurs Fiyatı: ₺199</h5>
-                    <div class="py-3 px-4">
-                        <a class="btn btn-block btn-secondary py-3 px-5" href="">Satın al</a>
-                    </div>
-                </div>
-                <!-- Kategoriler 
-                <div class="mb-5">
-                    <h2 class="mb-3">Kategoriler</h2>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="" class="text-decoration-none h6 m-0">Web Tasarım</a>
-                            <span class="badge badge-primary badge-pill">150</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="" class="text-decoration-none h6 m-0">Web Geliştirici</a>
-                            <span class="badge badge-primary badge-pill">131</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="" class="text-decoration-none h6 m-0">Çevrimiçi Pazarlama</a>
-                            <span class="badge badge-primary badge-pill">78</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="" class="text-decoration-none h6 m-0">SEO</a>
-                            <span class="badge badge-primary badge-pill">56</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            <a href="" class="text-decoration-none h6 m-0">Mobil Uygulama Geliştirici</a>
-                            <span class="badge badge-primary badge-pill">98</span>
-                        </li>
-                    </ul>
-                </div>
-                -->
-                <!-- Son Kurslar
-                <div class="mb-5">
-                    <h2 class="mb-4">Recent Courses</h2>
-                    <a class="d-flex align-items-center text-decoration-none mb-4" href="">
-                        <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
-                        <div class="pl-3">
-                            <h6>Web design & development courses for beginners</h6>
-                            <div class="d-flex">
-                                <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
-                                <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
-                            </div>
+                        <h5 class="text-white py-3 px-4 m-0">Kurs Fiyatı: @Model.Price₺</h5>
+                        <div class="py-3 px-4">
+                            <a class="btn btn-block btn-secondary py-3 px-5" href="">Satın al</a>
                         </div>
-                    </a>
-                    <a class="d-flex align-items-center text-decoration-none mb-4" href="">
-                        <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
-                        <div class="pl-3">
-                            <h6>Web design & development courses for beginners</h6>
-                            <div class="d-flex">
-                                <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
-                                <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                    </div>
+                    <!-- Kategoriler
+                    <div class="mb-5">
+                        <h2 class="mb-3">Kategoriler</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="" class="text-decoration-none h6 m-0">Web Tasarım</a>
+                                <span class="badge badge-primary badge-pill">150</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="" class="text-decoration-none h6 m-0">Web Geliştirici</a>
+                                <span class="badge badge-primary badge-pill">131</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="" class="text-decoration-none h6 m-0">Çevrimiçi Pazarlama</a>
+                                <span class="badge badge-primary badge-pill">78</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="" class="text-decoration-none h6 m-0">SEO</a>
+                                <span class="badge badge-primary badge-pill">56</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="" class="text-decoration-none h6 m-0">Mobil Uygulama Geliştirici</a>
+                                <span class="badge badge-primary badge-pill">98</span>
+                            </li>
+                        </ul>
+                    </div>
+                    -->
+                    <!-- Son Kurslar
+                    <div class="mb-5">
+                        <h2 class="mb-4">Recent Courses</h2>
+                        <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                            <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
+                            <div class="pl-3">
+                                <h6>Web design & development courses for beginners</h6>
+                                <div class="d-flex">
+                                    <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
+                                    <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a class="d-flex align-items-center text-decoration-none mb-4" href="">
-                        <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
-                        <div class="pl-3">
-                            <h6>Web design & development courses for beginners</h6>
-                            <div class="d-flex">
-                                <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
-                                <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                        </a>
+                        <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                            <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
+                            <div class="pl-3">
+                                <h6>Web design & development courses for beginners</h6>
+                                <div class="d-flex">
+                                    <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
+                                    <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a class="d-flex align-items-center text-decoration-none" href="">
-                        <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
-                        <div class="pl-3">
-                            <h6>Web design & development courses for beginners</h6>
-                            <div class="d-flex">
-                                <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
-                                <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                        </a>
+                        <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                            <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
+                            <div class="pl-3">
+                                <h6>Web design & development courses for beginners</h6>
+                                <div class="d-flex">
+                                    <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
+                                    <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                        <a class="d-flex align-items-center text-decoration-none" href="">
+                            <img class="img-fluid rounded" src="~/online-education/img/courses-80x80.jpg" alt="">
+                            <div class="pl-3">
+                                <h6>Web design & development courses for beginners</h6>
+                                <div class="d-flex">
+                                    <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Jhon Doe</small>
+                                    <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>4.5 (250)</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    -->
                 </div>
-                -->
             </div>
         </div>
     </div>
-</div>
-<!-- Detail End -->
+    <!-- Detail End -->
+} else
+{
+    <h1 class="text-center">Kurs Bulunamadı</h1>
+}
 
