@@ -2,8 +2,10 @@
 using BusinessLayer.Abstract;
 using DtoLayer.DTOs.CourseDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
@@ -25,6 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             var values = _CourseService.TGetList();
             return Ok(values);
         }
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public IActionResult AddCourse(AddCourseDto addCourseDto)
         {
@@ -36,6 +39,7 @@ namespace OnlineEgitimAPI.Controllers
             _CourseService.TAdd(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteCourse(int id)
         {
@@ -43,6 +47,7 @@ namespace OnlineEgitimAPI.Controllers
             _CourseService.TDelete(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult UpdateCourse(UpdateCourseDto updateCourseDto)
         {

@@ -6,22 +6,27 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link @(controllerName == "About" ? "active" : "")" href="/About/AdminIndex/">
+                <a class="nav-link @(controllerName == "Dashboard" ? "active" : "")" href="/Admin/Dashboard/Index/">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @(controllerName == "About" ? "active" : "")" href="/Admin/About/Index/">
                     Hakkımızda
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @(controllerName == "Contact" ? "active" : "")" href="/Contact/AdminIndex/">
+                <a class="nav-link @(controllerName == "Contact" ? "active" : "")" href="/Admin/Contact/Index/">
                     İletişim
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @(controllerName == "Course" ? "active" : "")" href="/Course/AdminIndex/">
+                <a class="nav-link @(controllerName == "Course" ? "active" : "")" href="/Admin/Course/Index/">
                     Kurslar
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @(controllerName == "Location" ? "active" : "")" href="/Location/AdminIndex/">
+                <a class="nav-link @(controllerName == "Location" ? "active" : "")" href="/Admin/Location/Index/">
                     Lokasyonlar
                 </a>
             </li>

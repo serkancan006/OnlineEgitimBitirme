@@ -12,3 +12,18 @@
 
 <!-- Template Javascript -->
 <script src="~/online-education/js/main.js"></script>
+
+<!-- Tarayıcıda çerezlerden alınan verileri yerel depolama alanına eklemek  -->
+<script>
+    document.cookie.split(';').forEach(function (cookie) {
+        var parts = cookie.split('=');
+        var key = parts[0].trim();
+        var value = parts[1];
+
+        if (key === 'Token' || key === 'TokenExpires') {
+            var decodedValue = decodeURIComponent(value);
+            //localStorage.setItem(key, value);
+            localStorage.setItem(key, decodedValue);
+        }
+    });
+</script>

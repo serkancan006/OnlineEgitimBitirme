@@ -3,8 +3,9 @@ using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.LocationDto;
 using OnlineEgitimClient.Service;
 
-namespace OnlineEgitimClient.Controllers
+namespace OnlineEgitimClient.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class LocationController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;
@@ -12,7 +13,7 @@ namespace OnlineEgitimClient.Controllers
         {
             _customHttpClient = customHttpClient;
         }
-        public async Task<IActionResult> AdminIndex()
+        public async Task<IActionResult> Index()
         {
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Location" });
             if (responseMessage.IsSuccessStatusCode)
@@ -26,13 +27,13 @@ namespace OnlineEgitimClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult AdminAddLocation()
+        public IActionResult AddLocation()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AdminAddLocation(AddLocationDto model)
+        public async Task<IActionResult> AddLocation(AddLocationDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -41,17 +42,17 @@ namespace OnlineEgitimClient.Controllers
             var responseMessage = await _customHttpClient.Post<AddLocationDto>(new() { Controller = "Location" }, model);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("Index");
             }
             return View();
         }
 
-        public async Task<IActionResult> AdminDeleteLocation(int id)
+        public async Task<IActionResult> DeleteLocation(int id)
         {
             var responseMessage = await _customHttpClient.Delete(new() { Controller = "Location" }, id);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("Index");
             }
             return View();
         }
@@ -75,7 +76,7 @@ namespace OnlineEgitimClient.Controllers
             var responseMessage = await _customHttpClient.Put<UpdateLocationDto>(new() { Controller = "Location" }, model);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("AdminIndex");
+                return RedirectToAction("Index");
             }
             return View();
         }

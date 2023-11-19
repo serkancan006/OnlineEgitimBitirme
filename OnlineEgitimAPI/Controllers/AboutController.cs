@@ -2,11 +2,14 @@
 using BusinessLayer.Abstract;
 using DtoLayer.DTOs.AboutDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AboutController : ControllerBase
@@ -18,7 +21,7 @@ namespace OnlineEgitimAPI.Controllers
             _aboutService = aboutService;
             _mapper = mapper;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult AboutList()
         {
@@ -54,6 +57,7 @@ namespace OnlineEgitimAPI.Controllers
             _aboutService.TUpdate(values);
             return Ok("Başarıyla GÜncellendi");
         }
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetAbout(int id)
         {

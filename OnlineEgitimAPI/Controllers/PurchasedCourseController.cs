@@ -2,8 +2,10 @@
 using BusinessLayer.Abstract;
 using DtoLayer.DTOs.PurchasedCourseDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
@@ -18,13 +20,14 @@ namespace OnlineEgitimAPI.Controllers
             _PurchasedCourseService = PurchasedCourseService;
             _mapper = mapper;
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult PurchasedCourseList()
         {
             var values = _PurchasedCourseService.TGetList();
             return Ok(values);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AddPurchasedCourse(AddPurchasedCourseDto addPurchasedCourseDto)
         {
@@ -36,6 +39,7 @@ namespace OnlineEgitimAPI.Controllers
             _PurchasedCourseService.TAdd(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeletePurchasedCourse(int id)
         {
@@ -43,6 +47,7 @@ namespace OnlineEgitimAPI.Controllers
             _PurchasedCourseService.TDelete(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult UpdatePurchasedCourse(UpdatePurchasedCourseDto updatePurchasedCourseDto)
         {
@@ -54,6 +59,7 @@ namespace OnlineEgitimAPI.Controllers
             _PurchasedCourseService.TUpdate(values);
             return Ok();
         }
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetPurchasedCourse(int id)
         {

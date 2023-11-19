@@ -3,8 +3,10 @@ using BusinessLayer.Abstract;
 using DtoLayer.DTOs.CourseVideoFileDto;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.File;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Text.RegularExpressions;
 
 namespace OnlineEgitimAPI.Controllers
@@ -38,6 +40,7 @@ namespace OnlineEgitimAPI.Controllers
 
 
         //https://localhost:7064/videos/CourseVideo/deneme_20231116183017533.mp4  adresine kaydedilir
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public async Task<IActionResult> AddCourseVideoFile([FromForm] IFormFile file, int id)
         {
@@ -82,7 +85,7 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya yükleme hatası: {ex.Message}");
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteCourseVideoFile(int id)
         {
@@ -106,7 +109,7 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya silme hatası: {ex.Message}");
             }
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetCourseVideoFile(int id)
         {

@@ -2,11 +2,14 @@
 using BusinessLayer.Abstract;
 using DtoLayer.DTOs.ContactDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactController : ControllerBase
@@ -18,7 +21,7 @@ namespace OnlineEgitimAPI.Controllers
             _ContactService = ContactService;
             _mapper = mapper;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult ContactList()
         {
@@ -54,6 +57,7 @@ namespace OnlineEgitimAPI.Controllers
             _ContactService.TUpdate(values);
             return Ok();
         }
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetContact(int id)
         {

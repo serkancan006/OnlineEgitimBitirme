@@ -2,8 +2,10 @@
 using BusinessLayer.Abstract;
 using DtoLayer.DTOs.WidgetClickLogDto;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
@@ -36,6 +38,7 @@ namespace OnlineEgitimAPI.Controllers
             _WidgetClickLogService.TAdd(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteWidgetClickLog(int id)
         {
@@ -43,6 +46,7 @@ namespace OnlineEgitimAPI.Controllers
             _WidgetClickLogService.TDelete(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult UpdateWidgetClickLog(UpdateWidgetClickLogDto updateWidgetClickLogDto)
         {
