@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OnlineEgitimClient.Dtos.AppUserDto;
 using OnlineEgitimClient.Service;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Google;
 
 namespace OnlineEgitimClient.Controllers
 {
@@ -34,21 +39,10 @@ namespace OnlineEgitimClient.Controllers
             var token = responseObject?["value"]?["token"]?.ToString();
             var expires = responseObject?["value"]?["expires"]?.ToString();
             var message = responseObject?["message"]?.ToString();
-            Response.Cookies.Delete("Token");
-            Response.Cookies.Delete("TokenExpires");
+            //Response.Cookies.Delete("Token");
+            //Response.Cookies.Delete("TokenExpires");
             Response.Cookies.Append("Token", token ?? "");
             Response.Cookies.Append("TokenExpires", expires ?? "");
-            //Console.WriteLine(token);
-            //Console.WriteLine(expires);
-            //Console.WriteLine(message);
-            //gelen veri
-            //{
-            //  "message": "Kullanıcı girişi başarılı.",
-            //  "value": {
-            //      "token":                      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MDAzMDgzNTAsImV4cCI6MTcwMDMwODUzMCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3QiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdCJ9.0DuJEZTBRHT5dk7P4r5qbUvONqgnlChUZ7Qqss_9Fho",
-            //      "expires": "2023-11-18T14:55:30.4090744+03:00"
-            //  }
-            //}
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Default");
@@ -63,6 +57,87 @@ namespace OnlineEgitimClient.Controllers
                 return View();
             }
             //return View();
+        }
+        [Authorize(AuthenticationSchemes = "Google") ]
+        public async Task<IActionResult> GoogleLogin()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userClaims = claimsIdentity?.Claims;
+
+            var userInfo = userClaims?.Select(c => new { c.Type, c.Value });
+            var userEmail = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var userName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            var userId = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userFirstName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
+            var userLastName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+            var provider = "Google";
+            var accessToken = await HttpContext.GetTokenAsync(GoogleDefaults.AuthenticationScheme, "access_token");
+
+
+            Console.WriteLine($"accessToken: {accessToken}");
+            Console.WriteLine($"User Email: {userEmail}");
+            Console.WriteLine($"User Name: {userName}");
+            Console.WriteLine($"User ID: {userId}");
+            Console.WriteLine($"User First Name: {userFirstName}");
+            Console.WriteLine($"User Last Name: {userLastName}");
+            Console.WriteLine($"provider: {provider}");
+         
+
+            return RedirectToAction("Index", "Login");
+        }
+        [Authorize(AuthenticationSchemes = "Facebook")]
+        public async Task<IActionResult> FacebookLogin()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userClaims = claimsIdentity?.Claims;
+            var userInfo = userClaims?.Select(c => new { c.Type, c.Value });
+
+            foreach (var item in userInfo)
+            {
+                Console.WriteLine($"{item.Type}: {item.Value}");
+            }
+            
+            var userEmail = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var userName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+            var userId = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userFirstName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
+            var userLastName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+            var provider = "Facebook";
+            var accessToken = await HttpContext.GetTokenAsync(GoogleDefaults.AuthenticationScheme, "access_token");
+
+            var authenticationResult = await HttpContext.AuthenticateAsync("Facebook");
+
+            // Eğer kullanıcı başarılı bir şekilde doğrulandıysa
+            if (authenticationResult.Succeeded)
+            {
+                // Access Token bilgisini alıp konsola yazdırabilirsiniz
+                var accesToken = authenticationResult.Properties.GetTokenValue("access_token");
+
+                // Konsola yazdırma işlemi
+                Console.WriteLine("Access Token: " + accesToken);
+
+                // Diğer işlemler veya dönüş
+                // Örneğin, Access Token'i başka bir servise gönderme veya kullanma işlemleri yapılabilir.
+            }
+            Console.WriteLine($"accessToken: {accessToken}");
+            Console.WriteLine($"User Email: {userEmail}");
+            Console.WriteLine($"User Name: {userName}");
+            Console.WriteLine($"User ID: {userId}");
+            Console.WriteLine($"User First Name: {userFirstName}");
+            Console.WriteLine($"User Last Name: {userLastName}");
+            Console.WriteLine($"provider: {provider}");
+
+
+            return RedirectToAction("Index", "Login");
+        }
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync();
+            Response.Cookies.Delete("Token");
+            Response.Cookies.Delete("TokenExpires");
+            return RedirectToAction("Index", "Login");
         }
     }
 }
