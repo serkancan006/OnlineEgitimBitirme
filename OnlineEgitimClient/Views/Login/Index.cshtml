@@ -21,38 +21,84 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <br />
-        <h2 class="text-lg-center">Giriş Sayfası</h2>
-        <form method="post">
-            <div class="form-group">
-                <label for="UserNameOrEmail">Kullanıcı/Email</label>
-                <input type="text" class="form-control" id="UserNameOrEmail" aria-describedby="usernameHelp" placeholder="Kullanıcı/Email giriniz" asp-for="UserNameOrEmail">
-                <span asp-validation-for="UserNameOrEmail" id="usernameHelp" class="form-text text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Şifreniz</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
-                    <div class="input-group-append" style="cursor:pointer">
-                        <span class="input-group-text">
-                            <i class="fa fa-eye" id="togglePassword"></i>
-                        </span>
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-6 my-2">
+                <br />
+                <h2 class="text-lg-center">Kullanıcı Giriş Sayfası</h2>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="UserNameOrEmail">Kullanıcı/Email</label>
+                        <input type="text" class="form-control" id="UserNameOrEmail" aria-describedby="usernameHelp" placeholder="Kullanıcı/Email giriniz" asp-for="UserNameOrEmail">
+                        <span asp-validation-for="UserNameOrEmail" id="usernameHelp" class="form-text text-danger"></span>
                     </div>
-                </div>
-                <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Giriş Yap</button>
-        </form>
-        <br />
-        <br />
-        <a href="/Register/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabın yok mu? Hemen Kayıt Ol.</a>
-        <br />
-        <div class="text-center">
-            <a asp-action="FacebookLogin" asp-controller="Login"> <img src="https://qph.fs.quoracdn.net/main-qimg-1026df84fca620201583e334e1edb3fa" /></a>
-            <a asp-action="GoogleLogin" asp-controller="Login"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5Z9TzoJxfLaNOBQRKy76SftRdrnlQz01SuS2BMBoi1F13QRM1Q&s" /></a>
+                    <div class="form-group">
+                        <label for="password">Şifreniz</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
+                            <div class="input-group-append" style="cursor:pointer">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="togglePassword"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                </form>
+                <br />
+                <br />
+                <a href="/Register/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabın yok mu? Hemen Kayıt Ol.</a>
+                <br />
+                <div class="text-center mt-5">
+                    <a class="mx-4" asp-action="FacebookLogin" asp-controller="Login"><i style="font-size:80px" class="fab fa-facebook"></i></a>
+                    <a class="mx-4" asp-action="GoogleLogin" asp-controller="Login"><i style="font-size:80px" class="fab fa-google"></i></a>
+
+
+                    @*<a asp-action="FacebookLogin" asp-controller="Login"> <img src="https://qph.fs.quoracdn.net/main-qimg-1026df84fca620201583e334e1edb3fa" /></a>*@
+                    @*<a asp-action="GoogleLogin" asp-controller="Login"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5Z9TzoJxfLaNOBQRKy76SftRdrnlQz01SuS2BMBoi1F13QRM1Q&s" /></a>*@
+                </div>
+            </div>
+            <div class="col-lg-6 my-2">
+                <br />
+                <h2 class="text-lg-center">Eğitmen Giriş Sayfası</h2>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="UserNameOrEmail">Kullanıcı/Email</label>
+                        <input type="text" class="form-control" id="UserNameOrEmail" aria-describedby="usernameHelp" placeholder="Kullanıcı/Email giriniz" asp-for="UserNameOrEmail">
+                        <span asp-validation-for="UserNameOrEmail" id="usernameHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Şifreniz</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
+                            <div class="input-group-append" style="cursor:pointer">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="togglePassword"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                </form>
+                <br />
+                <br />
+                <a href="/Register/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabın yok mu? Hemen Kayıt Ol.</a>
+                <br />
+                <div class="text-center mt-5">
+                    <a class="mx-4" asp-action="FacebookLogin" asp-controller="Login"><i style="font-size:80px" class="fab fa-facebook"></i></a>
+                    <a class="mx-4" asp-action="GoogleLogin" asp-controller="Login"><i style="font-size:80px" class="fab fa-google"></i></a>
+
+
+                    @*<a asp-action="FacebookLogin" asp-controller="Login"> <img src="https://qph.fs.quoracdn.net/main-qimg-1026df84fca620201583e334e1edb3fa" /></a>*@
+                    @*<a asp-action="GoogleLogin" asp-controller="Login"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5Z9TzoJxfLaNOBQRKy76SftRdrnlQz01SuS2BMBoi1F13QRM1Q&s" /></a>*@
+                </div>
+            </div>
         </div>
     </div>
 

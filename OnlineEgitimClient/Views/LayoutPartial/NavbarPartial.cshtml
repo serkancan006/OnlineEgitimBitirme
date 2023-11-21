@@ -1,5 +1,5 @@
 ﻿@{
-    string controllerName = ViewContext.RouteData.Values["controller"].ToString();
+    string controllerName = ViewContext?.RouteData?.Values?["controller"]?.ToString() ?? "";
 }
 
 <!-- Navbar Start -->
@@ -17,23 +17,37 @@
                 <a href="/About/Index/" class="nav-item nav-link @(controllerName == "About" ? "active" : "")">Hakkımızda</a>
                 <a href="/Course/Index/" class="nav-item nav-link @(controllerName == "Course" ? "active" : "")">Kurslar</a>
                 <a href="/Contact/Index/" class="nav-item nav-link @(controllerName == "Contact" ? "active" : "")">İletisim</a>
-                <a href="#" class="nav-item nav-link @(controllerName == "About" ? "active" : "")">Ögrenim İçeriğim</a>
-                <!--
-    <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-        <div class="dropdown-menu m-0">
-            <a href="#" class="dropdown-item">Course Detail</a>
-            <a href="#" class="dropdown-item">Our Features</a>
-            <a href="#" class="dropdown-item">Instructors</a>
-            <a href="#" class="dropdown-item">Testimonial</a>
-        </div>
-    </div>
-    -->
+                @*<a href="/PurchasedCourse/Index/" class="nav-item nav-link @(controllerName == "PurchasedCourse" ? "active" : "")">Ögrenim İçeriğim</a>*@
+
+                @*<div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Giriş Yap</a>
+                <div class="dropdown-menu m-0">
+                    <a href="#" class="dropdown-item">Course Detail</a>
+                    <a href="#" class="dropdown-item">Our Features</a>
+                    <a href="#" class="dropdown-item">Instructors</a>
+                    <a href="#" class="dropdown-item">Testimonial</a>
+                </div>
+            </div>*@
+
             </div>
-           
-            <a href="/Login/Index/" class="mx-1 btn btn-primary py-2 px-4 d-none d-lg-block">Bize Katılın</a>
-            <a href="#" class="btn btn-primary py-2 px-4 d-none d-lg-block">Egitmen Ol</a>
-      
+
+            <a href="/Basket/Index/" class="mr-2 text-uppercase text-decoration-none position-relative">
+                <span class="badge rounded-pill bg-danger translate-middle position-absolute text-white">15</span>
+                <i class="mr-1 ml-4 my-3 fas fa-shopping-cart text-primary"></i>sepetim
+            </a>
+
+            <a href="/Login/Index/" class="py-2 px-4 d-lg-block text-decoration-none text-uppercase">Bize Katılın</a>
+
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle text-uppercase" data-toggle="dropdown">Hesabım</a>
+                <div class="dropdown-menu m-0">
+                    <a href="#" class="dropdown-item">Bilgiler</a>
+                    <a href="/PurchasedCourse/Index/" class="dropdown-item">Kurslarım</a>
+                    <a href="#" class="dropdown-item">Çıkış Yap</a>
+                </div>
+            </div>
+
+
         </div>
     </nav>
 </div>
