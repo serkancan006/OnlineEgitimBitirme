@@ -6,6 +6,12 @@ namespace OnlineEgitimClient.Controllers
 {
     public class LayoutPartialController : Controller
     {
+        private readonly BasketService _basketService;
+        public LayoutPartialController(BasketService basketService)
+        {
+            _basketService = basketService;
+        }
+
         public PartialViewResult HeadPartial()
         {
             return PartialView();
@@ -16,6 +22,7 @@ namespace OnlineEgitimClient.Controllers
         }
         public PartialViewResult NavbarPartial()
         {
+            ViewBag.totalCourse = _basketService.TotalCourse();
             return PartialView();
         }
         public PartialViewResult FooterPartial()

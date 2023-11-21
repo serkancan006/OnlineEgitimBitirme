@@ -24,6 +24,7 @@ builder.Services.AddSingleton<CustomHttpClient>(provider =>
     var customHttpClient = new CustomHttpClient(httpClientFactory, configuration, httpContextAccessor);
     return customHttpClient;
 });
+builder.Services.AddSingleton<BasketService>();
 //Google Login
 builder.Services.AddAuthentication(options =>
 {

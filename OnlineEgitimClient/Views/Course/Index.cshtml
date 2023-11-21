@@ -54,7 +54,11 @@
                             </div>
                         </div>
                     </a>
-                    <a class="btn btn-success">Sepete Ekle</a>
+                    <form method="get" asp-controller="Basket" asp-action="AddToCourse">
+                        <input type="hidden" name="courseId" value="@item.Id" />
+                        <input type="submit" value="Sepete Ekle" class="btn btn-success" />
+                    </form>
+                    @*<a class="btn btn-success" href="7Basket/AddToCourse/@item.Id">Sepete Ekle</a>*@
                 </div>
             }
 
