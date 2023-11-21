@@ -1,7 +1,6 @@
 ﻿using OnlineEgitimClient.Dtos.AboutDto;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using OnlineEgitimClient.Models.About;
 using System.Text;
 using OnlineEgitimClient.Service;
 using System.Net.Http;

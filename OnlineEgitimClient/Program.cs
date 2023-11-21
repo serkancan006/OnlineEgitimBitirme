@@ -24,7 +24,7 @@ builder.Services.AddSingleton<CustomHttpClient>(provider =>
     var customHttpClient = new CustomHttpClient(httpClientFactory, configuration, httpContextAccessor);
     return customHttpClient;
 });
-//Goole Login
+//Google Login
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies"; // Varsayýlan þema adýný belirtin
