@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
 
 namespace OnlineEgitimClient.Service
@@ -10,14 +6,11 @@ namespace OnlineEgitimClient.Service
     public class BasketService
     {
         private readonly CustomHttpClient _customHttpClient;
-        private readonly SessionService _sessionService;
-        private List<ListCourseDto> courseList;
+        private readonly List<ListCourseDto> courseList = new List<ListCourseDto>();
 
-        public BasketService(CustomHttpClient customHttpClient, SessionService sessionService)
+        public BasketService(CustomHttpClient customHttpClient)
         {
             _customHttpClient = customHttpClient;
-            _sessionService = sessionService;
-            courseList = _sessionService.GetValue<List<ListCourseDto>>("Basket") ?? new List<ListCourseDto>();
         }
 
         public async Task AddBasketCourse(int id)
@@ -27,11 +20,24 @@ namespace OnlineEgitimClient.Service
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
-                courseList.Add(values);
-                _sessionService.SetValue("Basket", courseList);
+
+                // Aynı ID'ye sahip kursun listeye eklenmemesi için kontrol
+                if (!CourseExists(id))
+                {
+                    courseList.Add(values);
+                }
+                else
+                {
+                    // Eğer aynı ID'ye sahip kurs zaten varsa istenilen işlemi yapabilirsiniz.
+                    // Örneğin: Uyarı mesajı vermek veya başka bir şey yapmak.
+                    Console.WriteLine("Bu ID'ye sahip kurs zaten listenizde bulunmaktadır.");
+                }
             }
         }
-
+        private bool CourseExists(int id)
+        {
+            return courseList.Any(course => course.Id == id);
+        }
         public List<ListCourseDto> GetBasketCourse()
         {
             return courseList;
@@ -43,13 +49,11 @@ namespace OnlineEgitimClient.Service
             if (item != null)
             {
                 courseList.Remove(item);
-                _sessionService.SetValue("Basket", courseList);
             }
         }
         public void ClearBasketCourse()
         {
             courseList.Clear();
-            _sessionService.SetValue("Basket", courseList);
         }
         public decimal TotalPrice()
         {
