@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
 
 namespace OnlineEgitimClient.Service
@@ -6,11 +10,14 @@ namespace OnlineEgitimClient.Service
     public class BasketService
     {
         private readonly CustomHttpClient _customHttpClient;
-        private readonly List<ListCourseDto> courseList = new List<ListCourseDto>();
+        private readonly SessionService _sessionService;
+        private List<ListCourseDto> courseList;
 
-        public BasketService(CustomHttpClient customHttpClient)
+        public BasketService(CustomHttpClient customHttpClient, SessionService sessionService)
         {
             _customHttpClient = customHttpClient;
+            _sessionService = sessionService;
+            courseList = _sessionService.GetValue<List<ListCourseDto>>("Basket") ?? new List<ListCourseDto>();
         }
 
         public async Task AddBasketCourse(int id)
@@ -21,6 +28,7 @@ namespace OnlineEgitimClient.Service
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
                 courseList.Add(values);
+                _sessionService.SetValue("Basket", courseList);
             }
         }
 
@@ -35,11 +43,13 @@ namespace OnlineEgitimClient.Service
             if (item != null)
             {
                 courseList.Remove(item);
+                _sessionService.SetValue("Basket", courseList);
             }
         }
         public void ClearBasketCourse()
         {
             courseList.Clear();
+            _sessionService.SetValue("Basket", courseList);
         }
         public decimal TotalPrice()
         {

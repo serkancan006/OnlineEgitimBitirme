@@ -33,5 +33,7 @@ namespace OnlineEgitimClient.Controllers
             _basketService.ClearBasketCourse();
             return RedirectToAction("Index");
         }
+
+
     }
 }

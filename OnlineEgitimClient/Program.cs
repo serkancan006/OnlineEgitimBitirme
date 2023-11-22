@@ -15,7 +15,13 @@ builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddAutoMapper(typeof(Program));
-
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    //options.IdleTimeout = TimeSpan.FromSeconds(10);
+    //options.Cookie.HttpOnly = true;
+    //options.Cookie.IsEssential = true;
+});
 builder.Services.AddSingleton<CustomHttpClient>(provider =>
 {
     var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
@@ -25,6 +31,7 @@ builder.Services.AddSingleton<CustomHttpClient>(provider =>
     return customHttpClient;
 });
 builder.Services.AddSingleton<BasketService>();
+builder.Services.AddSingleton<SessionService>();
 //Google Login
 builder.Services.AddAuthentication(options =>
 {
@@ -66,6 +73,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseSession();
 
 app.MapControllerRoute(
         name: "areas",
