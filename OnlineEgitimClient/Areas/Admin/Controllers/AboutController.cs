@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.AboutDto;
 using OnlineEgitimClient.Service;
+using System.Data;
 
 namespace OnlineEgitimClient.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AboutController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;

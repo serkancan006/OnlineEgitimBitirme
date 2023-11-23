@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.LocationDto;
 using OnlineEgitimClient.Service;
@@ -6,6 +7,7 @@ using OnlineEgitimClient.Service;
 namespace OnlineEgitimClient.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class LocationController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;

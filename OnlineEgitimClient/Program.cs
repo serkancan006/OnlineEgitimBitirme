@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using NuGet.Configuration;
 using OnlineEgitimClient.Service;
 using System.Configuration;
 using System.Net;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -35,7 +38,21 @@ builder.Services.AddSingleton<BasketService>();
 //Google Login
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = "Cookies"; // Varsayýlan þema adýný belirtin
+    //options.DefaultScheme = "Cookies"; // Varsayýlan þema adýný belirtin
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(opt =>
+{
+    opt.RequireHttpsMetadata = true;
+    opt.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidIssuer = "https://localhost",
+        ValidAudience = "https://localhost",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aspnetcoreapiapi")),
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
 }).AddCookie("Cookies") // Cookies için þema adýný belirtin
 .AddGoogle("Google", googleOptions =>
 {
@@ -60,14 +77,40 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-// Middleware
-//app.Use(async (context, next) =>
-//{
-//    await next();
-//});
+//Middleware
+app.Use(async (context, next) =>
+{
+    var jwt = context.Request.Cookies["Token"];
+
+    if (jwt != null)
+        context.Request.Headers.Append("Authorization", "Bearer " + jwt);
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseStatusCodePages(async context =>
+{
+    var request = context.HttpContext.Request;
+    var response = context.HttpContext.Response;
+    if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+    {
+        // Kullanýcý giriþ yapmamýþsa, giriþ sayfasýna yönlendir
+        response.Redirect("/Login/Index");
+    }
+    //else if (response.StatusCode == (int)HttpStatusCode.Forbidden)
+    //{
+    //    // Kullanýcý yetkisizse, yetkiniz yok sayfasýna yönlendir
+    //    response.Redirect("/account/forbidden");
+    //}
+
+    //if (response.StatusCode == (int)HttpStatusCode.NotFound)
+    //{
+    //    response.Redirect("/NotFound");
+    //}
+});
 
 app.UseRouting();
 app.UseAuthentication();
