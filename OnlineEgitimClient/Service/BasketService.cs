@@ -16,7 +16,7 @@ namespace OnlineEgitimClient.Service
         }
         private List<ListCourseDto> GetCourseListFromSession()
         {
-            var courseListJson = _httpContextAccessor.HttpContext.Session.GetString("UserCourseList");
+            var courseListJson = _httpContextAccessor?.HttpContext?.Request.Cookies["UserCourseList"];
             if (courseListJson != null)
             {
                 return JsonConvert.DeserializeObject<List<ListCourseDto>>(courseListJson);
@@ -26,7 +26,7 @@ namespace OnlineEgitimClient.Service
         private void SetCourseListToSession(List<ListCourseDto> courseList)
         {
             var courseListJson = JsonConvert.SerializeObject(courseList);
-            _httpContextAccessor.HttpContext.Session.SetString("UserCourseList", courseListJson);
+            _httpContextAccessor?.HttpContext?.Response.Cookies.Append("UserCourseList", courseListJson);
         }
         public async Task AddBasketCourse(int id)
         {

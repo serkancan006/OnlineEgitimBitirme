@@ -135,9 +135,12 @@ namespace OnlineEgitimClient.Controllers
         public async Task<IActionResult> Logout()
         {
             //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignOutAsync();
+            //HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
+            //await HttpContext.SignOutAsync();
+            HttpContext.Session.Remove("UserNameOrEmail");
             Response.Cookies.Delete("Token");
             Response.Cookies.Delete("TokenExpires");
+            Response.Cookies.Delete("UserCourseList");
             return RedirectToAction("Index", "Login");
         }
     }
