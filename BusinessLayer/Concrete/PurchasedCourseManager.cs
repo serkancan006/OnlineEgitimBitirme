@@ -1,6 +1,9 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
+using EntityLayer.Concrete.identity;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +15,12 @@ namespace BusinessLayer.Concrete
     public class PurchasedCourseManager : IPurchasedCourseService
     {
         private readonly IPurchasedCourseDal _purchasedCourseDal;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PurchasedCourseManager(IPurchasedCourseDal purchasedCourseDal)
+        public PurchasedCourseManager(IPurchasedCourseDal purchasedCourseDal, UserManager<AppUser> userManager)
         {
             _purchasedCourseDal = purchasedCourseDal;
+            _userManager = userManager;
         }
 
         public void TAdd(PurchasedCourse t)
@@ -46,6 +51,19 @@ namespace BusinessLayer.Concrete
         public void TUpdate(PurchasedCourse t)
         {
             _purchasedCourseDal.Update(t);
+        }
+        public async Task<List<PurchasedCourse>> GetListByUserName(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                var values =  _purchasedCourseDal.GetListByFilter(x => x.AppUserID == user.Id);
+                return values;
+            }
+            else
+            {
+                return new List<PurchasedCourse>();
+            }
         }
     }
 }

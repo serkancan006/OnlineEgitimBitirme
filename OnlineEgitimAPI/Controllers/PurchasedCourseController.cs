@@ -66,5 +66,12 @@ namespace OnlineEgitimAPI.Controllers
             var values = _PurchasedCourseService.TGetByID(id);
             return Ok(values);
         }
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> PurchasedCourseList(string username)
+        {
+            var values = await _PurchasedCourseService.GetListByUserName(username);
+            return Ok(values);
+        }
     }
 }
