@@ -1,4 +1,7 @@
-﻿@{
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+
+@{
     string controllerName = ViewContext?.RouteData?.Values?["controller"]?.ToString() ?? "";
 }
 
@@ -17,6 +20,14 @@
                 <a href="/About/Index/" class="nav-item nav-link @(controllerName == "About" ? "active" : "")">Hakkımızda</a>
                 <a href="/Course/Index/" class="nav-item nav-link @(controllerName == "Course" ? "active" : "")">Kurslar</a>
                 <a href="/Contact/Index/" class="nav-item nav-link @(controllerName == "Contact" ? "active" : "")">İletisim</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="/Admin/Dashboard/Index/" class="nav-item nav-link @(controllerName == "Dashboard" ? "active" : "")">Admin</a>
+                }
+                @if (User.IsInRole("Instructor"))
+                {
+                    <a href="#" class="nav-item nav-link @(controllerName == "Dashboard" ? "active" : "")">Eğitmen</a>
+                }
                 @*<a href="/PurchasedCourse/Index/" class="nav-item nav-link @(controllerName == "PurchasedCourse" ? "active" : "")">Ögrenim İçeriğim</a>*@
 
                 @*<div class="nav-item dropdown">
@@ -37,16 +48,17 @@
             </a>
 
             <a href="/Login/Index/" class="py-2 px-4 d-lg-block text-decoration-none text-uppercase">Bize Katılın</a>
-
-            <div class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle text-uppercase" data-toggle="dropdown">Hesabım</a>
-                <div class="dropdown-menu m-0">
-                    <a href="#" class="dropdown-item">Bilgiler</a>
-                    <a href="/PurchasedCourse/Index/" class="dropdown-item">Kurslarım</a>
-                    <a href="#" class="dropdown-item">Çıkış Yap</a>
+            @if (HttpContextAccessor != null && HttpContextAccessor.HttpContext != null && HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+            {
+                <div class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle text-uppercase" data-toggle="dropdown">@HttpContextAccessor.HttpContext.Session.GetString("UserNameOrEmail")</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="#" class="dropdown-item">Bilgiler</a>
+                        <a href="/PurchasedCourse/Index/" class="dropdown-item">Kurslarım</a>
+                        <a href="/Login/Logout/" class="dropdown-item">Çıkış Yap</a>
+                    </div>
                 </div>
-            </div>
-
+            }
 
         </div>
     </nav>

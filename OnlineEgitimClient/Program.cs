@@ -100,16 +100,15 @@ app.UseStatusCodePages(async context =>
         // Kullanýcý giriþ yapmamýþsa, giriþ sayfasýna yönlendir
         response.Redirect("/Login/Index");
     }
-    //else if (response.StatusCode == (int)HttpStatusCode.Forbidden)
-    //{
-    //    // Kullanýcý yetkisizse, yetkiniz yok sayfasýna yönlendir
-    //    response.Redirect("/account/forbidden");
-    //}
-
-    //if (response.StatusCode == (int)HttpStatusCode.NotFound)
-    //{
-    //    response.Redirect("/NotFound");
-    //}
+    if (response.StatusCode == (int)HttpStatusCode.Forbidden)
+    {
+        // Kullanýcý yetkisizse, yetkiniz yok sayfasýna yönlendir
+        response.Redirect("/ErrorPage/Error403/");
+    }
+    if (response.StatusCode == (int)HttpStatusCode.NotFound)
+    {
+        response.Redirect("/ErrorPage/Error404/");
+    }
 });
 
 app.UseRouting();

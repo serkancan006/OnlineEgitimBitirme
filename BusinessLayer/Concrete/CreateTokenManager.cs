@@ -42,7 +42,7 @@ namespace BusinessLayer.Concrete
             {
                 new Claim(ClaimTypes.NameIdentifier,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role,"Admin"),
-                new Claim(ClaimTypes.Role,"Instructor"),
+                //new Claim(ClaimTypes.Role,"Instructor"),
             };
 
             DateTime expires = DateTime.Now.AddMinutes(3);
