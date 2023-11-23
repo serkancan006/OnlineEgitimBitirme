@@ -6,57 +6,76 @@ namespace OnlineEgitimClient.Service
     public class BasketService
     {
         private readonly CustomHttpClient _customHttpClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly List<ListCourseDto> courseList = new List<ListCourseDto>();
 
-        public BasketService(CustomHttpClient customHttpClient)
+        public BasketService(CustomHttpClient customHttpClient, IHttpContextAccessor httpContextAccessor)
         {
             _customHttpClient = customHttpClient;
+            _httpContextAccessor = httpContextAccessor;
         }
-
+        private List<ListCourseDto> GetCourseListFromSession()
+        {
+            var courseListJson = _httpContextAccessor.HttpContext.Session.GetString("UserCourseList");
+            if (courseListJson != null)
+            {
+                return JsonConvert.DeserializeObject<List<ListCourseDto>>(courseListJson);
+            }
+            return new List<ListCourseDto>();
+        }
+        private void SetCourseListToSession(List<ListCourseDto> courseList)
+        {
+            var courseListJson = JsonConvert.SerializeObject(courseList);
+            _httpContextAccessor.HttpContext.Session.SetString("UserCourseList", courseListJson);
+        }
         public async Task AddBasketCourse(int id)
         {
-            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course" }, id);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
+            var courseList = GetCourseListFromSession();
+            var existingCourse = courseList.FirstOrDefault(c => c.Id == id);
 
-                // Aynı ID'ye sahip kursun listeye eklenmemesi için kontrol
-                if (!CourseExists(id))
+            if (existingCourse == null)
+            {
+                var responseMessage = await _customHttpClient.Get(new() { Controller = "Course" }, id);
+                if (responseMessage.IsSuccessStatusCode)
                 {
+                    var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                    var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
                     courseList.Add(values);
-                }
-                else
-                {
-                    // Eğer aynı ID'ye sahip kurs zaten varsa istenilen işlemi yapabilirsiniz.
-                    // Örneğin: Uyarı mesajı vermek veya başka bir şey yapmak.
-                    Console.WriteLine("Bu ID'ye sahip kurs zaten listenizde bulunmaktadır.");
+                    SetCourseListToSession(courseList);
                 }
             }
+            else
+            {
+                Console.WriteLine("Bu ID'ye sahip kurs zaten listenizde bulunmaktadır.");
+            }
         }
-        private bool CourseExists(int id)
-        {
-            return courseList.Any(course => course.Id == id);
-        }
+       
         public List<ListCourseDto> GetBasketCourse()
         {
-            return courseList;
+            return GetCourseListFromSession();
         }
 
         public void DeleteBasketCourse(int id)
         {
+            var courseList = GetCourseListFromSession();
             var item = courseList.FirstOrDefault(c => c.Id == id);
             if (item != null)
             {
                 courseList.Remove(item);
+                SetCourseListToSession(courseList);
             }
         }
         public void ClearBasketCourse()
         {
-            courseList.Clear();
+            var courseList = GetCourseListFromSession();
+            courseList.Clear(); // Listenin içeriğini temizle
+            SetCourseListToSession(courseList);
+            //SetCourseListToSession(new List<ListCourseDto>());
+            //_httpContextAccessor.HttpContext.Session.Remove("UserCourseList");
         }
         public decimal TotalPrice()
         {
+            var courseList = GetCourseListFromSession();
             decimal totalPrice = 0;
             foreach (var item in courseList)
             {
@@ -66,6 +85,7 @@ namespace OnlineEgitimClient.Service
         }
         public int TotalCourse()
         {
+            var courseList = GetCourseListFromSession();
             return courseList.Count();
         }
     }

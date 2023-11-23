@@ -38,13 +38,14 @@ namespace OnlineEgitimClient.Controllers
             var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
             var token = responseObject?["value"]?["token"]?.ToString();
             var expires = responseObject?["value"]?["expires"]?.ToString();
-            var message = responseObject?["message"]?.ToString();
-            //Response.Cookies.Delete("Token");
-            //Response.Cookies.Delete("TokenExpires");
-            Response.Cookies.Append("Token", token ?? "");
-            Response.Cookies.Append("TokenExpires", expires ?? "");
+            //var message = responseObject?["message"]?.ToString();
+       
+          
             if (responseMessage.IsSuccessStatusCode)
             {
+                Response.Cookies.Append("Token", token ?? "");
+                Response.Cookies.Append("TokenExpires", expires ?? "");
+                HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
                 return RedirectToAction("Index", "Default");
             }
             else
