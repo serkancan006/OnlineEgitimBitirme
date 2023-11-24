@@ -14,6 +14,7 @@ namespace DtoLayer.DTOs.PurchasedCourseDto
         public bool Status { get; set; }
 
         public int AppUserID { get; set; }
+        //public Course Course { get; set; }
         public int CourseID { get; set; }
     }
 }

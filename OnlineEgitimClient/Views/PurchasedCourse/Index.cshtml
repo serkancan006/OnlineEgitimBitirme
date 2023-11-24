@@ -1,66 +1,27 @@
-﻿
+﻿@model List<ListPurchasedCourseWİthCourseDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1 class="text-center">Ögrenim İçeriğim</h1>
-<hr class="border border-danger border-1 my-5"/>
+<hr class="border border-danger border-1 my-5" />
 
 <div class="row container-fluid">
-
-    <div class="col-lg-3 col-md-4 pb-4">
-        <div class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-            <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
-            <div class="courses-text">
-                <h5 class="text-center text-white px-3">Web Geliştirme</h5>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex p-3">
-                        <a href="/PurchasedCourse/CourseContent/" class="text-white btn btn-primary">Hemen başla</a>
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 pb-4">
+            <div class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
+                <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
+                <div class="courses-text">
+                    <h5 class="text-center text-white px-3">@item.Title</h5>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex p-3">
+                            <a href="/PurchasedCourse/CourseContent/" class="text-white btn btn-primary">Hemen başla</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-lg-3 col-md-4 pb-4">
-        <div class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-            <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
-            <div class="courses-text">
-                <h5 class="text-center text-white px-3">Web Geliştirme</h5>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex p-3">
-                        <a href="/PurchasedCourse/CourseContent/" class="text-white btn btn-primary">Hemen başla</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-4 pb-4">
-        <div class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-            <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
-            <div class="courses-text">
-                <h5 class="text-center text-white px-3">Web Geliştirme</h5>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex p-3">
-                        <a href="/PurchasedCourse/CourseContent/" class="text-white btn btn-primary">Hemen başla</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-4 pb-4">
-        <div class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-            <img class="img-fluid" src="~/online-education/img/courses-1.jpg" alt="">
-            <div class="courses-text">
-                <h5 class="text-center text-white px-3">Web Geliştirme</h5>
-                <div class="border-top w-100 mt-3">
-                    <div class="d-flex p-3">
-                        <a href="/PurchasedCourse/CourseContent/" class="text-white btn btn-primary">Hemen başla</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    }
 </div>

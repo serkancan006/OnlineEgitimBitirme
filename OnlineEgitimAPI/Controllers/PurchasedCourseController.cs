@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
 using BusinessLayer.Abstract;
+using DataAccessLayer.Concrete;
 using DtoLayer.DTOs.PurchasedCourseDto;
 using EntityLayer.Concrete;
+using EntityLayer.Concrete.identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
@@ -15,12 +20,14 @@ namespace OnlineEgitimAPI.Controllers
     {
         private readonly IPurchasedCourseService _PurchasedCourseService;
         private readonly IMapper _mapper;
-        public PurchasedCourseController(IPurchasedCourseService PurchasedCourseService, IMapper mapper)
+        private readonly UserManager<AppUser> _userManager;
+        public PurchasedCourseController(IPurchasedCourseService PurchasedCourseService, IMapper mapper, UserManager<AppUser> userManager)
         {
             _PurchasedCourseService = PurchasedCourseService;
             _mapper = mapper;
+            _userManager = userManager;
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult PurchasedCourseList()
         {
@@ -70,7 +77,14 @@ namespace OnlineEgitimAPI.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> PurchasedCourseList(string username)
         {
-            var values = await _PurchasedCourseService.GetListByUserName(username);
+            var user = await _userManager.FindByNameAsync(username);
+            var values = _PurchasedCourseService.TCourseListInclude().Where(x => x.AppUserID == user?.Id).Select(x => new
+            {
+                x.CourseID,
+                x.Course.ImageUrl,
+                x.Course.Title,
+                x.Course.Description
+            });
             return Ok(values);
         }
     }

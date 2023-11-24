@@ -9,7 +9,6 @@ namespace BusinessLayer.Abstract
 {
 	public interface IPurchasedCourseService:IGenericService<PurchasedCourse>
 	{
-        Task<List<PurchasedCourse>> GetListByUserName(string username);
-
+        List<PurchasedCourse> TCourseListInclude();
     }
 }

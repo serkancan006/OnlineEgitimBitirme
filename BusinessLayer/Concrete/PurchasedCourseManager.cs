@@ -15,12 +15,10 @@ namespace BusinessLayer.Concrete
     public class PurchasedCourseManager : IPurchasedCourseService
     {
         private readonly IPurchasedCourseDal _purchasedCourseDal;
-        private readonly UserManager<AppUser> _userManager;
 
-        public PurchasedCourseManager(IPurchasedCourseDal purchasedCourseDal, UserManager<AppUser> userManager)
+        public PurchasedCourseManager(IPurchasedCourseDal purchasedCourseDal)
         {
             _purchasedCourseDal = purchasedCourseDal;
-            _userManager = userManager;
         }
 
         public void TAdd(PurchasedCourse t)
@@ -52,18 +50,9 @@ namespace BusinessLayer.Concrete
         {
             _purchasedCourseDal.Update(t);
         }
-        public async Task<List<PurchasedCourse>> GetListByUserName(string username)
+        public List<PurchasedCourse> TCourseListInclude()
         {
-            var user = await _userManager.FindByNameAsync(username);
-            if (user != null)
-            {
-                var values =  _purchasedCourseDal.GetListByFilter(x => x.AppUserID == user.Id);
-                return values;
-            }
-            else
-            {
-                return new List<PurchasedCourse>();
-            }
+            return _purchasedCourseDal.CourseListInclude();
         }
     }
 }
