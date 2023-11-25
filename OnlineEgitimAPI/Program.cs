@@ -70,6 +70,7 @@ builder.Services.AddScoped<ICourseVideoFileDal, EfCourseVideoFile>();
 builder.Services.AddScoped<ICourseVideoFileService, CourseVideoFileManager>();
 //builder.Services.AddScoped<ICourseCourseVideoFileDal, EfCourseCourseVideoFileDal>();
 //builder.Services.AddScoped<ICourseCourseVideoFileService, CourseCourseVideoFileManager>();
+builder.Services.AddScoped<IUserCourseAccessService, UserCourseAccessManager>();
 
 builder.Services.AddScoped<ICreateTokenService, CreateTokenManager>();
 

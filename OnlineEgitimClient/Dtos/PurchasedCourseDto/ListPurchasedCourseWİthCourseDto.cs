@@ -2,9 +2,9 @@
 {
     public class ListPurchasedCourseWİthCourseDto
     {
-        public int CourseID { get; set; }
-        public string ImageUrl { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public int courseID { get; set; }
+        public string imageUrl { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
     }
 }

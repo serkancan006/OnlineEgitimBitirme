@@ -536,6 +536,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
+                    b.HasIndex("CourseID");
+
                     b.HasDiscriminator().HasValue("CourseVideoFile");
                 });
 
@@ -638,8 +640,21 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.File.CourseVideoFile", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Course", "Course")
+                        .WithMany("CourseVideoFiles")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Course", b =>
                 {
+                    b.Navigation("CourseVideoFiles");
+
                     b.Navigation("PurchasedCourses");
                 });
 #pragma warning restore 612, 618

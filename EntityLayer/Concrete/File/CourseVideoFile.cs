@@ -9,6 +9,6 @@ namespace EntityLayer.Concrete.File
     public class CourseVideoFile : File
     {
         public int CourseID { get; set; }
-        //public Course Course { get; set; }
+        public Course Course { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace EntityLayer.Concrete
 
 		public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
 		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
-		//public ICollection<CourseVideoFile> CourseVideoFiles { get; set; }
+		public ICollection<CourseVideoFile> CourseVideoFiles { get; set; }
 	}
 }
 

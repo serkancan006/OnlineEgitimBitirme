@@ -3,8 +3,10 @@ using BusinessLayer.Abstract;
 using DtoLayer.DTOs.CourseVideoFileDto;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.File;
+using EntityLayer.Concrete.identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Text.RegularExpressions;
@@ -19,13 +21,19 @@ namespace OnlineEgitimAPI.Controllers
         private readonly ICourseVideoFileService _courseVideoFileService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public CourseVideoFileController(IWebHostEnvironment environment, ICourseVideoFileService courseVideoFileService, IMapper mapper, IConfiguration configuration)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IUserCourseAccessService _userCourseAccessService;
+
+        public CourseVideoFileController(IWebHostEnvironment environment, ICourseVideoFileService courseVideoFileService, IMapper mapper, IConfiguration configuration, UserManager<AppUser> userManager, IUserCourseAccessService userCourseAccessService)
         {
             _environment = environment;
             _courseVideoFileService = courseVideoFileService;
             _mapper = mapper;
             _configuration = configuration;
+            _userManager = userManager;
+            _userCourseAccessService = userCourseAccessService;
         }
+
         private string GetUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);
@@ -109,7 +117,7 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya silme hatası: {ex.Message}");
             }
         }
-        [Authorize]
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpGet("{id}")]
         public IActionResult GetCourseVideoFile(int id)
         {
@@ -121,6 +129,31 @@ namespace OnlineEgitimAPI.Controllers
             }
             return Ok(mappedValues);
         }
-
+        [Authorize]
+        //[HttpGet("[action]/{courseId}")]
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetCourseVideoFileWithUser(int courseId, string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                bool hasAccess = _userCourseAccessService.HasAccessToCourse(user.Id, courseId);
+                if (hasAccess)
+                {
+                    var values = _courseVideoFileService.CourseGetVideoFiles(courseId);
+                    var mappedValues = _mapper.Map<List<ListCourseVideoFileDto>>(values);
+                    foreach (ListCourseVideoFileDto file in mappedValues)
+                    {
+                        file.FilePath = _configuration["BaseUrl"] + file.FilePath;
+                    }
+                    return Ok(mappedValues);
+                }
+                else
+                {
+                    return Unauthorized("Bu kursa erişim izniniz yok.");
+                }
+            }
+            return NotFound("Kullanıcı bulunamadı.");
+        }
     }
 }
