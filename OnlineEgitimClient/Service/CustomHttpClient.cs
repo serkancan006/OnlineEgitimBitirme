@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Common;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -63,6 +64,53 @@ namespace OnlineEgitimClient.Service
             var responseMessage = await _httpClient.PostAsync(url, stringContent);
             return responseMessage;
         }
+
+        public async Task<HttpResponseMessage> PostFile(RequestParameters requestParameters, IFormFile file, int? id = null)
+        {
+            try
+            {
+                string url;
+                if (requestParameters.FullEndPoint != null)
+                {
+                    url = requestParameters.FullEndPoint;
+                }
+                else
+                {
+                    url = $"{Url(requestParameters)}{(id != null ? $"/{id}" : "")}{(requestParameters.QueryString != null ? $"?{requestParameters.QueryString}" : "")}";
+                }
+
+                var multipartContent = new MultipartFormDataContent();
+                var fileContent = new StreamContent(file.OpenReadStream())
+                {
+                    Headers =
+            {
+                ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    Name = "file",
+                    FileName = file.FileName
+                }
+            }
+                };
+
+                multipartContent.Add(fileContent);
+
+                var token = _httpContextAccessor.HttpContext?.Request.Cookies["Token"];
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var responseMessage = await _httpClient.PostAsync(url, multipartContent);
+                return responseMessage;
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda uygun bir HTTP yanıtı döndürün
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent($"Dosya yükleme hatası: {ex.Message}")
+                };
+            }
+        }
+
+
 
         public async Task<HttpResponseMessage> Put<T>(RequestParameters requestParameters, T content)
         {

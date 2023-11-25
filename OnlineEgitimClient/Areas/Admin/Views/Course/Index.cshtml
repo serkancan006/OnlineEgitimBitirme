@@ -26,7 +26,8 @@
             <th>Durumu</th>
             <th>Sil</th>
             <th>Güncelle</th>
-            <th>Detaylar</th>
+            <th>Videolar</th>
+            <th>Video Yükle</th>
         </tr>
         @foreach (var item in Model)
         {
@@ -49,7 +50,8 @@
                 <td>@item.Status</td>
                 <td><a href="/Admin/Course/DeleteCourse/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
                 <td><a href="/Admin/Course/UpdateCourse/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
-                <td><a href="#" class="btn mb-1 btn-rounded btn-outline-warning">Detaylar</a></td>
+                <td><a href="/Admin/Course/CourseVideos/@item.Id" class="btn mb-1 btn-rounded btn-outline-warning">Videoları</a></td>
+                <td><a href="/Admin/Course/CourseUploadVideo/@item.Id" class="btn mb-1 btn-rounded btn-outline-info">Video Yükle</a></td>
             </tr>
         }
     </table>

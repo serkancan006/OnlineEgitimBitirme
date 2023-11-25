@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
+using OnlineEgitimClient.Dtos.CourseVideoDto;
 using OnlineEgitimClient.Service;
 using System.Data;
 
@@ -83,5 +85,38 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CourseVideos(int id)
+        {
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "CourseVideoFile" }, id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ListCourseVideoDto>>(jsonData);
+                return View(values);
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult CourseUploadVideo(int id)
+        {
+            ViewBag.CourseID = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CourseUploadVideo(IFormFile file, int id)
+        {
+            var responseMessage = await _customHttpClient.PostFile(new RequestParameters { Controller = "CourseVideoFile", QueryString = $"id={id}" }, file);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("CourseVideos", new { id = id });
+            }
+            return View();
+        }
+
     }
 }
