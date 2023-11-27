@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="table-responsive">
+<div class="table-responsive-lg">
     <table class="table table-bordered">
         <tr>
             <th>#</th>
@@ -25,6 +25,7 @@
             <th>Güncellenme Tarihi</th>
             <th>Durumu</th>
             <th>Sil</th>
+            <th>Detaylar</th>
             <th>Güncelle</th>
             <th>Videolar</th>
             <th>Video Yükle</th>
@@ -34,10 +35,12 @@
             <tr>
                 <td>@item.Id</td>
                 <td>@item.Title</td>
-                <td>@item.Description</td>
+                <td>@((item.Description.Length > 25) ? item.Description.Substring(0, 25) + "..." : item.Description)</td>
                 <td>@item.Price</td>
                 <td>@item.Duration</td>
-                <td>@item.ImageUrl</td>
+                <td>
+                    <img class="img-fluid" src="@item.ImageUrl" alt="" style="max-width: 100px; max-height: 100px;">
+                </td>
                 <td>@item.SubjectCount</td>
                 <td>@item.Level</td>
                 <td>@item.Language</td>
@@ -49,6 +52,7 @@
                 <td>@item.UpdatedDate</td>
                 <td>@item.Status</td>
                 <td><a href="/Admin/Course/DeleteCourse/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
+                <td><a href="/Course/CourseDetails/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Detaylar</a></td>
                 <td><a href="/Admin/Course/UpdateCourse/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
                 <td><a href="/Admin/CourseVideoFile/Index/@item.Id" class="btn mb-1 btn-rounded btn-outline-warning">Kurs Videoları</a></td>
                 <td><a href="/Admin/CourseVideoFile/CourseUploadVideo/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Video Tükle</a></td>

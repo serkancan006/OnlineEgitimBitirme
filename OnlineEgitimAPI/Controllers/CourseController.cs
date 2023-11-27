@@ -108,6 +108,16 @@ namespace OnlineEgitimAPI.Controllers
             values.ImageUrl = "https://"+_configuration["BaseUrl"] + values.ImageUrl;
             return Ok(values);
         }
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetCourseByUser(int id)
+        {
+            var values = _CourseService.TGetByID(id);
+            values.CourseViewCountLog += 1;
+            Course model = _mapper.Map<Course>(values);
+            _CourseService.TUpdate(model);
+            values.ImageUrl = "https://" + _configuration["BaseUrl"] + values.ImageUrl;
+            return Ok(values);
+        }
         [HttpGet("[action]")]
         public IActionResult CourseListByStatus()
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
 using OnlineEgitimClient.Service;
@@ -12,7 +14,7 @@ namespace OnlineEgitimClient.Controllers
         {
             _customHttpClient = customHttpClient;
         }
-      
+
         public async Task<IActionResult> Index()
         {
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action = "CourseListByStatus" });
@@ -25,10 +27,11 @@ namespace OnlineEgitimClient.Controllers
 
             return View();
         }
-
+      
         public async Task<IActionResult> CourseDetails(int id)
         {
-            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course" },id);
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action= "GetCourseByUser" },id);
+            
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
