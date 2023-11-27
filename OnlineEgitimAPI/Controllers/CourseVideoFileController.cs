@@ -125,7 +125,7 @@ namespace OnlineEgitimAPI.Controllers
             var mappedValues = _mapper.Map<List<ListCourseVideoFileDto>>(values);
             foreach (ListCourseVideoFileDto file in mappedValues)
             {
-                file.FilePath = _configuration["BaseUrl"] + file.FilePath;
+                file.FilePath = "https://" + _configuration["BaseUrl"] + file.FilePath;
             }
             return Ok(mappedValues);
         }

@@ -45,7 +45,7 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
                 return View();
             }
 
-            var responseMessage = await _customHttpClient.Post<AddCourseDto>(new() { Controller = "Course" }, model);
+            var responseMessage = await _customHttpClient.PostMultipartFormData<AddCourseDto>(new() { Controller = "Course" }, model);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
