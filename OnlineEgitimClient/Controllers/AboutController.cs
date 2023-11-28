@@ -9,11 +9,7 @@ namespace OnlineEgitimClient.Controllers
 {
     public class AboutController : Controller
     {
-        private readonly CustomHttpClient _customHttpClient;
-        public AboutController(CustomHttpClient customHttpClient)
-        {
-            _customHttpClient = customHttpClient;
-        }
+
 
         public IActionResult Index()
         {

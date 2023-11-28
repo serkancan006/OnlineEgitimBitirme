@@ -20,6 +20,7 @@
 </div>
 <!-- Header End -->
 
-@await Html.PartialAsync("~/Views/Default/ContactPartial.cshtml")
+@*@await Html.PartialAsync("~/Views/Default/ContactPartial.cshtml")*@
+@await Component.InvokeAsync("_ContactPartial");
 
 
