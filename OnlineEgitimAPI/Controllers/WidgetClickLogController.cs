@@ -27,6 +27,7 @@ namespace OnlineEgitimAPI.Controllers
             var values = _WidgetClickLogService.TGetList();
             return Ok(values);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AddWidgetClickLog(AddWidgetClickLogDto addWidgetClickLogDto)
         {
