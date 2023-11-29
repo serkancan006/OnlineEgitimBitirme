@@ -3,7 +3,9 @@ using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
+using OnlineEgitimClient.Dtos.WidgetClickLogDto;
 using OnlineEgitimClient.Service;
+using System.Text;
 
 namespace OnlineEgitimClient.Controllers
 {
@@ -30,6 +32,15 @@ namespace OnlineEgitimClient.Controllers
       
         public async Task<IActionResult> CourseDetails(int id)
         {
+            var userId = HttpContext.Session.Get("userId");
+            if (userId != null)
+            {
+                AddWidgetClickLogDto model = new AddWidgetClickLogDto();
+                model.CourseID = id;
+                model.AppUserID = Convert.ToInt32(Encoding.UTF8.GetString(userId));
+                await _customHttpClient.Post(new() { Controller = "WidgetClickLog" }, model);
+            }
+
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action= "GetCourseByUser" },id);
             
             if (responseMessage.IsSuccessStatusCode)

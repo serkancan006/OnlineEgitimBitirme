@@ -12,6 +12,11 @@ namespace BusinessLayer.Concrete
     public class WidgetClickLogManager : IWidgetClickLogService
     {
         private readonly IWidgetClickLogDal _widgetClickLogDal;
+        public WidgetClickLogManager(IWidgetClickLogDal widgetClickLogDal)
+        {
+            _widgetClickLogDal = widgetClickLogDal;
+        }
+
         public void TAdd(WidgetClickLog t)
         {
             _widgetClickLogDal.Insert(t);

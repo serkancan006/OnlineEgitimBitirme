@@ -43,18 +43,18 @@ namespace OnlineEgitimAPI.Controllers
                             {
                                 // Kullanıcı Admin içeriği içeriyorsa 
                                 var value = _createTokenService.TokenCreateAdmin();
-                                return Ok(new { message = "Admini girişi başarılı.", value });
+                                return Ok(new { message = "Admini girişi başarılı.", value, userId = user.Id });
                             }
                             else if (userRoles.Contains("Instructor"))
                             {
                                 // Kullanıcı Instructor içeriği içeriyorsa 
                                 var value = _createTokenService.TokenCreateInstructor();
-                                return Ok(new { message = "Eğitmen girişi başarılı.", value });
+                                return Ok(new { message = "Eğitmen girişi başarılı.", value, userId = user.Id });
                             }
                             else
                             {
                                 var value = _createTokenService.TokenCreate();
-                                return Ok(new { message = "Kullanıcı girişi başarılı.", value });
+                                return Ok(new { message = "Kullanıcı girişi başarılı.", value, userId = user.Id });
                             }
                         }
                         //return Ok(value);

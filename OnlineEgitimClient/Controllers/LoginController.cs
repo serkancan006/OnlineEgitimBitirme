@@ -39,6 +39,7 @@ namespace OnlineEgitimClient.Controllers
             var token = responseObject?["value"]?["token"]?.ToString();
             var expires = responseObject?["value"]?["expires"]?.ToString();
             //var message = responseObject?["message"]?.ToString();
+            var userId = responseObject?["userId"]?.ToString();
        
           
             if (responseMessage.IsSuccessStatusCode)
@@ -46,6 +47,7 @@ namespace OnlineEgitimClient.Controllers
                 Response.Cookies.Append("Token", token ?? "");
                 Response.Cookies.Append("TokenExpires", expires ?? "");
                 HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
+                HttpContext.Session.SetString("userId", userId ?? "");
                 return RedirectToAction("Index", "Default");
             }
             else
@@ -138,6 +140,7 @@ namespace OnlineEgitimClient.Controllers
             //HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
             //await HttpContext.SignOutAsync();
             HttpContext.Session.Remove("UserNameOrEmail");
+            HttpContext.Session.Remove("userId");
             Response.Cookies.Delete("Token");
             Response.Cookies.Delete("TokenExpires");
             Response.Cookies.Delete("UserCourseList");
