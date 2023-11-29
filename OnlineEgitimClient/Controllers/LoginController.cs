@@ -134,11 +134,10 @@ namespace OnlineEgitimClient.Controllers
             return RedirectToAction("Index", "Login");
         }
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            //HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
-            //await HttpContext.SignOutAsync();
+            //await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); -> cookie ile auth
+            //await HttpContext.SignOutAsync(); -> identitiy claim ile çıkış
             HttpContext.Session.Remove("UserNameOrEmail");
             HttpContext.Session.Remove("userId");
             Response.Cookies.Delete("Token");
