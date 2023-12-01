@@ -129,7 +129,16 @@ namespace OnlineEgitimAPI.Controllers
             return Ok(values);
         }
 
-
+        [HttpGet("[action]/{id}")]
+        public IActionResult CourseListByInstructor(int id)
+        {
+            var values = _CourseService.TGetListByInstructor(id);
+            foreach (var item in values)
+            {
+                item.ImageUrl = "https://" + _configuration["BaseUrl"] + item.ImageUrl;
+            }
+            return Ok(values);
+        }
 
         private string GetUniqueFileName(string fileName)
         {

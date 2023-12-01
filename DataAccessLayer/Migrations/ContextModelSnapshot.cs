@@ -138,6 +138,9 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AppUserID")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseDisLike")
                         .HasColumnType("int");
 
@@ -165,6 +168,9 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -173,8 +179,8 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -190,6 +196,10 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
                 });
@@ -602,6 +612,21 @@ namespace DataAccessLayer.Migrations
                     b.HasDiscriminator().HasValue("Instructor");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Course", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.identity.Instructor", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("InstructorId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.PurchasedCourse", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
@@ -680,6 +705,11 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("CourseVideoFiles");
 
                     b.Navigation("PurchasedCourses");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.identity.Instructor", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

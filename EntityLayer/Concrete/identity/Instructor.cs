@@ -19,6 +19,6 @@ namespace EntityLayer.Concrete.identity
 		public int InstructorPuan { get; set; }
 		public int InstructorViewCountLog { get; set; }
 
-		//public ICollection<Course>? Courses { get; set; }
+		public ICollection<Course>? Courses { get; set; }
 	}
 }

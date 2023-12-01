@@ -39,5 +39,33 @@ namespace OnlineEgitimClient.Controllers
             }
             //return View();
         }
+
+        [HttpGet]
+        public IActionResult InstructorRegister()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> InstructorRegister(RegisterAppUserDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var responseMessage = await _customHttpClient.Post<RegisterAppUserDto>(new() { Controller = "Register", Action= "AddUserWithRole" }, model);
+            if (responseMessage.IsSuccessStatusCode)
+                return RedirectToAction("Index", "Login");
+            else
+            {
+                // Hata durumunda konsola hataları yazdırma
+                var errorContent = await responseMessage.Content.ReadAsStringAsync();
+                Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
+                Console.WriteLine($"Hata Detayları: {errorContent}");
+
+                return View();
+            }
+            //return View();
+        }
     }
 }

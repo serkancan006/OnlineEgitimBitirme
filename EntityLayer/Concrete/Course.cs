@@ -15,8 +15,7 @@ namespace EntityLayer.Concrete
 	{
         public string Title { get; set; }
 		public string Description { get; set; }
-		[Column(TypeName = "decimal(18, 2)")]
-		public decimal Price { get; set; }
+		public double Price { get; set; }
         public string Duration { get; set; } // eğitim süresi
         public string ImageUrl { get; set; }
 		public int SubjectCount { get; set; }
@@ -30,8 +29,8 @@ namespace EntityLayer.Concrete
 
 		//public int LocationID { get; set; }
 		//public Location Location { get; set; }
-		//public int AppUserID { get; set; } //InstructorID
-		//public AppUser AppUser { get; set; }
+		public int AppUserID { get; set; } //InstructorID
+		public AppUser AppUser { get; set; }
 
 		public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
 		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }

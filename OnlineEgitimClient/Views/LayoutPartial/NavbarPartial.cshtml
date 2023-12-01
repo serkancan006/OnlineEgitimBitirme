@@ -26,7 +26,7 @@
                 }
                 @if (User.IsInRole("Instructor"))
                 {
-                    <a href="#" class="nav-item nav-link @(controllerName == "Dashboard" ? "active" : "")">Eğitmen</a>
+                    <a href="/Instructor/Dashboard/Index/" class="nav-item nav-link @(controllerName == "Dashboard" ? "active" : "")">Eğitmen</a>
                 }
                 @*<a href="/PurchasedCourse/Index/" class="nav-item nav-link @(controllerName == "PurchasedCourse" ? "active" : "")">Ögrenim İçeriğim</a>*@
 

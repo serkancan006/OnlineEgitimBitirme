@@ -73,10 +73,10 @@ namespace OnlineEgitimClient.Service
             //SetCourseListToSession(new List<ListCourseDto>());
             //_httpContextAccessor.HttpContext.Session.Remove("UserCourseList");
         }
-        public decimal TotalPrice()
+        public double TotalPrice()
         {
             var courseList = GetCourseListFromSession();
-            decimal totalPrice = 0;
+            double totalPrice = 0;
             foreach (var item in courseList)
             {
                 totalPrice += item.Price;

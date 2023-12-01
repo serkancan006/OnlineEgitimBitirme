@@ -43,6 +43,11 @@ namespace BusinessLayer.Concrete
             return _courseDal.GetListByFilter(x => x.Status == true);
         }
 
+        public List<Course> TGetListByInstructor(int id)
+        {
+            return _courseDal.GetListByFilter(x => x.AppUserID == id);
+        }
+
         public void TUpdate(Course t)
         {
             _courseDal.Update(t);

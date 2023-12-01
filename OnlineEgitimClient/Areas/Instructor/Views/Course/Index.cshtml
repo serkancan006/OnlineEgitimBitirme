@@ -1,0 +1,60 @@
+﻿@model List<ListCourseDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Instructor/Views/Shared/_InstructorLayout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Kurs Başlık</th>
+            <th>Kurs Açıklama</th>
+            <th>Kurs Fiyat</th>
+            <th>Kurs Süresi</th>
+            <th>Kurs Resimi</th>
+            <th>Kurs Konu Sayısı</th>
+            <th>Kurs Seviyesi</th>
+            <th>Kurs Dili</th>
+            <th>Kurs Like</th>
+            <th>Kurs Dislike</th>
+            <th>Kurs Puanı</th>
+            <th>Kurs Görüntülenme</th>
+            <th>Oluşturulma tarihi</th>
+            <th>Güncellenme Tarihi</th>
+            <th>Durumu</th>
+            <th>Detaylar</th>
+            <th>Videolar</th>
+            <th>Video Yükle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                <td>@((item.Description.Length > 25) ? item.Description.Substring(0, 25) + "..." : item.Description)</td>
+                <td>@item.Price</td>
+                <td>@item.Duration</td>
+                <td>
+                    <img class="img-fluid" src="@item.ImageUrl" alt="" style="max-width: 100px; max-height: 100px;">
+                </td>
+                <td>@item.SubjectCount</td>
+                <td>@item.Level</td>
+                <td>@item.Language</td>
+                <td>@item.CourseLike</td>
+                <td>@item.CourseDisLike</td>
+                <td>@item.CoursePuan</td>
+                <td>@item.CourseViewCountLog</td>
+                <td>@item.CreatedDate</td>
+                <td>@item.UpdatedDate</td>
+                <td>@item.Status</td>
+                <td><a href="/Course/CourseDetails/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Detaylar</a></td>
+                <td><a href="/Instructor/CourseVideoFile/Index/@item.Id" class="btn mb-1 btn-rounded btn-outline-warning">Kurs Videoları</a></td>
+                <td><a href="/Instructor/CourseVideoFile/CourseUploadVideo/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Video Yükle</a></td>
+            </tr>
+        }
+    </table>
+</div>
+<br />
+<a href="/Instructor/Course/AddCourse/" class="btn mb-1 btn-rounded btn-outline-primary">Yeni Kurs Oluştur</a>
+
