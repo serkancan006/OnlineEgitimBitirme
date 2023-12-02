@@ -1,0 +1,29 @@
+﻿@model List<TopPurchasedCourseDto>
+<div class="col-md-6 my-4">
+    <div class="table-responsive">
+        <h3 class="text-center">Çok Satan Eğitimler</h3>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Kurs Adı</th>
+                    <th>Kurs Fİyatı</th>
+                    <th>Kurs Görüntülenme</th>
+                    <th>Satma Sayısı</th>
+                </tr>
+            </tbody>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@item.CourseID</th>
+                        <th><img src="@item.ImageUrl" style="width:75px;width:75px" /></th>
+                        <th>@item.Title</th>
+                        <th>@item.Price</th>
+                        <th>@item.PurchaseCount</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -54,5 +54,9 @@ namespace BusinessLayer.Concrete
         {
             return _purchasedCourseDal.CourseListInclude();
         }
+        public List<PurchasedCourse> TCourseListIncludewhereInstructor(int id)
+        {
+            return _purchasedCourseDal.CourseListInclude().Where(x => x.AppUserID == id).ToList();
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace BusinessLayer.Abstract
 	public interface IPurchasedCourseService:IGenericService<PurchasedCourse>
 	{
         List<PurchasedCourse> TCourseListInclude();
+        List<PurchasedCourse> TCourseListIncludewhereInstructor(int id);
     }
 }

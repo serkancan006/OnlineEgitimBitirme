@@ -1,8 +1,77 @@
-﻿
+﻿@model List<ListCourseDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<p>Dashborda Hoşgeldin</p>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="bg-primary p-4 my-4" style="border-radius:60px">
+                <h3 class="text-center text-white">Eğitimlerim</h3>
+                <div class="flex-row d-flex justify-content-between p-2">
+                    <i class="fas fa-book-reader text-white" style="font-size:90px"></i>
+                    <h3 class="text-white mr-5" style="font-size:70px">@ViewBag.CourseCount</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="bg-success p-4 my-4" style="border-radius:60px">
+                <h3 class="text-center text-white">Satılan Eğitimlerim</h3>
+                <div class="flex-row d-flex justify-content-between p-2">
+                    <i class="fas fa-money-check-alt text-white" style="font-size:90px"></i>
+                    <h3 class="text-white mr-5" style="font-size:70px">@ViewBag.PurchasedCourseCount</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="bg-warning p-4 my-4" style="border-radius:60px">
+                <h3 class="text-center text-white">Kurs Görüntülenme</h3>
+                <div class="flex-row d-flex justify-content-between p-2">
+                    <i class="fas fa-eye text-white" style="font-size:90px"></i>
+                    <h3 class="text-white mr-5" style="font-size:70px">@ViewBag.TotalViewCount</h3>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-6 my-4">
+                <div class="table-responsive">
+                    <h3 class="text-center">Çok Görüntülenene Eğitimler</h3>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <th>Kurs Adı</th>
+                                <th>Kurs Resmi</th>
+                                <th>Kurs Görüntülenme</th>
+                                <th>Kurs Fiyatı</th>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Title</td>
+                                    <td><img src="@item.ImageUrl" style="width:75px;height:75px" /></td>
+                                    <td>@item.CourseViewCountLog</td>
+                                    <td>@item.Price</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @await Component.InvokeAsync("_Top5PurchasedCourse");
+
+        </div>
+
+    </div>
+</div>
 
