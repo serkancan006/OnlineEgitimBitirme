@@ -13,6 +13,29 @@
 <!-- Template Javascript -->
 <script src="~/online-education/js/main.js"></script>
 
+<!-- CK editör -->
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>*@
+<script>
+    CKEDITOR.replace('ckeditor', {
+        language: 'tr',
+        entities: false,
+        entities_latin: false
+    });
+    //var editor = CKEDITOR.instances.ckeditor;
+    //editor.on('change', function (evt) {
+    //    evt.editor.setData(DOMPurify.sanitize(evt.editor.getData()));
+    //});
+    //editor.on('change', function (evt) {
+    //    var originalData = evt.editor.getData();
+    //    var sanitizedData = DOMPurify.sanitize(originalData);
+    //    if (originalData !== sanitizedData) {
+    //        evt.editor.setData(sanitizedData);
+    //        alert("Girdiğiniz metinde izin verilmeyen bazı öğeler bulundu ve kaldırıldı. Lütfen girdiğiniz metni kontrol edin.");
+    //    }
+    //});
+</script>
+
 <!-- Tarayıcıda çerezlerden alınan verileri yerel depolama alanına eklemek  -->
 <script>
     document.cookie.split(';').forEach(function (cookie) {
