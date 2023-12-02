@@ -168,9 +168,6 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -178,6 +175,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -199,7 +199,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("AppUserID");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("LocationID");
 
                     b.ToTable("Courses");
                 });
@@ -294,6 +294,8 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserID");
+
                     b.HasIndex("CourseID");
 
                     b.ToTable("PurchasedCourses");
@@ -323,6 +325,10 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("CourseID");
 
                     b.ToTable("WidgetClickLogs");
                 });
@@ -355,6 +361,20 @@ namespace DataAccessLayer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Instructor",
+                            NormalizedName = "INSTRUCTOR"
+                        });
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.identity.AppUser", b =>
@@ -451,6 +471,29 @@ namespace DataAccessLayer.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("AppUser");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f1c38224-6de3-439c-8968-18b06f721597",
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "RootAdmin",
+                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDvsIXQEDoQGnDFuWV/TFGFTNEbAIUcZYC2QZ9nzeOIeT3Jf6SzDs6mmtdrWxIcjGA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Status = false,
+                            Surname = "Admin",
+                            TwoFactorEnabled = false,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -535,6 +578,13 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -615,25 +665,56 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("EntityLayer.Concrete.Course", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("AppUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrete.identity.Instructor", null)
+                    b.HasOne("EntityLayer.Concrete.Location", "Location")
                         .WithMany("Courses")
-                        .HasForeignKey("InstructorId");
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.PurchasedCourse", b =>
                 {
+                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
+                        .WithMany("PurchasedCourses")
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
                         .WithMany("PurchasedCourses")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.WidgetClickLog", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
+                        .WithMany("WidgetClickLogs")
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.Course", "Course")
+                        .WithMany("WidgetClickLogs")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Course");
                 });
@@ -705,11 +786,22 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("CourseVideoFiles");
 
                     b.Navigation("PurchasedCourses");
+
+                    b.Navigation("WidgetClickLogs");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.identity.Instructor", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.Location", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.identity.AppUser", b =>
+                {
+                    b.Navigation("Courses");
+
+                    b.Navigation("PurchasedCourses");
+
+                    b.Navigation("WidgetClickLogs");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,5 +21,8 @@ namespace OnlineEgitimClient.Dtos.CourseDto
         public int CourseDisLike { get; set; }
         public int CoursePuan { get; set; }
         public int CourseViewCountLog { get; set; }
+
+        public int LocationID { get; set; }
+        public int AppUserID { get; set; }
     }
 }

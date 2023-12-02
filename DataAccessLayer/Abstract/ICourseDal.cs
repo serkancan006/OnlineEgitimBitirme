@@ -9,5 +9,6 @@ namespace DataAccessLayer.Abstract
 {
 	public interface ICourseDal : IGenericDal<Course>
 	{
-	}
+        List<Course> CourseListInclude();
+    }
 }

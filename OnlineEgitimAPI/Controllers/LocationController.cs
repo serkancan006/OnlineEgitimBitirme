@@ -63,5 +63,11 @@ namespace OnlineEgitimAPI.Controllers
             var values = _LocationService.TGetByID(id);
             return Ok(values);
         }
+        [HttpGet("[action]")]
+        public IActionResult LocationListByStatus()
+        {
+            var values = _LocationService.TGetListTrueStatus();
+            return Ok(values);
+        }
     }
 }

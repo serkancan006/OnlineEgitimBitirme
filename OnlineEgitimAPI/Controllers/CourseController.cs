@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace OnlineEgitimAPI.Controllers
@@ -137,6 +138,19 @@ namespace OnlineEgitimAPI.Controllers
             {
                 item.ImageUrl = "https://" + _configuration["BaseUrl"] + item.ImageUrl;
             }
+            return Ok(values);
+        }
+
+        [HttpGet("include")]
+        public IActionResult CourseListInclude()
+        {
+            var values = _CourseService.TGetListInclude().Select(x => new
+            {
+                ImageUrl = "https://" + _configuration["BaseUrl"] + x.ImageUrl,
+                UserName = x.AppUser.UserName,
+                AppUserID = x.AppUserID
+            }).ToList();
+
             return Ok(values);
         }
 

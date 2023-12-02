@@ -18,8 +18,8 @@ namespace EntityLayer.Concrete.identity
         virtual public DateTime UpdatedDate { get; set; }
         public bool Status { get; set; }
 
-
-		//public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
-		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
+        public ICollection<Course>? Courses { get; set; }
+        public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
+		public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
 	}
 }

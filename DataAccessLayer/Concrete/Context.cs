@@ -2,6 +2,7 @@
 using EntityLayer.Concrete.Common;
 using EntityLayer.Concrete.File;
 using EntityLayer.Concrete.identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,38 +19,79 @@ namespace DataAccessLayer.Concrete
 		{
 			optionsBuilder.UseSqlServer("Server=.;Database=Online-Egitim-DB;Integrated Security=True;TrustServerCertificate=True;");
 		}
-     
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
-		//{
-			//modelBuilder.Entity<PurchasedCourse>()
-			//	.HasOne(pc => pc.Course)
-			//	.WithMany(c => c.PurchasedCourses)
-			//	.OnDelete(DeleteBehavior.Restrict);
 
-			//modelBuilder.Entity<PurchasedCourse>()
-			//	.HasOne(pc => pc.AppUser)
-			//	.WithMany(u => u.PurchasedCourses)
-			//	.OnDelete(DeleteBehavior.Restrict);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PurchasedCourse>()
+                .HasOne(pc => pc.Course)
+                .WithMany(c => c.PurchasedCourses)
+                .OnDelete(DeleteBehavior.Restrict);
 
-			//base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PurchasedCourse>()
+                .HasOne(pc => pc.AppUser)
+                .WithMany(u => u.PurchasedCourses)
+                .OnDelete(DeleteBehavior.Restrict);
 
-			//Yukarıdaki kod, PurchasedCourse tablosundaki Course ve AppUser yabancı anahtarlarına ilişkin silme işlemlerini kısıtlar. Bu sayede, bir Course veya AppUser silindiğinde, ilgili PurchasedCourse’ların otomatik olarak silinmesini engeller. Bu, döngü oluşturma veya birden çok kademeli yol oluşturma sorununu çözer.
+            base.OnModelCreating(modelBuilder);
 
-			//modelBuilder.Entity<WidgetClickLog>()
-			//	.HasOne(pc => pc.Course)
-			//	.WithMany(c => c.WidgetClickLogs)
-			//	.OnDelete(DeleteBehavior.Restrict);
+            //Yukarıdaki kod, PurchasedCourse tablosundaki Course ve AppUser yabancı anahtarlarına ilişkin silme işlemlerini kısıtlar. Bu sayede, bir Course veya AppUser silindiğinde, ilgili PurchasedCourse’ların otomatik olarak silinmesini engeller.Bu, döngü oluşturma veya birden çok kademeli yol oluşturma sorununu çözer.
 
-			//modelBuilder.Entity<WidgetClickLog>()
-			//	.HasOne(pc => pc.AppUser)
-			//	.WithMany(u => u.WidgetClickLogs)
-			//	.OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<WidgetClickLog>()
+                .HasOne(pc => pc.Course)
+                .WithMany(c => c.WidgetClickLogs)
+                .OnDelete(DeleteBehavior.Restrict);
 
-			//base.OnModelCreating(modelBuilder);
-		//}
+            modelBuilder.Entity<WidgetClickLog>()
+                .HasOne(pc => pc.AppUser)
+                .WithMany(u => u.WidgetClickLogs)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole
+                {
+                    Id = 1,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
+                },
+                new AppRole
+                {
+                    Id = 2,
+                    Name = "Instructor",
+                    NormalizedName = "INSTRUCTOR"
+                }
+              );
+            var hasher = new PasswordHasher<AppUser>();
+
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser
+                {
+                    Id = 1,
+                    Name = "RootAdmin",
+                    Surname = "Admin",
+                    UserName = "admin", // Kullanıcı adı
+                    NormalizedUserName = "ADMIN",
+                    Email = "admin@example.com", // E-posta
+                    NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "123456Aa*"), // Hashlenmiş şifre
+                    SecurityStamp = string.Empty
+                    // Diğer kullanıcı özellikleri
+                }
+            );
+
+            modelBuilder.Entity<IdentityUserRole<int>>().HasData(
+                new IdentityUserRole<int>
+                {
+                    RoleId = 1, // Admin rolü Id'si
+                    UserId = 1  // Oluşturduğumuz admin kullanıcısının Id'si
+                }
+            );
+        }
 
 
-		public DbSet<About> Abouts { get; set; }
+        public DbSet<About> Abouts { get; set; }
 		public DbSet<Contact> Contacts { get; set; }
 		public DbSet<Course> Courses { get; set; }
 		public DbSet<Location> Locations { get; set; }

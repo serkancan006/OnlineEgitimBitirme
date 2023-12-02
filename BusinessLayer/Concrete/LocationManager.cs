@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace BusinessLayer.Concrete
 
         public List<Location> TGetListTrueStatus()
         {
-            throw new NotImplementedException();
+            return _locationDal.GetListByFilter(x => x.Status == true);
         }
 
         public void TUpdate(Location t)

@@ -27,13 +27,13 @@ namespace EntityLayer.Concrete
         public int CoursePuan { get; set; }
         public int CourseViewCountLog { get; set; }
 
-		//public int LocationID { get; set; }
-		//public Location Location { get; set; }
-		public int AppUserID { get; set; } //InstructorID
+		public int LocationID { get; set; }
+		public Location Location { get; set; }
+		public int AppUserID { get; set; }
 		public AppUser AppUser { get; set; }
 
 		public ICollection<PurchasedCourse> PurchasedCourses { get; set; }
-		//public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
+		public ICollection<WidgetClickLog> WidgetClickLogs { get; set; }
 		public ICollection<CourseVideoFile> CourseVideoFiles { get; set; }
 	}
 }

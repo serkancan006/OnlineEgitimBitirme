@@ -52,5 +52,10 @@ namespace BusinessLayer.Concrete
         {
             _courseDal.Update(t);
         }
+
+        public List<Course> TGetListInclude()
+        {
+            return _courseDal.CourseListInclude();
+        }
     }
 }
