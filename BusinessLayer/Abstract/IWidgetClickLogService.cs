@@ -9,5 +9,7 @@ namespace BusinessLayer.Abstract
 {
 	public interface IWidgetClickLogService : IGenericService<WidgetClickLog>
 	{
-	}
+        List<WidgetClickLog> TWidgetListIncludeTrueStatus();
+        bool TGetByAppUserIDAndCourseID(int appUserID, int courseID);
+    }
 }

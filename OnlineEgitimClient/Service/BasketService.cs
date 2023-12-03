@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
+using OnlineEgitimClient.Dtos.PurchasedCourseDto;
 
 namespace OnlineEgitimClient.Service
 {
@@ -87,6 +88,35 @@ namespace OnlineEgitimClient.Service
         {
             var courseList = GetCourseListFromSession();
             return courseList.Count();
+        }
+
+        public async Task BuyCourse(int userId)
+        {
+            var courseList = GetCourseListFromSession();
+
+            foreach (var item in courseList)
+            {
+                var purchasedCoursesDto = new AddPurchasedCourseDto
+                {
+                    AppUserID = userId,
+                    CourseID = item.Id
+                };
+
+                var responseMessage = await _customHttpClient.Post<AddPurchasedCourseDto>(new() { Controller = "PurchasedCourse" }, purchasedCoursesDto);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    // If the purchase is successful, you may perform additional actions here
+                    Console.WriteLine($"Course with ID {item.Id} purchased successfully for user {userId}");
+                    ClearBasketCourse();
+                }
+
+                else
+                {
+                    // Handle failure scenarios for this particular course
+                    Console.WriteLine($"Failed to purchase course with ID {item.Id} for user {userId}");
+                }
+            }
         }
     }
 }

@@ -14,5 +14,6 @@ namespace EntityLayer.Concrete
 		public AppUser AppUser { get; set; }
 		public int CourseID { get; set; }
 		public Course Course { get; set; }
-	}
+        public int CourseViewCount { get; set; }
+    }
 }

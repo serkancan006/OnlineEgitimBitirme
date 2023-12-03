@@ -36,8 +36,15 @@ namespace OnlineEgitimAPI.Controllers
                 return BadRequest();
             }
             var values = _mapper.Map<WidgetClickLog>(addWidgetClickLogDto);
-            _WidgetClickLogService.TAdd(values);
-            return Ok();
+            var haswidget = _WidgetClickLogService.TGetByAppUserIDAndCourseID(addWidgetClickLogDto.AppUserID, addWidgetClickLogDto.CourseID);
+            if (haswidget)
+                return Ok();
+            else
+            {
+                values.CourseViewCount = 1;
+                _WidgetClickLogService.TAdd(values);
+                return Ok();
+            }
         }
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]

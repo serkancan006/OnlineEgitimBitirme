@@ -9,7 +9,8 @@
 @*@await Html.PartialAsync("~/Views/Default/AboutPartial.cshtml")*@
 @await Component.InvokeAsync("_AboutPartial");
 
-@await Html.PartialAsync("~/Views/Default/NewCoursesPartial.cshtml")
+@await Component.InvokeAsync("_NewCoursesPartial");
+@*@await Html.PartialAsync("~/Views/Default/NewCoursesPartial.cshtml")*@
 
 @await Html.PartialAsync("~/Views/Default/InstructorsPartial.cshtml")
 

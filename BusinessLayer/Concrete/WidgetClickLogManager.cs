@@ -47,5 +47,15 @@ namespace BusinessLayer.Concrete
         {
             _widgetClickLogDal.Update(t);
         }
+
+        public List<WidgetClickLog> TWidgetListIncludeTrueStatus()
+        {
+            return _widgetClickLogDal.WidgetListIncludeTrueStatus();
+        }
+
+        public bool TGetByAppUserIDAndCourseID(int appUserID, int courseID)
+        {
+            return _widgetClickLogDal.GetByAppUserIDAndCourseID(appUserID,courseID);
+        }
     }
 }

@@ -1,14 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OnlineEgitimClient.Dtos.PurchasedCourseDto;
 using OnlineEgitimClient.Service;
+using System.Text;
 
 namespace OnlineEgitimClient.Controllers
 {
     public class BasketController : Controller
     {
         private readonly BasketService _basketService;
-        public BasketController(BasketService basketService)
+        private readonly CustomHttpClient _customHttpClient;
+
+        public BasketController(BasketService basketService, CustomHttpClient customHttpClient)
         {
             _basketService = basketService;
+            _customHttpClient = customHttpClient;
         }
 
         public IActionResult Index()
@@ -17,6 +23,22 @@ namespace OnlineEgitimClient.Controllers
             ViewBag.totalPrice = _basketService.TotalPrice();
             ViewBag.totalCourse = _basketService.TotalCourse();
             return View(values);
+        }
+        [Authorize] // Sadece yetkilendirilmiş kullanıcıların erişebileceği bir metod
+        public async Task<IActionResult> Buy()
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View();
+            //}
+            //var responseMessage = await _customHttpClient.Post<AddPurchasedCourseDto>(new() { Controller = "Location" }, model);
+            //if (responseMessage.IsSuccessStatusCode)
+            //{
+            //    return RedirectToAction("Index");
+            //}
+            var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+            await _basketService.BuyCourse(userId);
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> AddToCourse(int courseId)
         {

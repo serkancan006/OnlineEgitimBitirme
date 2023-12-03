@@ -10,5 +10,6 @@ namespace DtoLayer.DTOs.WidgetClickLogDto
     {
         public int AppUserID { get; set; }
         public int CourseID { get; set; }
+        public int CourseViewCount { get; set; }
     }
 }

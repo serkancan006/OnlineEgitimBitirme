@@ -37,16 +37,58 @@ namespace OnlineEgitimAPI.Controllers
         }
 
 
-        //[HttpGet("[action]")]
-        //public IActionResult CourseListByUser(int id)
-        //{
-        //    var values = _widgetClickLogService.TGetListTrueStatus().Where(x => x.AppUserID == id);
-        //    foreach (var item in values)
-        //    {
-        //        item.ImageUrl = "https://" + _configuration["BaseUrl"] + item.ImageUrl;
-        //    }
-        //    return Ok(values);
-        //}
+        [HttpGet("[action]")]
+        public IActionResult CourseListByUser(int id)
+        {
+            //var values = _widgetClickLogService.TWidgetListIncludeTrueStatus().Where(x => x.AppUserID == id).Select(y => new
+            //{
+            //    y.AppUserID,
+            //    y.CourseID,
+            //    ImageUrl = "https://" + _configuration["BaseUrl"] + y.Course.ImageUrl,
+            //    y.Course.Title,
+            //    y.Course.Price,
+            //    y.Course.Level,
+            //    y.Course.Language,
+            //    y.Course.CourseViewCountLog
+            //});
+
+            //var values = _widgetClickLogService
+            //    .TWidgetListIncludeTrueStatus()
+            //    .Where(x => x.AppUserID == id)
+            //    .GroupBy(y => y.CourseID)
+            //    .Select(group => new
+            //    {
+            //        CourseID = group.Key,
+            //        Count = group.Count(),
+            //        CourseDetails = group.First().Course // Sadece kurs detaylarına erişim
+            //    })
+            //    .OrderByDescending(courseGroup => courseGroup.Count)
+            //    .Take(3)
+            //    .Select(courseGroup => new
+            //    {
+            //        courseGroup.CourseID,
+            //        courseGroup.CourseDetails.AppUserID,
+            //        courseGroup.CourseDetails.Title,
+            //        courseGroup.CourseDetails.Price,
+            //        courseGroup.CourseDetails.Level,
+            //        courseGroup.CourseDetails.Language
+            //        // İhtiyaç duyulan diğer özellikler
+            //    });
+
+            var values = _widgetClickLogService.TWidgetListIncludeTrueStatus().Where(x => x.AppUserID == id).Select(y => new
+            {
+                y.AppUserID,
+                y.CourseID,
+                ImageUrl = "https://" + _configuration["BaseUrl"] + y.Course.ImageUrl,
+                y.Course.Title,
+                y.Course.Price,
+                y.Course.Level,
+                y.Course.Language,
+                y.Course.CourseViewCountLog
+            }).OrderByDescending(x => x.CourseViewCountLog).Take(3);
+
+            return Ok(values);
+        }
 
     }
 }

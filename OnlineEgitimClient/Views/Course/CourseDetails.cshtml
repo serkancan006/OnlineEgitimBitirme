@@ -1,4 +1,6 @@
 ﻿@model ListCourseDto
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "CourseDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,7 +43,11 @@
                         </div>
                     </div>
                     <!-- İlgili Kurslar-->
-                    @await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")
+                    @*@await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")*@
+                    @if (HttpContextAccessor != null && HttpContextAccessor.HttpContext != null && HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("_RelatedCoursesPartial")
+                    }
                     <!-- ilgili Kurslar-->
                 </div>
                 <!-- Kurs Özellikleri-->
@@ -168,7 +174,8 @@
         </div>
     </div>
     <!-- Detail End -->
-} else
+}
+else
 {
     <br />
     <h1 class="my-5 text-center">Kurs Bulunamadı</h1>

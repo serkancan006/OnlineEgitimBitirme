@@ -1,0 +1,27 @@
+﻿@model List<WidgetCourseByUserDto>
+
+@if (Model != null)
+{
+    <h2 class="mb-3">İlgili Kurslar</h2>
+    <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
+        @foreach (var item in Model)
+        {
+            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
+                <img class="img-fluid" src="@item.imageUrl" alt="">
+                <div class="courses-text">
+                    <h4 class="text-center text-white px-3">
+                        @item.title
+                    </h4>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex justify-content-between p-4">
+                            <span class="text-white"><i class="fa fa-user mr-2"></i>@item.level</span>
+                            <span class="text-white">
+                                <i class="fa fa-money mr-2"></i>@item.price
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+}

@@ -7,7 +7,10 @@ namespace OnlineEgitimClient.Controllers
 {
     public class DefaultController : Controller
     {
-      
+        public IActionResult Index()
+        {
+            return View();
+        }
         public PartialViewResult HeaderPartial()
         {
             return PartialView();
@@ -32,9 +35,6 @@ namespace OnlineEgitimClient.Controllers
         {
             return PartialView();
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
     }
 }

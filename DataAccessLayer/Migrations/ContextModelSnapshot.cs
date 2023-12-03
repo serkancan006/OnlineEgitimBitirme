@@ -315,6 +315,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("CourseID")
                         .HasColumnType("int");
 
+                    b.Property<int>("CourseViewCount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -477,7 +480,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f1c38224-6de3-439c-8968-18b06f721597",
+                            ConcurrencyStamp = "b6aed193-c506-418e-842e-c3d1a2dc5e53",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
                             EmailConfirmed = true,
@@ -485,7 +488,7 @@ namespace DataAccessLayer.Migrations
                             Name = "RootAdmin",
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDvsIXQEDoQGnDFuWV/TFGFTNEbAIUcZYC2QZ9nzeOIeT3Jf6SzDs6mmtdrWxIcjGA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEXw5YDc5MounBnxW7wCf1Xtc4vTULkd1k3zf0T4A6Hqx/7z02RAXgbG6IfnqQvTyw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = false,

@@ -9,5 +9,7 @@ namespace DataAccessLayer.Abstract
 {
 	public interface IWidgetClickLogDal : IGenericDal<WidgetClickLog>
 	{
-	}
+        List<WidgetClickLog> WidgetListIncludeTrueStatus();
+        bool GetByAppUserIDAndCourseID(int appUserID, int courseID);
+    }
 }
