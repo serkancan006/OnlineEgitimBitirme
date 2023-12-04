@@ -4,17 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@await Html.PartialAsync("~/Views/Default/HeaderPartial.cshtml")
 
-@*@await Html.PartialAsync("~/Views/Default/AboutPartial.cshtml")*@
 @await Component.InvokeAsync("_AboutPartial");
 
 @await Component.InvokeAsync("_NewCoursesPartial");
-@*@await Html.PartialAsync("~/Views/Default/NewCoursesPartial.cshtml")*@
 
 @await Html.PartialAsync("~/Views/Default/InstructorsPartial.cshtml")
 
 @await Html.PartialAsync("~/Views/Default/TestimonialPartial.cshtml")
 
-@*@await Html.PartialAsync("~/Views/Default/ContactPartial.cshtml")*@
 @await Component.InvokeAsync("_ContactPartial");

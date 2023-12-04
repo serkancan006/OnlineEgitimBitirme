@@ -6,21 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Header Start -->
-<div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
-    <div class="container text-center py-5">
-        <h1 class="text-white display-1">Kurs Detayı</h1>
-        <div class="d-inline-flex text-white mb-5">
-            <p class="m-0 text-uppercase"><a class="text-white" href="">Ana Sayfa</a></p>
-            <i class="fa fa-angle-double-right pt-1 px-3"></i>
-            <p class="m-0 text-uppercase">Kurs Detayı</p>
-        </div>
-        <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
-            @await Component.InvokeAsync("_SearchInput")
-        </div>
-    </div>
-</div>
-<!-- Header End -->
+
 @if (Model.Status)
 {
     <!-- Detail Start -->
@@ -33,7 +19,7 @@
                             <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Kurs Detayı</h6>
                             <h1 class="display-4">@Model.Title</h1>
                         </div>
-                        <img class="img-fluid rounded w-100 mb-4" src="@Model.ImageUrl" alt="Image">
+                        <img class="img-fluid rounded w-100 mb-4" src="@Model.ImageUrl" style="max-height:510px;object-fit:cover" alt="Image">
                         <div class="my-4">@Html.Raw(Model.Description)</div>
                         <div class="d-flex justify-content-between px-2">
                             <i class="fa fa-eye text-primary"> @Model.CourseViewCountLog</i>
@@ -43,7 +29,6 @@
                         </div>
                     </div>
                     <!-- İlgili Kurslar-->
-                    @*@await Html.PartialAsync("~/Views/Course/RelatedCourses.cshtml")*@
                     @if (HttpContextAccessor != null && HttpContextAccessor.HttpContext != null && HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                     {
                         @await Component.InvokeAsync("_RelatedCoursesPartial")

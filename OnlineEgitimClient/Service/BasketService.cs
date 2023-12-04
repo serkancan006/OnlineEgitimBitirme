@@ -71,8 +71,6 @@ namespace OnlineEgitimClient.Service
             var courseList = GetCourseListFromSession();
             courseList.Clear(); // Listenin içeriğini temizle
             SetCourseListToSession(courseList);
-            //SetCourseListToSession(new List<ListCourseDto>());
-            //_httpContextAccessor.HttpContext.Session.Remove("UserCourseList");
         }
         public double TotalPrice()
         {
@@ -93,30 +91,26 @@ namespace OnlineEgitimClient.Service
         public async Task BuyCourse(int userId)
         {
             var courseList = GetCourseListFromSession();
+            var purchasedCoursesDto = new AddPurchasedCourseDto();
+            purchasedCoursesDto.AppUserID = userId;
 
             foreach (var item in courseList)
             {
-                var purchasedCoursesDto = new AddPurchasedCourseDto
-                {
-                    AppUserID = userId,
-                    CourseID = item.Id
-                };
+                purchasedCoursesDto.CourseID = item.Id;
 
                 var responseMessage = await _customHttpClient.Post<AddPurchasedCourseDto>(new() { Controller = "PurchasedCourse" }, purchasedCoursesDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    // If the purchase is successful, you may perform additional actions here
-                    Console.WriteLine($"Course with ID {item.Id} purchased successfully for user {userId}");
-                    ClearBasketCourse();
+                    //Console.WriteLine($"Kurs id {item.Id} başarılı bir şekilde {userId} ye ait kullanıcıya eklenmiştir");
                 }
 
                 else
                 {
-                    // Handle failure scenarios for this particular course
-                    Console.WriteLine($"Failed to purchase course with ID {item.Id} for user {userId}");
+                    //Console.WriteLine($"kurs id {item.Id} {userId} id li kullanıcya eklenirken hata oluştu");
                 }
             }
+            ClearBasketCourse();
         }
     }
 }

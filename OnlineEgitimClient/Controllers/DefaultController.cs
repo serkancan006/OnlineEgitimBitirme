@@ -11,18 +11,7 @@ namespace OnlineEgitimClient.Controllers
         {
             return View();
         }
-        public PartialViewResult HeaderPartial()
-        {
-            return PartialView();
-        }
-        public PartialViewResult AboutPartial()
-        {
-            return PartialView();
-        }
-        public PartialViewResult NewCoursesPartial()
-        {
-            return PartialView();
-        }
+       
         public PartialViewResult InstructorsPartial()
         {
             return PartialView();
@@ -31,10 +20,7 @@ namespace OnlineEgitimClient.Controllers
         {
             return PartialView();
         }
-        public PartialViewResult ContactPartial()
-        {
-            return PartialView();
-        }
+      
        
     }
 }

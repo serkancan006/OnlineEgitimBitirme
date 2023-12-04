@@ -24,18 +24,9 @@ namespace OnlineEgitimClient.Controllers
             ViewBag.totalCourse = _basketService.TotalCourse();
             return View(values);
         }
-        [Authorize] // Sadece yetkilendirilmiş kullanıcıların erişebileceği bir metod
+        [Authorize]
         public async Task<IActionResult> Buy()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View();
-            //}
-            //var responseMessage = await _customHttpClient.Post<AddPurchasedCourseDto>(new() { Controller = "Location" }, model);
-            //if (responseMessage.IsSuccessStatusCode)
-            //{
-            //    return RedirectToAction("Index");
-            //}
             var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
             await _basketService.BuyCourse(userId);
             return RedirectToAction("Index");

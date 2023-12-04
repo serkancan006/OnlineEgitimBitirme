@@ -5,21 +5,30 @@
 }
 
 
-<!-- Header Start -->
-<div class="jumbotron jumbotron-fluid page-header position-relative overlay-bottom" style="margin-bottom: 90px;">
-    <div class="container text-center py-5">
-        <h1 class="text-white display-1">Kurslar</h1>
-        <div class="d-inline-flex text-white mb-5">
-            <p class="m-0 text-uppercase"><a class="text-white" href="">Ana Sayfa</a></p>
-            <i class="fa fa-angle-double-right pt-1 px-3"></i>
-            <p class="m-0 text-uppercase">Kurslar</p>
-        </div>
-        <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
-        @await Component.InvokeAsync("_SearchInput")
+<!-- Search İnput -->
+<br /> <br />
+<div class="d-flex justify-content-center">
+    <div class="input-group w-50">
+        <!--
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Kategoriler
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Tümü</a>
+                    <a class="dropdown-item" href="#">Bilişim</a>
+                    <a class="dropdown-item" href="#">Yazılım</a>
+                </div>
+            </div>
+            -->
+        <input type="text" class="form-control border-light" style="padding: 30px 25px;" placeholder="Kurs ara...">
+        <div class="input-group-append">
+            <button class="btn btn-secondary px-4 px-lg-5">Ara</button>
         </div>
     </div>
 </div>
-<!-- Header End -->
+
 <!-- Courses Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">

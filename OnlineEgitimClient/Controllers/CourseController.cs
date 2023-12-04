@@ -52,9 +52,6 @@ namespace OnlineEgitimClient.Controllers
 
             return View();
         }
-        public PartialViewResult RelatedCourses()
-        {
-            return PartialView();
-        }
+       
     }
 }
