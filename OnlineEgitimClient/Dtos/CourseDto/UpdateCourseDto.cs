@@ -15,6 +15,7 @@ namespace OnlineEgitimClient.Dtos.CourseDto
         public string? Duration { get; set; } // eğitim süresi
         [JsonIgnore]
         public IFormFile? ImageUrl { get; set; }
+        //public IFormFile? ImageFile { get; set; }
         public int? SubjectCount { get; set; }
         public string? Level { get; set; }
         public string? Language { get; set; }

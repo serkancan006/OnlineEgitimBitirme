@@ -24,6 +24,7 @@
             <th>Güncellenme Tarihi</th>
             <th>Durumu</th>
             <th>Detaylar</th>
+            <th>Güncelle</th>
             <th>Videolar</th>
             <th>Video Yükle</th>
         </tr>
@@ -49,6 +50,7 @@
                 <td>@item.UpdatedDate</td>
                 <td>@item.Status</td>
                 <td><a href="/Course/CourseDetails/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Detaylar</a></td>
+                <td><a href="/Instructor/Course/UpdateCourse/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
                 <td><a href="/Instructor/CourseVideoFile/Index/@item.Id" class="btn mb-1 btn-rounded btn-outline-warning">Kurs Videoları</a></td>
                 <td><a href="/Instructor/CourseVideoFile/CourseUploadVideo/@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Video Yükle</a></td>
             </tr>

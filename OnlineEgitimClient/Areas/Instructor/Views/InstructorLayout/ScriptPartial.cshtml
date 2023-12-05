@@ -15,13 +15,36 @@
 
 <!-- Tarayıcıda çerezlerden alınan verileri yerel depolama alanına eklemek  -->
 <script>
-        document.cookie.split(';').forEach(function (cookie) {
-            var parts = cookie.split('=');
-            var key = parts[0].trim();
-            var value = parts[1];
+    document.cookie.split(';').forEach(function (cookie) {
+        var parts = cookie.split('=');
+        var key = parts[0].trim();
+        var value = parts[1];
 
-            if (key === 'Token' || key === 'TokenExpires') {
-                localStorage.setItem(key, value);
-            }
-        });
+        if (key === 'Token' || key === 'TokenExpires') {
+            localStorage.setItem(key, value);
+        }
+    });
+</script>
+
+<!-- CK editör -->
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>*@
+<script>
+    CKEDITOR.replace('ckeditor', {
+        language: 'tr',
+        entities: false,
+        entities_latin: false
+    });
+    //var editor = CKEDITOR.instances.ckeditor;
+    //editor.on('change', function (evt) {
+    //    evt.editor.setData(DOMPurify.sanitize(evt.editor.getData()));
+    //});
+    //editor.on('change', function (evt) {
+    //    var originalData = evt.editor.getData();
+    //    var sanitizedData = DOMPurify.sanitize(originalData);
+    //    if (originalData !== sanitizedData) {
+    //        evt.editor.setData(sanitizedData);
+    //        alert("Girdiğiniz metinde izin verilmeyen bazı öğeler bulundu ve kaldırıldı. Lütfen girdiğiniz metni kontrol edin.");
+    //    }
+    //});
 </script>

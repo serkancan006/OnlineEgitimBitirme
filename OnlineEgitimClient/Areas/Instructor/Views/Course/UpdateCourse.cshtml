@@ -1,0 +1,79 @@
+﻿@model UpdateCourseDto
+
+@{
+    ViewData["Title"] = "UpdateCourse";
+    Layout = "~/Areas/Instructor/Views/Shared/_InstructorLayout.cshtml";
+}
+
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="AppUserID" class="form-control" />
+
+        <label>Kurs Başlık</label>
+        <input type="text" asp-for="Title" class="form-control" />
+        <br />
+
+        <label>Kurs Açıklama</label>
+        <textarea asp-for="Description" id="ckeditor" rows="10" cols="80"></textarea>
+        <br>
+
+        <label>Kurs Fiyat</label>
+        <input type="number" step="0.01" asp-for="Price" class="form-control" />
+        <br />
+
+
+        @*<label>Kurs süre</label>
+        <input type="number" asp-for="Duration" class="form-control" />
+        <br />*@
+        <div class="row">
+            <div class="col-md-6">
+                <label for="timeInput">Kurs Süre</label>
+                <input type="time" class="form-control" id="timeInput" asp-for="Duration">
+            </div>
+        </div>
+        @*<span asp-validation-for="Duration" class="text-danger"></span>*@
+
+        <label>Kurs Resmi</label>
+        <input type="file" asp-for="ImageUrl" class="form-control" />
+        <br />
+
+        <label>Kurs konu sayısı</label>
+        <input type="number" asp-for="SubjectCount" class="form-control" />
+        <br />
+
+        <label>Kurs Seviyesi</label>
+        <select class="form-control" asp-for="Level">
+            <option value="temel">Temel Seviye</option>
+            <option value="orta">Orta Seviye</option>
+            <option value="ileri">İleri Seviye</option>
+        </select>
+        <br />
+
+        <label>Kurs Dili</label>
+        <select class="form-control" asp-for="Language">
+            <option value="turkish">Türkçe</option>
+            <option value="english">İngilizce</option>
+        </select>
+        <br />
+
+        <div class="form-group">
+            <label for="LocationID">Lokasyon:</label>
+            <select asp-for="LocationID" class="form-control" asp-items="@ViewBag.LocationList">
+                <option value="">Lokasyon Seçin</option>
+            </select>
+        </div>
+
+        <label>Durumu</label>
+        <select asp-for="Status" class="form-control">
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+        <br />
+
+        <button class="btn btn-primary">Kurs Güncelle</button>
+    </form>
+</div>
+
+

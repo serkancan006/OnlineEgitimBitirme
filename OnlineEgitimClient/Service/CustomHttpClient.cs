@@ -111,7 +111,6 @@ namespace OnlineEgitimClient.Service
             }
         }
 
-
         public async Task<HttpResponseMessage> PostMultipartFormData<T>(RequestParameters requestParameters, T content, int? id = null)
         {
             // URL oluşturma
@@ -152,7 +151,7 @@ namespace OnlineEgitimClient.Service
                                 formData.Add(fileContent);
                             }
                             // Eğer özellik int veya string ise, veriyi text/plain formatında form-data olarak ekler
-                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(string))
+                            else
                             {
                                 var stringValue = propValue.ToString();
                                 var stringContent = new StringContent(stringValue, Encoding.UTF8, "text/plain");
@@ -211,7 +210,7 @@ namespace OnlineEgitimClient.Service
                                 formData.Add(fileContent);
                             }
                             // Eğer özellik int veya string ise, veriyi text/plain formatında form-data olarak ekler
-                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(string))
+                            else
                             {
                                 var stringValue = propValue.ToString();
                                 var stringContent = new StringContent(stringValue, Encoding.UTF8, "text/plain");
@@ -229,7 +228,6 @@ namespace OnlineEgitimClient.Service
                 return responseMessage;
             }
         }
-
 
         public async Task<HttpResponseMessage> Put<T>(RequestParameters requestParameters, T content)
         {

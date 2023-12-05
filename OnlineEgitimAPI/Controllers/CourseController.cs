@@ -83,19 +83,6 @@ namespace OnlineEgitimAPI.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpPut]
-        //public IActionResult UpdateCourse(UpdateCourseDto updateCourseDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var values = _mapper.Map<Course>(updateCourseDto);
-        //    _CourseService.TUpdate(values);
-        //    return Ok();
-        //}
-
         [Authorize(Roles = "Admin,Instructor")]
         [HttpPut]
         public async Task<IActionResult> UpdateCourse([FromForm] UpdateCourseDto updateCourseDto)

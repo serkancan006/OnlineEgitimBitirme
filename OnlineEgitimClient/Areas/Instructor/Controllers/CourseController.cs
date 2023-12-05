@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -14,9 +15,11 @@ namespace OnlineEgitimClient.Areas.Instructor.Controllers
     public class CourseController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;
-        public CourseController(CustomHttpClient customHttpClient)
+        private readonly IMapper _mapper;
+        public CourseController(CustomHttpClient customHttpClient, IMapper mapper)
         {
             _customHttpClient = customHttpClient;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -64,6 +67,34 @@ namespace OnlineEgitimClient.Areas.Instructor.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UpdateCourse(int id)
+        {
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "Course" }, id);
+            var responseMessage2 = await _customHttpClient.Get(new() { Controller = "Location", Action = "LocationListByStatus" });
+            if (responseMessage.IsSuccessStatusCode && responseMessage2.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<UpdateCourseListDto>(jsonData);
+                var result = _mapper.Map<UpdateCourseDto>(values);
+                var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
+                var values2 = JsonConvert.DeserializeObject<List<ListLocationDto>>(jsonData2);
+                ViewBag.LocationList = new SelectList(values2, "Id", "Address");
+                return View(result);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(UpdateCourseDto model)
+        {
+            var responseMessage = await _customHttpClient.PutMultipartFormData<UpdateCourseDto>(new() { Controller = "Course" }, model);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
 
     }
 }

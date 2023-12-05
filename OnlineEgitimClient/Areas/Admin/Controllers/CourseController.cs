@@ -89,8 +89,6 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
                 var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
                 var values2 = JsonConvert.DeserializeObject<List<ListLocationDto>>(jsonData2);
                 ViewBag.LocationList = new SelectList(values2, "Id", "Address");
-                //ViewBag.ImageUrl = values.ImageUrl;
-                //values.ImageUrl = null;
                 return View(result);
             }
             return View();
@@ -99,13 +97,6 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCourse(UpdateCourseDto model)
         {
-            //var responseMessage = await _customHttpClient.Put<UpdateCourseDto>(new() { Controller = "Course" }, model);
-            //if (responseMessage.IsSuccessStatusCode)
-            //{
-            //    return RedirectToAction("Index");
-            //}
-            //return View();
-
             var responseMessage = await _customHttpClient.PutMultipartFormData<UpdateCourseDto>(new() { Controller = "Course" }, model);
             if (responseMessage.IsSuccessStatusCode)
             {

@@ -9,7 +9,6 @@ using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class LocationController : ControllerBase
@@ -22,12 +21,14 @@ namespace OnlineEgitimAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult LocationList()
         {
             var values = _LocationService.TGetList();
             return Ok(values);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddLocation(AddLocationDto addLocationDto)
         {
@@ -39,6 +40,7 @@ namespace OnlineEgitimAPI.Controllers
             _LocationService.TAdd(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteLocation(int id)
         {
@@ -46,6 +48,7 @@ namespace OnlineEgitimAPI.Controllers
             _LocationService.TDelete(values);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult UpdateLocation(UpdateLocationDto updateLocationDto)
         {
@@ -57,12 +60,14 @@ namespace OnlineEgitimAPI.Controllers
             _LocationService.TUpdate(values);
             return Ok();
         }
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetLocation(int id)
         {
             var values = _LocationService.TGetByID(id);
             return Ok(values);
         }
+        [Authorize]
         [HttpGet("[action]")]
         public IActionResult LocationListByStatus()
         {
