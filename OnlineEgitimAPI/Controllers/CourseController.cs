@@ -82,6 +82,72 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya yükleme hatası: {ex.Message}");
             }
         }
+
+        //[Authorize(Roles = "Admin")]
+        //[HttpPut]
+        //public IActionResult UpdateCourse(UpdateCourseDto updateCourseDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var values = _mapper.Map<Course>(updateCourseDto);
+        //    _CourseService.TUpdate(values);
+        //    return Ok();
+        //}
+
+        [Authorize(Roles = "Admin,Instructor")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCourse([FromForm] UpdateCourseDto updateCourseDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+           
+
+            try
+            {
+                if (updateCourseDto.ImageUrl == null || updateCourseDto.ImageUrl.Length <= 0)
+                {
+                    var course =  _CourseService.TGetByID(updateCourseDto.Id);
+                    var values = _mapper.Map<Course>(updateCourseDto);
+                    values.ImageUrl = course.ImageUrl;
+                    _CourseService.TUpdate(values);
+                    return Ok("Kurs Başarıyla Güncellendi Resimsiz");
+                }
+                else
+                {
+                    var rootPath = _environment.WebRootPath;
+                    var path = "images/CourseImage/";
+                    var fullPath = Path.Combine(rootPath, path);
+                    var fileName = GetUniqueFileName(updateCourseDto.ImageUrl.FileName);
+                    var filePath = Path.Combine(fullPath, fileName);
+                    var databasePath = path + fileName;
+                    // Eğer belirtilen dizin yoksa oluştur
+                    if (!Directory.Exists(fullPath))
+                        Directory.CreateDirectory(fullPath);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await updateCourseDto.ImageUrl.CopyToAsync(stream);
+                    }
+
+                    var values = _mapper.Map<Course>(updateCourseDto);
+                    values.ImageUrl = databasePath;
+
+                    _CourseService.TUpdate(values);
+
+                    return Ok("Kurs Başarıyla Güncellendi Resimli");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Dosya yükleme hatası: {ex.Message}");
+            }
+        }
+
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteCourse(int id)
@@ -90,18 +156,7 @@ namespace OnlineEgitimAPI.Controllers
             _CourseService.TDelete(values);
             return Ok();
         }
-        [Authorize(Roles = "Admin")]
-        [HttpPut]
-        public IActionResult UpdateCourse(UpdateCourseDto updateCourseDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            var values = _mapper.Map<Course>(updateCourseDto);
-            _CourseService.TUpdate(values);
-            return Ok();
-        }
+
         [HttpGet("{id}")]
         public IActionResult GetCourse(int id)
         {
@@ -109,6 +164,7 @@ namespace OnlineEgitimAPI.Controllers
             values.ImageUrl = "https://"+_configuration["BaseUrl"] + values.ImageUrl;
             return Ok(values);
         }
+
         [HttpGet("[action]/{id}")]
         public IActionResult GetCourseByUser(int id)
         {
@@ -119,6 +175,7 @@ namespace OnlineEgitimAPI.Controllers
             values.ImageUrl = "https://" + _configuration["BaseUrl"] + values.ImageUrl;
             return Ok(values);
         }
+
         [HttpGet("[action]")]
         public IActionResult CourseListByStatus()
         {

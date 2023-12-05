@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace OnlineEgitimClient.Dtos.CourseDto
+﻿namespace OnlineEgitimClient.Dtos.CourseDto
 {
-    public class UpdateCourseDto
+    public class UpdateCourseListDto
     {
         public int Id { get; set; }
         public bool Status { get; set; }
@@ -13,8 +9,6 @@ namespace OnlineEgitimClient.Dtos.CourseDto
         public string? Description { get; set; }
         public double? Price { get; set; }
         public string? Duration { get; set; } // eğitim süresi
-        [JsonIgnore]
-        public IFormFile? ImageUrl { get; set; }
         public int? SubjectCount { get; set; }
         public string? Level { get; set; }
         public string? Language { get; set; }

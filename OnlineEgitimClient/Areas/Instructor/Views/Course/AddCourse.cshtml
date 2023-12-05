@@ -22,8 +22,8 @@
 
 
         @*<label>Kurs süre</label>
-            <input type="number" asp-for="Duration" class="form-control" />
-            <br />*@
+        <input type="number" asp-for="Duration" class="form-control" />
+        <br />*@
         <div class="row">
             <div class="col-md-6">
                 <label for="timeInput">Kurs Süre</label>
@@ -55,6 +55,12 @@
         </select>
         <br />
 
+        <div class="form-group">
+            <label for="LocationID">Lokasyon:</label>
+            <select asp-for="LocationID" class="form-control" asp-items="@ViewBag.LocationList">
+                <option value="">Lokasyon Seçin</option>
+            </select>
+        </div>
 
         <button class="btn btn-primary">Kurs Ekle</button>
     </form>

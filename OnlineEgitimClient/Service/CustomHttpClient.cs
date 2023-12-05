@@ -171,6 +171,65 @@ namespace OnlineEgitimClient.Service
             }
         }
 
+        public async Task<HttpResponseMessage> PutMultipartFormData<T>(RequestParameters requestParameters, T content, int? id = null)
+        {
+            // URL oluşturma
+            string url;
+            if (requestParameters.FullEndPoint != null)
+            {
+                url = requestParameters.FullEndPoint;
+            }
+            else
+            {
+                url = $"{Url(requestParameters)}{(id != null ? $"/{id}" : "")}{(requestParameters.QueryString != null ? $"?{requestParameters.QueryString}" : "")}";
+            }
+
+            // Form verilerini oluşturma
+            using (var formData = new MultipartFormDataContent())
+            {
+                // İçerik değerlerini kontrol etme ve form-data olarak eklemeyi işleme
+                if (content != null)
+                {
+                    var properties = content.GetType().GetProperties();
+
+                    foreach (var prop in properties)
+                    {
+                        var propValue = prop.GetValue(content);
+
+                        if (propValue != null)
+                        {
+                            // Eğer özellik dosya ise, dosyayı form-data olarak ekler
+                            if (prop.PropertyType == typeof(IFormFile))
+                            {
+                                var file = (IFormFile)propValue;
+                                var fileContent = new StreamContent(file.OpenReadStream());
+                                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                                {
+                                    Name = prop.Name,
+                                    FileName = file.FileName
+                                };
+                                formData.Add(fileContent);
+                            }
+                            // Eğer özellik int veya string ise, veriyi text/plain formatında form-data olarak ekler
+                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(string))
+                            {
+                                var stringValue = propValue.ToString();
+                                var stringContent = new StringContent(stringValue, Encoding.UTF8, "text/plain");
+                                formData.Add(stringContent, prop.Name);
+                            }
+                        }
+                    }
+                }
+
+                // Kimlik doğrulama ve istek gönderme
+                var token = _httpContextAccessor.HttpContext?.Request.Cookies["Token"];
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var responseMessage = await _httpClient.PutAsync(url, formData);
+                return responseMessage;
+            }
+        }
+
 
         public async Task<HttpResponseMessage> Put<T>(RequestParameters requestParameters, T content)
         {

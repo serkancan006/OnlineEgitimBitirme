@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
+using OnlineEgitimClient.Dtos.LocationDto;
 using OnlineEgitimClient.Service;
 using System.Text;
 
@@ -32,9 +34,17 @@ namespace OnlineEgitimClient.Areas.Instructor.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddCourse()
+        public async Task<IActionResult> AddCourse()
         {
             ViewBag.UserID = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "Location", Action = "LocationListByStatus" });
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ListLocationDto>>(jsonData);
+                ViewBag.LocationList = new SelectList(values, "Id", "Address");
+                return View();
+            }
             return View();
         }
 

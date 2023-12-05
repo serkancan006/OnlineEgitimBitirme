@@ -26,6 +26,7 @@ namespace OnlineEgitimClient.Mapping
             CreateMap<ListCourseDto, Course>().ReverseMap();
             CreateMap<UpdateCourseDto, Course>().ReverseMap();
             CreateMap<AddCourseDto, Course>().ReverseMap();
+            CreateMap<UpdateCourseDto, UpdateCourseListDto>().ReverseMap();
 
             CreateMap<ListLocationDto, Location>().ReverseMap();
             CreateMap<UpdateLocationDto, Location>().ReverseMap();

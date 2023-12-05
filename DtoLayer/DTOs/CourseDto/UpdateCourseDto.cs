@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace DtoLayer.DTOs.CourseDto
         public string Description { get; set; }
         public double Price { get; set; }
         public string Duration { get; set; } // eğitim süresi
-        public string ImageUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
         public int SubjectCount { get; set; }
         public string Level { get; set; }
         public string Language { get; set; }
