@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.AppUserDto;
 using OnlineEgitimClient.Service;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace OnlineEgitimClient.Controllers
 {
@@ -34,7 +37,11 @@ namespace OnlineEgitimClient.Controllers
                 var errorContent = await responseMessage.Content.ReadAsStringAsync();
                 Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
                 Console.WriteLine($"Hata Detayları: {errorContent}");
-
+                var errors = JsonConvert.DeserializeObject<List<IdentityError>>(errorContent);
+                foreach(var error in errors ?? Enumerable.Empty<IdentityError>())
+{
+                    ModelState.AddModelError("", error.Description);
+                }
                 return View();
             }
             //return View();
@@ -62,7 +69,11 @@ namespace OnlineEgitimClient.Controllers
                 var errorContent = await responseMessage.Content.ReadAsStringAsync();
                 Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
                 Console.WriteLine($"Hata Detayları: {errorContent}");
-
+                var errors = JsonConvert.DeserializeObject<List<IdentityError>>(errorContent);
+                foreach (var error in errors ?? Enumerable.Empty<IdentityError>())
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
                 return View();
             }
             //return View();

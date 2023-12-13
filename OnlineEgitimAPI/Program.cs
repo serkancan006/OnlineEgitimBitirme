@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OnlineEgitimAPI.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,7 +58,8 @@ builder.Services.AddDbContext<Context>();
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<Context>();
+}).AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>()
+.AddEntityFrameworkStores<Context>();
 
 // Add Jwt Bearer Token
 builder.Services.AddAuthentication(options =>

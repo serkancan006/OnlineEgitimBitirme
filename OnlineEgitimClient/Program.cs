@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -66,8 +67,15 @@ builder.Services.AddAuthentication(options =>
     facebookOptions.AppSecret = "a89c931142a0bc7b216575a6b44957e2";
     facebookOptions.CallbackPath = "/signin-facebook";
     facebookOptions.SaveTokens = true;
-}); 
+});
 
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
+
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

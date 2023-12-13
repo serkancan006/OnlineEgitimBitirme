@@ -24,13 +24,13 @@ namespace OnlineEgitimClient.Controllers
             ViewBag.totalCourse = _basketService.TotalCourse();
             return View(values);
         }
-        [Authorize]
-        public async Task<IActionResult> Buy()
-        {
-            var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
-            await _basketService.BuyCourse(userId);
-            return RedirectToAction("Index");
-        }
+        //[Authorize]
+        //public async Task<IActionResult> Buy()
+        //{
+        //    var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+        //    await _basketService.BuyCourse(userId);
+        //    return RedirectToAction("Index");
+        //}
         public async Task<IActionResult> AddToCourse(int courseId)
         {
             await _basketService.AddBasketCourse(courseId);

@@ -8,15 +8,18 @@ using OnlineEgitimClient.Dtos.AppUserDto;
 using OnlineEgitimClient.Service;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Google;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace OnlineEgitimClient.Controllers
 {
     public class LoginController : Controller
     {
         private readonly CustomHttpClient _customHttpClient;
-        public LoginController(CustomHttpClient customHttpClient)
+        private readonly INotyfService _notyfService;
+        public LoginController(CustomHttpClient customHttpClient, INotyfService notyfService)
         {
             _customHttpClient = customHttpClient;
+            _notyfService = notyfService;
         }
 
         [HttpGet]
@@ -48,6 +51,7 @@ namespace OnlineEgitimClient.Controllers
                 Response.Cookies.Append("TokenExpires", expires ?? "");
                 HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
                 HttpContext.Session.SetString("userId", userId ?? "");
+                _notyfService.Success("Kullanıcı Girişi Başarılı");
                 return RedirectToAction("Index", "Default");
             }
             else
@@ -56,7 +60,7 @@ namespace OnlineEgitimClient.Controllers
                 var errorContent = await responseMessage.Content.ReadAsStringAsync();
                 Console.WriteLine($"HTTP Hata Kodu: {responseMessage.StatusCode}");
                 Console.WriteLine($"Hata Detayları: {errorContent}");
-
+                _notyfService.Error("Kullanıcı Girişi Başarısız");
                 return View();
             }
             //return View();

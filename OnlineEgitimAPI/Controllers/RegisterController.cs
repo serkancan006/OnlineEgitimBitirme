@@ -29,12 +29,14 @@ namespace OnlineEgitimAPI.Controllers
 
             var appUser = new AppUser()
             {
+                //ImageUrl
                 Name = registerAppUserDto.Name,
-                Email = registerAppUserDto.Mail,
                 Surname = registerAppUserDto.Surname,
+                Email = registerAppUserDto.Mail,
                 UserName = registerAppUserDto.UserName,
                 Status = true,
                 CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow,
             };
             var result = await _userManager.CreateAsync(appUser, registerAppUserDto.Password);
 
