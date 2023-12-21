@@ -23,7 +23,7 @@ namespace OnlineEgitimClient.Areas.Instructor.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+            var userId = Convert.ToInt32(HttpContext.Session.GetString("userId"));
 
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action= "CourseListByInstructor" }, userId);
             if (responseMessage.IsSuccessStatusCode)
@@ -39,7 +39,7 @@ namespace OnlineEgitimClient.Areas.Instructor.Controllers
         [HttpGet]
         public async Task<IActionResult> AddCourse()
         {
-            ViewBag.UserID = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+            ViewBag.UserID = Convert.ToInt32(HttpContext.Session.GetString("userId"));
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Location", Action = "LocationListByStatus" });
             if (responseMessage.IsSuccessStatusCode)
             {

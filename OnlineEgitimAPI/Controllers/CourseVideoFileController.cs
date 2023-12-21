@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using BusinessLayer.Abstract;
+using BusinessLayer.Abstract.ExternalService;
 using DtoLayer.DTOs.CourseVideoFileDto;
-using EntityLayer.Concrete;
 using EntityLayer.Concrete.File;
 using EntityLayer.Concrete.identity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Text.RegularExpressions;
 
 namespace OnlineEgitimAPI.Controllers
 {
@@ -17,33 +14,19 @@ namespace OnlineEgitimAPI.Controllers
     [ApiController]
     public class CourseVideoFileController : ControllerBase
     {
-        private readonly IWebHostEnvironment _environment;
         private readonly ICourseVideoFileService _courseVideoFileService;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserCourseAccessService _userCourseAccessService;
+        private readonly IFileOperationsService _fileOperationsService;
 
-        public CourseVideoFileController(IWebHostEnvironment environment, ICourseVideoFileService courseVideoFileService, IMapper mapper, IConfiguration configuration, UserManager<AppUser> userManager, IUserCourseAccessService userCourseAccessService)
+        public CourseVideoFileController(ICourseVideoFileService courseVideoFileService, IMapper mapper, UserManager<AppUser> userManager, IUserCourseAccessService userCourseAccessService, IFileOperationsService fileOperationsService)
         {
-            _environment = environment;
             _courseVideoFileService = courseVideoFileService;
             _mapper = mapper;
-            _configuration = configuration;
             _userManager = userManager;
             _userCourseAccessService = userCourseAccessService;
-        }
-
-        private string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            string fileExtension = Path.GetExtension(fileName);
-            string pureFileName = Path.GetFileNameWithoutExtension(fileName);
-
-            pureFileName = Regex.Replace(pureFileName, "[^a-zA-Z0-9]", "-");
-
-            string newFileName = pureFileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + fileExtension;
-            return newFileName;
+            _fileOperationsService = fileOperationsService;
         }
 
 
@@ -52,27 +35,12 @@ namespace OnlineEgitimAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCourseVideoFile([FromForm] IFormFile file, int id)
         {
-            var rootPath = _environment.WebRootPath;
-            var path = "videos/CourseVideo/";
-            var fullPath = Path.Combine(rootPath, path);
-            var fileName = GetUniqueFileName(file.FileName);
-            var filePath = Path.Combine(fullPath, fileName);
-            var databasePath = path + fileName;
-
-            // Eğer belirtilen dizin yoksa oluştur
-            if (!Directory.Exists(fullPath))
-                Directory.CreateDirectory(fullPath);
-
             try
             {
                 if (file == null || file.Length <= 0)
                     return BadRequest("Geçersiz dosya");
 
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
+                var (fileName, databasePath) = await _fileOperationsService.SaveFileAsync(file, "videos/CourseVideo/");
 
                 var fileModel = new AddCourseVideoFileDto
                 {
@@ -85,7 +53,7 @@ namespace OnlineEgitimAPI.Controllers
                 var values = _mapper.Map<CourseVideoFile>(fileModel);
                 _courseVideoFileService.TAdd(values);
 
-                //return Ok($"Dosya Adı: {file.FileName}, belirtilen klasöre yüklendi: {path}");
+
                 return Ok("Dosya başarıyla yüklendi");
             }
             catch (Exception ex)
@@ -93,20 +61,19 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya yükleme hatası: {ex.Message}");
             }
         }
-        [Authorize(Roles = "Admin")]
+
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpDelete("{id}")]
         public IActionResult DeleteCourseVideoFile(int id)
         {
             try
             {
                 var values = _courseVideoFileService.TGetByID(id);
-                var filePath = Path.Combine(_environment.WebRootPath, values.FilePath);
+                var deleted = _fileOperationsService.DeleteFile(values.FilePath);
 
-                if (System.IO.File.Exists(filePath))
+                if (deleted)
                 {
-                    System.IO.File.Delete(filePath);
                     _courseVideoFileService.TDelete(values);
-                    //return Ok($"Dosya '{values.FileDisplayName}' başarıyla silindi.");
                     return Ok("Dosya Başarıyla Silindi");
                 }
 
@@ -117,6 +84,7 @@ namespace OnlineEgitimAPI.Controllers
                 return StatusCode(500, $"Dosya silme hatası: {ex.Message}");
             }
         }
+
         [Authorize(Roles = "Admin,Instructor")]
         [HttpGet("{id}")]
         public IActionResult GetCourseVideoFile(int id)
@@ -125,12 +93,12 @@ namespace OnlineEgitimAPI.Controllers
             var mappedValues = _mapper.Map<List<ListCourseVideoFileDto>>(values);
             foreach (ListCourseVideoFileDto file in mappedValues)
             {
-                file.FilePath = "https://" + _configuration["BaseUrl"] + file.FilePath;
+                file.FilePath = _fileOperationsService.GetFileConvertUrl(file.FilePath);
             }
             return Ok(mappedValues);
         }
+
         [Authorize]
-        //[HttpGet("[action]/{courseId}")]
         [HttpGet("[action]")]
         public async Task<IActionResult> GetCourseVideoFileWithUser(int courseId, string username)
         {
@@ -144,7 +112,7 @@ namespace OnlineEgitimAPI.Controllers
                     var mappedValues = _mapper.Map<List<ListCourseVideoFileDto>>(values);
                     foreach (ListCourseVideoFileDto file in mappedValues)
                     {
-                        file.FilePath = "https://" + _configuration["BaseUrl"] + file.FilePath;
+                        file.FilePath = _fileOperationsService.GetFileConvertUrl(file.FilePath);
                     }
                     return Ok(mappedValues);
                 }
@@ -155,5 +123,6 @@ namespace OnlineEgitimAPI.Controllers
             }
             return NotFound("Kullanıcı bulunamadı.");
         }
+
     }
 }

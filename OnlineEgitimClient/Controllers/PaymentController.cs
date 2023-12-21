@@ -99,7 +99,7 @@ namespace OnlineEgitimClient.Controllers
         [Authorize]
         public async Task<IActionResult> SuccessPayment()
         {
-            var userId = Convert.ToInt32(Encoding.UTF8.GetString(HttpContext.Session.Get("userId")));
+            var userId = Convert.ToInt32(HttpContext.Session.GetString("userId"));
             await _basketService.BuyCourse(userId);
             return View();
         }

@@ -6,9 +6,9 @@
 
     string filePath = ViewBag.FilePath;
     if (filePath == null)
-    {
         filePath = Model[0].filePath;
-    }
+    else
+        filePath = "";
 }
 
 

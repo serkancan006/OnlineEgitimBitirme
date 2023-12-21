@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLayer.Abstract;
+using BusinessLayer.Abstract.ExternalService;
 using DtoLayer.DTOs.CourseDto;
-using DtoLayer.DTOs.CourseVideoFileDto;
 using EntityLayer.Concrete;
-using EntityLayer.Concrete.File;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
-using System.Drawing;
-using System.Text.RegularExpressions;
 
 namespace OnlineEgitimAPI.Controllers
 {
@@ -19,15 +15,13 @@ namespace OnlineEgitimAPI.Controllers
     {
         private readonly ICourseService _CourseService;
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _environment;
-        private readonly IConfiguration _configuration;
+        private readonly IFileOperationsService _fileOperationsService;
 
-        public CourseController(ICourseService courseService, IMapper mapper, IWebHostEnvironment environment, IConfiguration configuration)
+        public CourseController(ICourseService courseService, IMapper mapper, IFileOperationsService fileOperationsService)
         {
             _CourseService = courseService;
             _mapper = mapper;
-            _environment = environment;
-            _configuration = configuration;
+            _fileOperationsService = fileOperationsService;
         }
 
         [HttpGet]
@@ -36,45 +30,30 @@ namespace OnlineEgitimAPI.Controllers
             var values = _CourseService.TGetList();
             foreach (var item in values)
             {
-                item.ImageUrl = "https://" + _configuration["BaseUrl"] + item.ImageUrl;
+                item.ImageUrl = _fileOperationsService.GetFileConvertUrl(item.ImageUrl);
             }
             return Ok(values);
         }
         [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
-        public async Task<IActionResult> AddCourse([FromForm]AddCourseDto addCourseDto)
+        public async Task<IActionResult> AddCourse([FromForm] AddCourseDto addCourseDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var rootPath = _environment.WebRootPath;
-            var path = "images/CourseImage/";
-            var fullPath = Path.Combine(rootPath, path);
-            var fileName = GetUniqueFileName(addCourseDto.ImageUrl.FileName);
-            var filePath = Path.Combine(fullPath, fileName);
-            var databasePath = path + fileName;
-            // Eğer belirtilen dizin yoksa oluştur
-            if (!Directory.Exists(fullPath))
-                Directory.CreateDirectory(fullPath);
 
             try
             {
                 if (addCourseDto.ImageUrl == null || addCourseDto.ImageUrl.Length <= 0)
                     return BadRequest("Geçersiz dosya");
 
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await addCourseDto.ImageUrl.CopyToAsync(stream);
-                }
-
                 var values = _mapper.Map<Course>(addCourseDto);
+                var (fileName, databasePath) = await _fileOperationsService.SaveFileAsync(addCourseDto.ImageUrl, "images/CourseImage/");
                 values.ImageUrl = databasePath;
 
                 _CourseService.TAdd(values);
 
-                //return Ok($"Dosya Adı: {file.FileName}, belirtilen klasöre yüklendi: {path}");
                 return Ok("Kurs Başarıyla Eklendi");
             }
             catch (Exception ex)
@@ -91,13 +70,12 @@ namespace OnlineEgitimAPI.Controllers
             {
                 return BadRequest();
             }
-           
 
             try
             {
                 if (updateCourseDto.ImageUrl == null || updateCourseDto.ImageUrl.Length <= 0)
                 {
-                    var course =  _CourseService.TGetByID(updateCourseDto.Id);
+                    var course = _CourseService.TGetByID(updateCourseDto.Id);
                     var values = _mapper.Map<Course>(updateCourseDto);
                     values.ImageUrl = course.ImageUrl;
                     _CourseService.TUpdate(values);
@@ -105,24 +83,10 @@ namespace OnlineEgitimAPI.Controllers
                 }
                 else
                 {
-                    var rootPath = _environment.WebRootPath;
-                    var path = "images/CourseImage/";
-                    var fullPath = Path.Combine(rootPath, path);
-                    var fileName = GetUniqueFileName(updateCourseDto.ImageUrl.FileName);
-                    var filePath = Path.Combine(fullPath, fileName);
-                    var databasePath = path + fileName;
-                    // Eğer belirtilen dizin yoksa oluştur
-                    if (!Directory.Exists(fullPath))
-                        Directory.CreateDirectory(fullPath);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await updateCourseDto.ImageUrl.CopyToAsync(stream);
-                    }
-
                     var values = _mapper.Map<Course>(updateCourseDto);
+                    _fileOperationsService.DeleteFile(values.ImageUrl);
+                    var (fileName, databasePath) = await _fileOperationsService.SaveFileAsync(updateCourseDto.ImageUrl, "images/CourseImage/");
                     values.ImageUrl = databasePath;
-
                     _CourseService.TUpdate(values);
 
                     return Ok("Kurs Başarıyla Güncellendi Resimli");
@@ -148,7 +112,7 @@ namespace OnlineEgitimAPI.Controllers
         public IActionResult GetCourse(int id)
         {
             var values = _CourseService.TGetByID(id);
-            values.ImageUrl = "https://"+_configuration["BaseUrl"] + values.ImageUrl;
+            values.ImageUrl = _fileOperationsService.GetFileConvertUrl(values.ImageUrl);
             return Ok(values);
         }
 
@@ -159,7 +123,7 @@ namespace OnlineEgitimAPI.Controllers
             values.CourseViewCountLog += 1;
             Course model = _mapper.Map<Course>(values);
             _CourseService.TUpdate(model);
-            values.ImageUrl = "https://" + _configuration["BaseUrl"] + values.ImageUrl;
+            values.ImageUrl = _fileOperationsService.GetFileConvertUrl(values.ImageUrl);
             return Ok(values);
         }
 
@@ -169,7 +133,7 @@ namespace OnlineEgitimAPI.Controllers
             var values = _CourseService.TGetListTrueStatus();
             foreach (var item in values)
             {
-                item.ImageUrl = "https://"+_configuration["BaseUrl"] + item.ImageUrl;
+                item.ImageUrl = _fileOperationsService.GetFileConvertUrl(item.ImageUrl);
             }
             return Ok(values);
         }
@@ -180,7 +144,7 @@ namespace OnlineEgitimAPI.Controllers
             var values = _CourseService.TGetListByInstructor(id);
             foreach (var item in values)
             {
-                item.ImageUrl = "https://" + _configuration["BaseUrl"] + item.ImageUrl;
+                item.ImageUrl = _fileOperationsService.GetFileConvertUrl(item.ImageUrl);
             }
             return Ok(values);
         }
@@ -190,7 +154,7 @@ namespace OnlineEgitimAPI.Controllers
         {
             var values = _CourseService.TGetListInclude().Select(x => new
             {
-                ImageUrl = "https://" + _configuration["BaseUrl"] + x.ImageUrl,
+                ImageUrl = _fileOperationsService.GetFileConvertUrl(x.ImageUrl),
                 UserName = x.AppUser.UserName,
                 AppUserID = x.AppUserID
             }).ToList();
@@ -198,16 +162,6 @@ namespace OnlineEgitimAPI.Controllers
             return Ok(values);
         }
 
-        private string GetUniqueFileName(string fileName)
-        {
-            fileName = Path.GetFileName(fileName);
-            string fileExtension = Path.GetExtension(fileName);
-            string pureFileName = Path.GetFileNameWithoutExtension(fileName);
 
-            pureFileName = Regex.Replace(pureFileName, "[^a-zA-Z0-9]", "-");
-
-            string newFileName = pureFileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + fileExtension;
-            return newFileName;
-        }
     }
 }

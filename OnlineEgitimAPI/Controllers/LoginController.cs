@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Abstract;
+﻿using BusinessLayer.Abstract.ExternalService;
 using DtoLayer.DTOs.AppUserDto;
 using DtoLayer.DTOs.TokenDto;
 using EntityLayer.Concrete.identity;

@@ -1,12 +1,7 @@
-using BusinessLayer.Abstract;
-using BusinessLayer.Concrete;
-using DataAccessLayer.Abstract;
+using BusinessLayer.Container;
 using DataAccessLayer.Concrete;
-using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete.identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OnlineEgitimAPI.Models;
@@ -19,6 +14,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => options.Serialize
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "My API", Version = "v1" });
@@ -55,6 +51,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddDbContext<Context>();
+
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
@@ -80,35 +77,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddScoped<IAboutDal, EfAboutDal>();
-builder.Services.AddScoped<IAboutService, AboutManager>();
-
-builder.Services.AddScoped<IContactDal, EfContactDal>();
-builder.Services.AddScoped<IContactService, ContactManager>();
-
-builder.Services.AddScoped<ICourseDal, EfCourseDal>();
-builder.Services.AddScoped<ICourseService, CourseManager>();
-
-builder.Services.AddScoped<ILocationDal, EfLocationDal>();
-builder.Services.AddScoped<ILocationService, LocationManager>();
-
-builder.Services.AddScoped<IPurchasedCourseDal, EfPurchasedCourseDal>();
-builder.Services.AddScoped<IPurchasedCourseService, PurchasedCourseManager>();
-
-builder.Services.AddScoped<IWidgetClickLogDal, EfWidgetClickLogDal>();
-builder.Services.AddScoped<IWidgetClickLogService, WidgetClickLogManager>();
-
-builder.Services.AddScoped<IFileDal, EfFileDal>();
-builder.Services.AddScoped<IFileService, FileManager>();
-builder.Services.AddScoped<ICourseImageFileDal, EfCourseImageFileDal>();
-builder.Services.AddScoped<ICourseImageFileService, CourseImageFileManager>();
-builder.Services.AddScoped<ICourseVideoFileDal, EfCourseVideoFile>();
-builder.Services.AddScoped<ICourseVideoFileService, CourseVideoFileManager>();
-//builder.Services.AddScoped<ICourseCourseVideoFileDal, EfCourseCourseVideoFileDal>();
-//builder.Services.AddScoped<ICourseCourseVideoFileService, CourseCourseVideoFileManager>();
-builder.Services.AddScoped<IUserCourseAccessService, UserCourseAccessManager>();
-
-builder.Services.AddScoped<ICreateTokenService, CreateTokenManager>();
+builder.Services.ContainerDependencies();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
