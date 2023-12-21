@@ -14,19 +14,17 @@
             <th>Durumu</th>
             <th>Sil</th>
             <th>Güncelle</th>
-            <th>Detaylar</th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@item.Id</td>
                 <td>@item.Address</td>
-                <td>@item.CreatedDate</td>
-                <td>@item.UpdatedDate</td>
+                <td>@(((DateTime)item.CreatedDate).ToString("dd-MMM-yyyy"))</td>
+                <td>@(((DateTime)item.UpdatedDate).ToString("dd-MMM-yyyy"))</td>
                 <td>@item.Status</td>
                 <td><a href="/Admin/Location/DeleteLocation/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
                 <td><a href="/Admin/Location/UpdateLocation/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
-                <td><a href="#" class="btn mb-1 btn-rounded btn-outline-warning">Detaylar</a></td>
             </tr>
         }
     </table>

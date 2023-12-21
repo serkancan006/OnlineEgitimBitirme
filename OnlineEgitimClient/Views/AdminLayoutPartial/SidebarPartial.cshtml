@@ -2,34 +2,63 @@
     string controllerName = ViewContext.RouteData.Values["controller"].ToString();
 }
 
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar">
-    <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link @(controllerName == "Dashboard" ? "active" : "")" href="/Admin/Dashboard/Index/">
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(controllerName == "About" ? "active" : "")" href="/Admin/About/Index/">
-                    Hakkımızda
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(controllerName == "Contact" ? "active" : "")" href="/Admin/Contact/Index/">
-                    İletişim
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(controllerName == "Course" ? "active" : "")" href="/Admin/Course/Index/">
-                    Kurslar
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link @(controllerName == "Location" ? "active" : "")" href="/Admin/Location/Index/">
-                    Lokasyonlar
-                </a>
-            </li>
-        </ul>
+<aside class="left-sidebar" data-sidebarbg="skin6">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <!-- User Profile-->
+                <li class="sidebar-item pt-2">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/Dashboard/Index/"
+                       aria-expanded="false">
+                        <i class="far fa-clock" aria-hidden="true"></i>
+                        <span class="hide-menu">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                       aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span class="hide-menu">Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/About/Index/"
+                       aria-expanded="false">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                        <span class="hide-menu">Hakkımızda</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/Contact/Index/"
+                       aria-expanded="false">
+                        <i class="fa fa-font" aria-hidden="true"></i>
+                        <span class="hide-menu">İletişim</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/Course/Index/"
+                       aria-expanded="false">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                        <span class="hide-menu">Kurslar</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/Location/Index/"
+                       aria-expanded="false">
+                        <i class="fa fa-columns" aria-hidden="true"></i>
+                        <span class="hide-menu">Lokasyonlar</span>
+                    </a>
+                </li>
+                <li class="text-center p-20 upgrade-btn">
+                    <a href="/Login/Logout/"
+                       class="btn d-grid btn-danger text-white" target="_blank">
+                        Çıkış Yap
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
     </div>
-</nav>
+</aside>

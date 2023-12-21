@@ -60,7 +60,7 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AdminUpdateLocation(int id)
+        public async Task<IActionResult> UpdateLocation(int id)
         {
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Location" }, id);
             if (responseMessage.IsSuccessStatusCode)
@@ -73,7 +73,7 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AdminUpdateLocation(UpdateLocationDto model)
+        public async Task<IActionResult> UpdateLocation(UpdateLocationDto model)
         {
             var responseMessage = await _customHttpClient.Put<UpdateLocationDto>(new() { Controller = "Location" }, model);
             if (responseMessage.IsSuccessStatusCode)

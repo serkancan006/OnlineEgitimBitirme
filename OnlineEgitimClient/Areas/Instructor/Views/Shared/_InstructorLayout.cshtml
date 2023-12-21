@@ -3,35 +3,65 @@
 }
 
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 @await Html.PartialAsync("../InstructorLayout/HeadPartial.cshtml")
+
 <body>
-
-    @await Html.PartialAsync("../InstructorLayout/NavbarPartial.cshtml")
-
-
-
-    <div class="container-fluid">
-        <div class="row">
-
-            @await Html.PartialAsync("../InstructorLayout/SidebarPartial.cshtml")
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                @*<h2>@controllerName</h2>*@
-                <br />
-
-                @RenderBody()
-
-            </main>
-
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
     </div>
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+        @await Html.PartialAsync("../InstructorLayout/NavbarPartial.cshtml")
+
+        @await Html.PartialAsync("../InstructorLayout/SidebarPartial.cshtml")
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">@controllerName</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <div class="d-md-flex">
+                            <ol class="breadcrumb ms-auto">
+                                <li><a href="/Default/Index/" class="fw-normal">Siteye Git</a></li>
+                            </ol>
+                            <a href="/Login/Logout/" target="_blank"
+                               class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">
+                                Çıkış Yap
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                @RenderSection("DashboardSection", required: false)
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="white-box">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+                @RenderSection("DashboardSection2", required: false)
+            </div>
+
+            <footer class="footer text-center">
+                @DateTime.UtcNow.Year © powered by Serkan Can <a href="#">online-egitim.com</a>
+            </footer>
+        </div>
+    </div>
+
+    
 
     @await Html.PartialAsync("../InstructorLayout/ScriptPartial.cshtml")
-
 </body>
 </html>

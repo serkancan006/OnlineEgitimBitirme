@@ -19,7 +19,7 @@ namespace BusinessLayer.Concrete.ExternalService
             SymmetricSecurityKey key = new SymmetricSecurityKey(bytes);
             SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            DateTime expires = DateTime.Now.AddMinutes(3);
+            DateTime expires = DateTime.Now.AddMinutes(60*24);
             JwtSecurityToken token = new JwtSecurityToken(issuer: "https://localhost", audience: "https://localhost", notBefore: DateTime.Now, expires: expires, signingCredentials: credentials);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
@@ -45,7 +45,7 @@ namespace BusinessLayer.Concrete.ExternalService
                 //new Claim(ClaimTypes.Role,"Instructor"),
             };
 
-            DateTime expires = DateTime.Now.AddMinutes(3);
+            DateTime expires = DateTime.Now.AddMinutes(60 * 24);
             JwtSecurityToken token = new JwtSecurityToken(issuer: "https://localhost", audience: "https://localhost", notBefore: DateTime.Now, expires: expires, signingCredentials: credentials, claims: claims);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
@@ -69,7 +69,7 @@ namespace BusinessLayer.Concrete.ExternalService
                 new Claim(ClaimTypes.NameIdentifier,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role,"Instructor"),
             };
-            DateTime expires = DateTime.Now.AddMinutes(3);
+            DateTime expires = DateTime.Now.AddMinutes(60 * 24);
             JwtSecurityToken token = new JwtSecurityToken(issuer: "https://localhost", audience: "https://localhost", notBefore: DateTime.Now, expires: expires, signingCredentials: credentials, claims: claims);
 
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();

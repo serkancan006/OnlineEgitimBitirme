@@ -8,21 +8,11 @@
     <table class="table table-bordered">
         <tr>
             <th>#</th>
-            <th>Resim</th>
             <th>Title</th>
-            <th>Açıklama</th>
-            <th>Resim2</th>
             <th>Title2</th>
-            <th>Açıklama2</th>
             <th>SubTitle</th>
-            <th>SubDesc</th>
             <th>SubTitle2</th>
-            <th>SubDesc2</th>
             <th>SubTitle3</th>
-            <th>SubDesc3</th>
-            <th>O.Tarihi</th>
-            <th>G.Tarihi</th>
-            <th>Durumu</th>
             <th>Sil</th>
             <th>Güncelle</th>
             <th>Detaylar</th>
@@ -31,21 +21,11 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.Image1</td>
                 <td>@item.Title</td>
-                <td>@item.Description</td>
-                <td>@item.Image2</td>
                 <td>@item.Title2</td>
-                <td>@item.Description2</td>
                 <td>@item.SubTitle</td>
-                <td>@item.SubDesc</td>
                 <td>@item.SubTitle2</td>
-                <td>@item.SubDesc2</td>
                 <td>@item.SubTitle3</td>
-                <td>@item.SubDesc3</td>
-                <td>@item.CreatedDate</td>
-                <td>@item.UpdatedDate</td>
-                <td>@item.Status</td>
                 <td><a href="/Admin/About/DeleteAbout/@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Sil</a></td>
                 <td><a href="/Admin/About/UpdateAbout/@item.Id" class="btn mb-1 btn-rounded btn-outline-success">Güncelle</a></td>
                 <td><a href="/About/Index/" class="btn mb-1 btn-rounded btn-outline-warning">Detaylar</a></td>
