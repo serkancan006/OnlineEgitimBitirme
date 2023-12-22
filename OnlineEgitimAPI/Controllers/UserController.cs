@@ -1,25 +1,38 @@
-﻿using AutoMapper;
-using BusinessLayer.Abstract;
-using EntityLayer.Concrete.identity;
+﻿using EntityLayer.Concrete.identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace OnlineEgitimAPI.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IMapper _mapper;
-        public UserController(IMapper mapper, UserManager<AppUser> userManager)
+
+        public UserController(UserManager<AppUser> userManager)
         {
-            _mapper = mapper;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult UserList()
         {
-            return Ok();
+            var users = _userManager.Users.ToList();
+            return Ok(users);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> InstructorList()
+        {
+            var usersInRole = (await _userManager.GetUsersInRoleAsync("Instructor")).Take(10);
+
+            return Ok(usersInRole);
+        }
+
+
     }
 }

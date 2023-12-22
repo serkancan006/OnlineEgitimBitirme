@@ -47,8 +47,8 @@ namespace OnlineEgitimClient.Controllers
           
             if (responseMessage.IsSuccessStatusCode)
             {
-                Response.Cookies.Append("Token", token ?? "");
-                Response.Cookies.Append("TokenExpires", expires ?? "");
+                Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
                 HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
                 HttpContext.Session.SetString("userId", userId ?? "");
                 _notyfService.Success("Kullanıcı Girişi Başarılı");
@@ -146,7 +146,7 @@ namespace OnlineEgitimClient.Controllers
             HttpContext.Session.Remove("userId");
             Response.Cookies.Delete("Token");
             Response.Cookies.Delete("TokenExpires");
-            Response.Cookies.Delete("UserCourseList");
+            Response.Cookies.Delete("UserCourseList"); //  , new CookieOptions { SameSite = SameSiteMode.Strict }
             return RedirectToAction("Index", "Login");
         }
     }

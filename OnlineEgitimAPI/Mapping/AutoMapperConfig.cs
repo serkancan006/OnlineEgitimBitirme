@@ -2,6 +2,7 @@
 using DtoLayer.DTOs.AboutDto;
 using DtoLayer.DTOs.AppUserDto;
 using DtoLayer.DTOs.ContactDto;
+using DtoLayer.DTOs.ContactUsDto;
 using DtoLayer.DTOs.CourseDto;
 using DtoLayer.DTOs.CourseVideoFileDto;
 using DtoLayer.DTOs.LocationDto;
@@ -22,6 +23,9 @@ namespace OnlineEgitimAPI.Mapping
 
             CreateMap<AddContactDto, Contact>().ReverseMap();
             CreateMap<UpdateContactDto, Contact>().ReverseMap();
+
+            CreateMap<AddContactUsDto, ContactUs>().ReverseMap();
+            CreateMap<UpdateContactUsDto, ContactUs>().ReverseMap();
 
             CreateMap<AddCourseDto, Course>().ReverseMap();
             CreateMap<UpdateCourseDto, Course>().ReverseMap();

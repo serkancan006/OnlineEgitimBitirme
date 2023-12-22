@@ -1,0 +1,37 @@
+﻿@model List<ContactUsViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Adı</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Konu</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">Detaylar</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><i class="far fa-square"></i></td>
+                    <td>@item.Name</td>
+                    <td>@item.Mail</td>
+                    <td>@item.Subject</td>
+                    <td>@(((DateTime)item.CreatedDate).ToString("dd-MMM-yyyy"))</td>
+                    <td><a href="/Admin/ContactUs/MessageDetails/@item.Id" class="btn btn-outline-info">Detaylar</a></td>
+                    <td><a href="/Admin/ContactUs/DeleteMessage/@item.Id" class="btn btn-outline-danger">Sil</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+

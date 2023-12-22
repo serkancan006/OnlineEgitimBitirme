@@ -23,6 +23,9 @@ namespace BusinessLayer.Container
             services.AddScoped<IContactDal, EfContactDal>();
             services.AddScoped<IContactService, ContactManager>();
 
+            services.AddScoped<IContactUsDal, EfContactUsDal>();
+            services.AddScoped<IContactUsService, ContactUsManager>();
+
             services.AddScoped<ICourseDal, EfCourseDal>();
             services.AddScoped<ICourseService, CourseManager>();
 

@@ -5,7 +5,16 @@
 }
 
 
-@*@await Html.PartialAsync("~/Views/Default/ContactPartial.cshtml")*@
-@await Component.InvokeAsync("_ContactPartial");
-
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                @await Component.InvokeAsync("_ContactPartial");
+            </div>
+            <div class="col-lg-7">
+                @await Component.InvokeAsync("_ContactUsPartial")
+            </div>
+        </div>
+    </div>
+</div>
 

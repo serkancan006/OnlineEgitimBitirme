@@ -98,6 +98,7 @@ namespace DataAccessLayer.Concrete
 		public DbSet<Location> Locations { get; set; }
 		public DbSet<PurchasedCourse> PurchasedCourses { get; set; }
 		public DbSet<WidgetClickLog> WidgetClickLogs { get; set; }
+		public DbSet<ContactUs> ContactUses { get; set; }
 
 		public DbSet<Instructor> Instructor { get; set; }
 

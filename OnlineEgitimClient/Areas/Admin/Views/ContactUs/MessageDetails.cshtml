@@ -1,0 +1,18 @@
+﻿@model ContactUsViewModel
+@{
+    ViewData["Title"] = "MessageDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Konu: @Model.Subject</h5>
+    </div>
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Gönderen: @Model.Mail <i class="fas fa-envelope"></i></h6>
+        <h6 class="card-subtitle mb-2 text-muted">Tarih: @(((DateTime)Model.CreatedDate).ToString("dd-MMM-yyyy")) <i class="fas fa-calendar-alt"></i></h6>
+        <br />
+        <p class="card-text">@Model.Body</p>
+    </div>
+</div>
+<a href="/Admin/Mail/Index/" class="btn btn-primary">Yanıtla</a>

@@ -1,0 +1,27 @@
+﻿@model ContactUsViewModel
+
+<div class="section-title position-relative mb-4">
+    <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Nasıl Yardım Edebiliriz?</h6>
+    <h1 class="display-4">Bize Mesaj Gönderin</h1>
+</div>
+<div class="contact-form">
+    <form method="post" asp-controller="ContactUs" asp-action="SendMessage">
+        <div class="row">
+            <div class="col-6 form-group">
+                <input type="text" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Adınız" asp-for="Name">
+            </div>
+            <div class="col-6 form-group">
+                <input type="email" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Your Mailiniz" asp-for="Mail">
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" asp-for="Subject" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Konu">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control border-top-0 border-right-0 border-left-0 p-0" asp-for="Body" rows="5" placeholder="Mesajınız"></textarea>
+        </div>
+        <div>
+            <button class="btn btn-primary py-3 px-5" type="submit">Gönder</button>
+        </div>
+    </form>
+</div>
