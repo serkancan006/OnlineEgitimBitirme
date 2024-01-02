@@ -39,9 +39,12 @@ builder.Services.AddSingleton<BasketService>();
 //Google Login
 builder.Services.AddAuthentication(options =>
 {
-    //options.DefaultScheme = "Cookies"; // Varsayýlan þema adýný belirtin
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; 
+    //options.DefaultScheme = "Cookies"; // Varsayýlan þema adýný belirtin
+    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(opt =>
 {
     opt.RequireHttpsMetadata = true;

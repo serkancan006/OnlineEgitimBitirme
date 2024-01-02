@@ -1,8 +1,12 @@
 ﻿@model List<ListPurchasedCourseWİthCourseDto>
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <h1 class="text-center">Ögrenim İçeriğim</h1>
 <hr class="border border-danger border-1 my-5" />
@@ -24,4 +28,10 @@
             </div>
         </div>
     }
+</div>
+<hr class="border border-danger border-1 my-5" />
+<div class="container">
+    <!-- İlgili Kurslar-->
+    @await Component.InvokeAsync("_RelatedCoursesPartial")
+    <!-- ilgili Kurslar-->
 </div>

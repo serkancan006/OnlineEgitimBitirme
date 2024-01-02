@@ -521,7 +521,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "91996a5c-b397-4ce5-a1f1-10e3d16681f2",
+                            ConcurrencyStamp = "fbaf4b71-cd04-4145-9ff5-8480a0cbb248",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
                             EmailConfirmed = true,
@@ -529,7 +529,7 @@ namespace DataAccessLayer.Migrations
                             Name = "RootAdmin",
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEASDDy7OqyTbLAvDRHlPrO/3lHU1TDuDTaIcayvcKJ3vDHb0d+DRmGDV63ZxPUyLuw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOKHj2mcTAffu7dbEkJ4FibjYXKefl5/P1nvMLh/iBtfl0ovTjC8AO8OTVzdF+PL3w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = false,
@@ -730,13 +730,13 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
                         .WithMany("PurchasedCourses")
                         .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
                         .WithMany("PurchasedCourses")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -749,13 +749,13 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
                         .WithMany("WidgetClickLogs")
                         .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
                         .WithMany("WidgetClickLogs")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");

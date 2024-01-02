@@ -44,7 +44,7 @@ namespace OnlineEgitimClient.Areas.Admin.Controllers
                 SmtpClient client = new SmtpClient();
                 client.Connect("smtp.gmail.com", 587, false);
 
-                client.Authenticate("kayatablet2018@gmail.com", "wdnmjrujeagtnhlzgbr");
+                client.Authenticate("kayatablet2018@gmail.com", "wjrujeagtnhlzgbr");
                 client.Send(mimeMessage);
                 client.Disconnect(true);
 

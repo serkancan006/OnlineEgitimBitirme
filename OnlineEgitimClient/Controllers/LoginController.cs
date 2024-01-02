@@ -144,6 +144,7 @@ namespace OnlineEgitimClient.Controllers
             //await HttpContext.SignOutAsync(); -> identitiy claim ile çıkış
             HttpContext.Session.Remove("UserNameOrEmail");
             HttpContext.Session.Remove("userId");
+            HttpContext.Session.Clear();
             Response.Cookies.Delete("Token");
             Response.Cookies.Delete("TokenExpires");
             Response.Cookies.Delete("UserCourseList"); //  , new CookieOptions { SameSite = SameSiteMode.Strict }
