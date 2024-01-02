@@ -18,7 +18,7 @@ namespace OnlineEgitimClient.Controllers
         //https://localhost:7064/api/PurchasedCourse/PurchasedCourseList?username=serkan06
         public async Task<IActionResult> Index()
         {
-            var responseMessage = await _customHttpClient.Get(new() { Controller = "PurchasedCourse", Action = "PurchasedCourseList", QueryString = $"username={HttpContext.Session.GetString("UserNameOrEmail")}" });
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "PurchasedCourse", Action = "PurchasedCourseList", QueryString = $"userId={HttpContext.Session.GetString("userId")}" });
 
             if (responseMessage.IsSuccessStatusCode)
             {

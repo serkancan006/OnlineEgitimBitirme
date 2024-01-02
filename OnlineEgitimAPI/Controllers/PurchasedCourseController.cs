@@ -75,9 +75,9 @@ namespace OnlineEgitimAPI.Controllers
         }
         [Authorize]
         [HttpGet("[action]")]
-        public async Task<IActionResult> PurchasedCourseList(string username)
+        public async Task<IActionResult> PurchasedCourseList(string userId)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByIdAsync(userId);
             var values = _PurchasedCourseService.TCourseListInclude().Where(x => x.AppUserID == user?.Id).Select(x => new
             {
                 x.CourseID,

@@ -69,7 +69,7 @@ namespace OnlineEgitimAPI.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> GoogleLogin(ExternalLoginDto model)
         {
-            AppUser user = await _userManager.FindByNameAsync(model.userName);
+            AppUser user = await _userManager.FindByEmailAsync(model.userEmail);
             if (user == null)
             {
                 AppUser newUser = new AppUser();
@@ -80,10 +80,10 @@ namespace OnlineEgitimAPI.Controllers
                 await _userManager.CreateAsync(newUser);
                 var userLoginInfo = new UserLoginInfo(model.provider, model.userId, "GOOGLE");
                 await _userManager.AddLoginAsync(newUser, userLoginInfo);
-                user = newUser;
             }
-          
-                var result = await _signInManager.ExternalLoginSignInAsync(model.provider, model.userId, false, false);
+            user = await _userManager.FindByEmailAsync(model.userEmail);
+
+            var result = await _signInManager.ExternalLoginSignInAsync(model.provider, model.userId, false, false);
                 if (result.Succeeded)
                 {
                     if (user != null)
