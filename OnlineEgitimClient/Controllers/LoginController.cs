@@ -9,6 +9,7 @@ using OnlineEgitimClient.Service;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Google;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authentication.Facebook;
 
 namespace OnlineEgitimClient.Controllers
 {
@@ -37,16 +38,15 @@ namespace OnlineEgitimClient.Controllers
             }
 
             var responseMessage = await _customHttpClient.Post<LoginAppUserDto>(new() { Controller = "Login" }, model);
-            var responseContent = await responseMessage.Content.ReadAsStringAsync();
-            var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
-            var token = responseObject?["value"]?["token"]?.ToString();
-            var expires = responseObject?["value"]?["expires"]?.ToString();
-            //var message = responseObject?["message"]?.ToString();
-            var userId = responseObject?["userId"]?.ToString();
-       
-          
             if (responseMessage.IsSuccessStatusCode)
             {
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
+                var token = responseObject?["value"]?["token"]?.ToString();
+                var expires = responseObject?["value"]?["expires"]?.ToString();
+                //var message = responseObject?["message"]?.ToString();
+                var userId = responseObject?["userId"]?.ToString();
+
                 Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
                 Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
                 HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
@@ -65,78 +65,86 @@ namespace OnlineEgitimClient.Controllers
             }
             //return View();
         }
+
         [Authorize(AuthenticationSchemes = "Google") ]
         public async Task<IActionResult> GoogleLogin()
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userClaims = claimsIdentity?.Claims;
+            var authenticationResult = await HttpContext.AuthenticateAsync("Google");
 
-            var userInfo = userClaims?.Select(c => new { c.Type, c.Value });
-            var userEmail = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var userName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var userId = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var userFirstName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
-            var userLastName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
-            var provider = "Google";
-            var accessToken = await HttpContext.GetTokenAsync(GoogleDefaults.AuthenticationScheme, "access_token");
+            if (authenticationResult.Succeeded)
+            {
+                ExternalLoginDto user = new ExternalLoginDto();
+                var claimsIdentity = User.Identity as ClaimsIdentity;
 
+                user.userEmail = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                user.userName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                user.userId = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                user.userFirstName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
+                user.userLastName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                user.provider = claimsIdentity?.AuthenticationType;
+                user.accessToken = await HttpContext.GetTokenAsync(GoogleDefaults.AuthenticationScheme, "access_token");
 
-            Console.WriteLine($"accessToken: {accessToken}");
-            Console.WriteLine($"User Email: {userEmail}");
-            Console.WriteLine($"User Name: {userName}");
-            Console.WriteLine($"User ID: {userId}");
-            Console.WriteLine($"User First Name: {userFirstName}");
-            Console.WriteLine($"User Last Name: {userLastName}");
-            Console.WriteLine($"provider: {provider}");
-         
+                var responseMessage = await _customHttpClient.Post<ExternalLoginDto>(new() { Controller = "Login", Action="GoogleLogin" }, user);
 
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                    var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
+                    var token = responseObject?["value"]?["token"]?.ToString();
+                    var expires = responseObject?["value"]?["expires"]?.ToString();
+                    //var message = responseObject?["message"]?.ToString();
+                    var userId = responseObject?["userId"]?.ToString();
+
+                    Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                    Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                    HttpContext.Session.SetString("UserNameOrEmail", user.userName);
+                    HttpContext.Session.SetString("userId", userId ?? "");
+                    _notyfService.Success("Kullanıcı Girişi Başarılı");
+                    return RedirectToAction("Index", "Default");
+                }
+            }
             return RedirectToAction("Index", "Login");
         }
+
         [Authorize(AuthenticationSchemes = "Facebook")]
         public async Task<IActionResult> FacebookLogin()
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var userClaims = claimsIdentity?.Claims;
-            var userInfo = userClaims?.Select(c => new { c.Type, c.Value });
-
-            foreach (var item in userInfo)
-            {
-                Console.WriteLine($"{item.Type}: {item.Value}");
-            }
-            
-            var userEmail = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-            var userName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var userId = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var userFirstName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
-            var userLastName = userClaims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
-            var provider = "Facebook";
-            var accessToken = await HttpContext.GetTokenAsync(GoogleDefaults.AuthenticationScheme, "access_token");
-
             var authenticationResult = await HttpContext.AuthenticateAsync("Facebook");
-
-            // Eğer kullanıcı başarılı bir şekilde doğrulandıysa
             if (authenticationResult.Succeeded)
             {
-                // Access Token bilgisini alıp konsola yazdırabilirsiniz
-                var accesToken = authenticationResult.Properties.GetTokenValue("access_token");
+                ExternalLoginDto user = new ExternalLoginDto();
+                var claimsIdentity = User.Identity as ClaimsIdentity;
 
-                // Konsola yazdırma işlemi
-                Console.WriteLine("Access Token: " + accesToken);
+                user.userEmail = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                user.userName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                user.userId = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                user.userFirstName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
+                user.userLastName = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                user.provider = claimsIdentity?.AuthenticationType;
+                user.accessToken = await HttpContext.GetTokenAsync(FacebookDefaults.AuthenticationScheme, "access_token");
 
-                // Diğer işlemler veya dönüş
-                // Örneğin, Access Token'i başka bir servise gönderme veya kullanma işlemleri yapılabilir.
+                var responseMessage = await _customHttpClient.Post<ExternalLoginDto>(new() { Controller = "Login", Action = "FacebookLogin" }, user);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                    var responseObject = JsonConvert.DeserializeObject<JObject>(responseContent);
+                    var token = responseObject?["value"]?["token"]?.ToString();
+                    var expires = responseObject?["value"]?["expires"]?.ToString();
+                    //var message = responseObject?["message"]?.ToString();
+                    var userId = responseObject?["userId"]?.ToString();
+
+                    Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                    Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                    HttpContext.Session.SetString("UserNameOrEmail", user.userName);
+                    HttpContext.Session.SetString("userId", userId ?? "");
+                    _notyfService.Success("Kullanıcı Girişi Başarılı");
+                    return RedirectToAction("Index", "Default");
+                }
             }
-            Console.WriteLine($"accessToken: {accessToken}");
-            Console.WriteLine($"User Email: {userEmail}");
-            Console.WriteLine($"User Name: {userName}");
-            Console.WriteLine($"User ID: {userId}");
-            Console.WriteLine($"User First Name: {userFirstName}");
-            Console.WriteLine($"User Last Name: {userLastName}");
-            Console.WriteLine($"provider: {provider}");
-
-
             return RedirectToAction("Index", "Login");
         }
+
         [Authorize]
         public IActionResult Logout()
         {
