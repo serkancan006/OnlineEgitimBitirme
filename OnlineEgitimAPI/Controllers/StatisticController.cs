@@ -37,8 +37,9 @@ namespace OnlineEgitimAPI.Controllers
         [HttpGet("[action]/{id}")]
         public IActionResult InstructorPurchasedCourseCount(int id)
         {
-            var values = _purchasedCourseService.TCourseListIncludewhereInstructor(id).Count();
-            return Ok(values);
+            //var values = _purchasedCourseService.TCourseListIncludewhereInstructor(userid).Count();
+            var coursesWithPurchases = _purchasedCourseService.TCourseListIncludewhereInstructor(id).Count();
+            return Ok(coursesWithPurchases);
         }
         //Eğitmenin en çok görüntülenen eğitimleri
         [HttpGet("[action]/{id}")]
