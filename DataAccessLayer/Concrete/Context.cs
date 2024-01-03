@@ -26,12 +26,12 @@ namespace DataAccessLayer.Concrete
             modelBuilder.Entity<PurchasedCourse>()
                 .HasOne(pc => pc.Course)
                 .WithMany(c => c.PurchasedCourses)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<PurchasedCourse>()
                 .HasOne(pc => pc.AppUser)
                 .WithMany(u => u.PurchasedCourses)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             base.OnModelCreating(modelBuilder);
 
@@ -40,13 +40,14 @@ namespace DataAccessLayer.Concrete
             modelBuilder.Entity<WidgetClickLog>()
                 .HasOne(pc => pc.Course)
                 .WithMany(c => c.WidgetClickLogs)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<WidgetClickLog>()
                 .HasOne(pc => pc.AppUser)
                 .WithMany(u => u.WidgetClickLogs)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
+            //identity ile baglı oldugu için fluent api kullanımlarında kullanilmasi şart
             base.OnModelCreating(modelBuilder);
             //Seed
             modelBuilder.Entity<AppRole>().HasData(

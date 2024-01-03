@@ -46,11 +46,23 @@ namespace OnlineEgitimClient.Controllers
                 var expires = responseObject?["value"]?["expires"]?.ToString();
                 //var message = responseObject?["message"]?.ToString();
                 var userId = responseObject?["userId"]?.ToString();
+                //
+                // Oturum bilgilerini al
+                var existingToken = HttpContext.Request.Cookies["Token"];
+                var existingExpires = HttpContext.Request.Cookies["TokenExpires"];
 
-                Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
-                HttpContext.Session.SetString("userId", userId ?? "");
+                // Eğer yeni bir token varsa veya token süresi değiştiyse, oturum ve token bilgilerini güncelle
+                if (token != existingToken || expires != existingExpires)
+                {
+                    // Yeni token ve süresini çerezlere kaydet
+                    Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                    Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+
+                    // Oturum verilerini güncelle
+                    HttpContext.Session.SetString("UserNameOrEmail", model.UserNameOrEmail);
+                    HttpContext.Session.SetString("userId", userId ?? "");
+                }
+
                 _notyfService.Success("Kullanıcı Girişi Başarılı");
                 return RedirectToAction("Index", "Default");
             }
@@ -94,11 +106,21 @@ namespace OnlineEgitimClient.Controllers
                     var expires = responseObject?["value"]?["expires"]?.ToString();
                     //var message = responseObject?["message"]?.ToString();
                     var userId = responseObject?["userId"]?.ToString();
+                    //
+                    // Oturum bilgilerini al
+                    var existingToken = HttpContext.Request.Cookies["Token"];
+                    var existingExpires = HttpContext.Request.Cookies["TokenExpires"];
+                    // Eğer yeni bir token varsa veya token süresi değiştiyse, oturum ve token bilgilerini güncelle
+                    if (token != existingToken || expires != existingExpires)
+                    {
+                        // Yeni token ve süresini çerezlere kaydet
+                        Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                        Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
 
-                    Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                    Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                    HttpContext.Session.SetString("UserNameOrEmail", user.userName);
-                    HttpContext.Session.SetString("userId", userId ?? "");
+                        // Oturum verilerini güncelle
+                        HttpContext.Session.SetString("UserNameOrEmail", user.userName);
+                        HttpContext.Session.SetString("userId", userId ?? "");
+                    }
                     _notyfService.Success("Kullanıcı Girişi Başarılı");
                     return RedirectToAction("Index", "Default");
                 }
@@ -133,11 +155,21 @@ namespace OnlineEgitimClient.Controllers
                     var expires = responseObject?["value"]?["expires"]?.ToString();
                     //var message = responseObject?["message"]?.ToString();
                     var userId = responseObject?["userId"]?.ToString();
+                    //
+                    // Oturum bilgilerini al
+                    var existingToken = HttpContext.Request.Cookies["Token"];
+                    var existingExpires = HttpContext.Request.Cookies["TokenExpires"];
+                    // Eğer yeni bir token varsa veya token süresi değiştiyse, oturum ve token bilgilerini güncelle
+                    if (token != existingToken || expires != existingExpires)
+                    {
+                        // Yeni token ve süresini çerezlere kaydet
+                        Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
+                        Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
 
-                    Response.Cookies.Append("Token", token ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                    Response.Cookies.Append("TokenExpires", expires ?? "", new CookieOptions { SameSite = SameSiteMode.Strict });
-                    HttpContext.Session.SetString("UserNameOrEmail", user.userName);
-                    HttpContext.Session.SetString("userId", userId ?? "");
+                        // Oturum verilerini güncelle
+                        HttpContext.Session.SetString("UserNameOrEmail", user.userName);
+                        HttpContext.Session.SetString("userId", userId ?? "");
+                    }
                     _notyfService.Success("Kullanıcı Girişi Başarılı");
                     return RedirectToAction("Index", "Default");
                 }

@@ -17,9 +17,8 @@
                     <div class="mb-5">
                         <div class="section-title position-relative mb-5">
                             <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Kurs Detayı</h6>
-                            <h1 class="display-4">@Model.Title</h1>
                         </div>
-                        <img class="img-fluid rounded w-100 mb-4" src="@Model.ImageUrl" style="max-height:510px;object-fit:cover" alt="Image">
+                        <img class="img-fluid rounded w-100 mb-4" src="@Model.ImageUrl" style="max-height:580px;object-fit:cover" alt="Image">
                         <div class="my-4">@Html.Raw(Model.Description)</div>
                         <div class="d-flex justify-content-between px-2">
                             <i class="fa fa-eye text-primary"> @Model.CourseViewCountLog</i>
@@ -28,15 +27,21 @@
                             <i class="fa fa-star text-warning"> @Model.CoursePuan</i>
                         </div>
                     </div>
-                
+
                 </div>
                 <!-- Kurs Özellikleri-->
                 <div class="col-lg-4 mt-5 mt-lg-0">
                     <div class="bg-primary mb-5 py-3">
                         <h3 class="text-white py-3 px-4 m-0">Kurs Özellikleri</h3>
+                        <!--
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Eğitmen</h6>
                             <h6 class="text-white my-3">John Doe</h6>
+                        </div>
+                             -->
+                        <div class="d-flex justify-content-between border-bottom px-4">
+                            <h6 class="text-white my-3">Kurs</h6>
+                            <h6 class="text-white my-3">@Model.Title</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Konu Sayısı</h6>
@@ -44,19 +49,25 @@
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Süre</h6>
-                            <h6 class="text-white my-3">@Model.Duration saat</h6>
+                            <h6 class="text-white my-3">@Model.Duration</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Seviye</h6>
-                            <h6 class="text-white my-3">@Model.Level.ToUpper() SEVİYE</h6>
+                            <h6 class="text-white my-3">@Model.Level.ToLower() seviye</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Dil</h6>
-                            <h6 class="text-white my-3">@Model.Language.ToUpper()</h6>
+                            <h6 class="text-white my-3">@Model.Language.ToLower()</h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Konum</h6>
-                            <h6 class="text-white my-3">City</h6>
+                            <h6 class="text-white my-3">
+                                @foreach (var item in @ViewBag.LocationList)
+                                {
+                                    @if (item.Id == Model.LocationID)
+                                        @item.Address.ToLower()
+                                }
+                            </h6>
                         </div>
                         <div class="d-flex justify-content-between border-bottom px-4">
                             <h6 class="text-white my-3">Oluşturulma</h6>

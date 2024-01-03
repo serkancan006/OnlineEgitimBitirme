@@ -2,8 +2,10 @@
 using EntityLayer.Concrete;
 using Iyzipay.Model.V2.Subscription;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using OnlineEgitimClient.Dtos.CourseDto;
+using OnlineEgitimClient.Dtos.LocationDto;
 using OnlineEgitimClient.Dtos.WidgetClickLogDto;
 using OnlineEgitimClient.Service;
 using System.Text;
@@ -69,11 +71,16 @@ namespace OnlineEgitimClient.Controllers
             }
 
             var responseMessage = await _customHttpClient.Get(new() { Controller = "Course", Action = "GetCourseByUser" }, id);
+            var responseMessage2 = await _customHttpClient.Get(new() { Controller = "Location", Action = "LocationListByStatus" });
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode && responseMessage2.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<ListCourseDto>(jsonData);
+                var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
+                var values2 = JsonConvert.DeserializeObject<List<ListLocationDto>>(jsonData2);
+                //ViewBag.LocationList = new SelectList(values2, "Id", "Address");
+                ViewBag.LocationList = values2;
                 return View(values);
             }
 

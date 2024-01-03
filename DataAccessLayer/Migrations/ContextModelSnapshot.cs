@@ -521,7 +521,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fbaf4b71-cd04-4145-9ff5-8480a0cbb248",
+                            ConcurrencyStamp = "a2883aa7-65ac-4f68-9e3e-57e11b7ee905",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@example.com",
                             EmailConfirmed = true,
@@ -529,7 +529,7 @@ namespace DataAccessLayer.Migrations
                             Name = "RootAdmin",
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOKHj2mcTAffu7dbEkJ4FibjYXKefl5/P1nvMLh/iBtfl0ovTjC8AO8OTVzdF+PL3w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELtIYcSYQbYgc1ko1sHVVi61x54IBTsWZSk3UEl06ZtFun/JFLFAuBeRYvJHyD+TZA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Status = false,
@@ -673,36 +673,6 @@ namespace DataAccessLayer.Migrations
                 {
                     b.HasBaseType("EntityLayer.Concrete.identity.AppUser");
 
-                    b.Property<DateTime>("InstructorCreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InstructorDisLike")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InstructorImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InstructorLike")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InstructorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InstructorPuan")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("InstructorStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("InstructorSurname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InstructorViewCountLog")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Instructor");
                 });
 
@@ -730,13 +700,13 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
                         .WithMany("PurchasedCourses")
                         .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
                         .WithMany("PurchasedCourses")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -749,13 +719,13 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("EntityLayer.Concrete.identity.AppUser", "AppUser")
                         .WithMany("WidgetClickLogs")
                         .HasForeignKey("AppUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Course", "Course")
                         .WithMany("WidgetClickLogs")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");

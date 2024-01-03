@@ -31,8 +31,8 @@ namespace OnlineEgitimClient.Controllers
         }
         public async Task<IActionResult> CourseContent(int id, int video)
         {
-            //https://localhost:7064/api/CourseVideoFile/GetCourseVideoFileWithUser?courseId=5&username=serkan006
-            var responseMessage = await _customHttpClient.Get(new() { Controller = "CourseVideoFile", Action = "GetCourseVideoFileWithUser", QueryString = $"courseId={id}&username={HttpContext.Session.GetString("UserNameOrEmail")}" });
+            //https://localhost:7064/api/CourseVideoFile/GetCourseVideoFileWithUser?courseId=5&userid=2
+            var responseMessage = await _customHttpClient.Get(new() { Controller = "CourseVideoFile", Action = "GetCourseVideoFileWithUser", QueryString = $"courseId={id}&userid={HttpContext.Session.GetString("userId")}" });
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();

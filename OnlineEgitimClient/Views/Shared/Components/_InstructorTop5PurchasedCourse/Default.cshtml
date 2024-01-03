@@ -1,29 +1,44 @@
 ﻿@model List<TopPurchasedCourseDto>
-<div class="col-md-6 my-4">
-    <div class="table-responsive">
-        <h3 class="text-center">Çok Satan Eğitimler</h3>
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <th>Kurs Adı</th>
-                    <th>Kurs Fİyatı</th>
-                    <th>Kurs Görüntülenme</th>
-                    <th>Satma Sayısı</th>
-                </tr>
-            </tbody>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <th>@item.CourseID</th>
-                        <th><img src="@item.ImageUrl" style="width:75px;width:75px"/></th>
-                        <th>@item.Title</th>
-                        <th>@item.Price</th>
-                        <th>@item.PurchaseCount</th>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <div class="d-md-flex mb-3">
+                <h3 class="box-title mb-0">Çok Satan Eğitimler</h3>
+                <div class="col-md-3 col-sm-4 col-xs-6 ms-auto">
+                    <select class="form-select shadow-none row border-top">
+                        <option>March 2021</option>
+                        <option>April 2021</option>
+                        <option>May 2021</option>
+                        <option>June 2021</option>
+                        <option>July 2021</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table no-wrap">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Kurs Adı</th>
+                            <th>Kurs Fİyatı</th>
+                            <th>Kurs Görüntülenme</th>
+                            <th>Satma Sayısı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@item.CourseID</th>
+                                <th><img src="@item.ImageUrl" style="width:75px;width:75px" /></th>
+                                <th>@item.Title</th>
+                                <th>@item.Price</th>
+                                <th>@item.PurchaseCount</th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

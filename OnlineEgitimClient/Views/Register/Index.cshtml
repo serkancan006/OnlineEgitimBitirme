@@ -23,72 +23,76 @@
 </head>
 <body>
     <div class="container">
-        <br />
-        <h2 class="text-lg-center">Kayıt Ol Sayfası</h2>
+        <div class="row">
+            <div class="col-6">
+                <br />
+                <h2 class="text-lg-center">Kayıt Ol Sayfası</h2>
 
-        <form method="post">
-            <div class="form-group">
-                <label for="name">Adınız</label>
-                <input type="text" class="form-control" id="name" aria-describedby="namelHelp" placeholder="Adınız" asp-for="Name">
-                <span asp-validation-for="Name" id="namelHelp" class="form-text text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="surname">Soyadınız</label>
-                <input type="text" class="form-control" id="surname" aria-describedby="surnameHelp" placeholder="Soyadınız" asp-for="Surname">
-                <span asp-validation-for="Surname" id="surnamelHelp" class="form-text text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="username">Kullanıcı Adınız</label>
-                <input type="text" class="form-control" id="username" aria-describedby="usernamelHelp" placeholder="Kullanıcı Adınız" asp-for="UserName">
-                <span asp-validation-for="UserName" id="usernamelHelp" class="form-text text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Mail Adresiniz</label>
-                <input type="" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Mailiniz" asp-for="Mail">
-                <span asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Şifreniz</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
-                    <div class="input-group-append" style="cursor:pointer">
-                        <span class="input-group-text">
-                            <i class="fa fa-eye" id="togglePassword"></i>
-                        </span>
+                <form method="post">
+                    <div class="form-group">
+                        <label for="name">Adınız</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="namelHelp" placeholder="Adınız" asp-for="Name">
+                        <span asp-validation-for="Name" id="namelHelp" class="form-text text-danger"></span>
                     </div>
-                </div>
-                <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
-            </div>
 
-            <div class="form-group">
-                <label for="confirmPassword">Şifre Tekrar</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Şifre tekrar" aria-describedby="confirmPasswordHelp" asp-for="ConfirmPassword">
-                    <div class="input-group-append" style="cursor:pointer">
-                        <span class="input-group-text">
-                            <i class="fa fa-eye" id="toggleConfirmPassword"></i>
-                        </span>
+                    <div class="form-group">
+                        <label for="surname">Soyadınız</label>
+                        <input type="text" class="form-control" id="surname" aria-describedby="surnameHelp" placeholder="Soyadınız" asp-for="Surname">
+                        <span asp-validation-for="Surname" id="surnamelHelp" class="form-text text-danger"></span>
                     </div>
-                </div>
-                <span asp-validation-for="ConfirmPassword" id="confirmPasswordHelp" class="form-text text-danger"></span>
+
+                    <div class="form-group">
+                        <label for="username">Kullanıcı Adınız</label>
+                        <input type="text" class="form-control" id="username" aria-describedby="usernamelHelp" placeholder="Kullanıcı Adınız" asp-for="UserName">
+                        <span asp-validation-for="UserName" id="usernamelHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Mail Adresiniz</label>
+                        <input type="" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Mailiniz" asp-for="Mail">
+                        <span asp-validation-for="Mail" id="emailHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Şifreniz</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Şifreniz" aria-describedby="passwordHelp" asp-for="Password">
+                            <div class="input-group-append" style="cursor:pointer">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="togglePassword"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" id="passwordHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Şifre Tekrar</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Şifre tekrar" aria-describedby="confirmPasswordHelp" asp-for="ConfirmPassword">
+                            <div class="input-group-append" style="cursor:pointer">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="toggleConfirmPassword"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" id="confirmPasswordHelp" class="form-text text-danger"></span>
+                    </div>
+
+                    <div class="text-danger" asp-validation-summary="ModelOnly">
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                </form>
+                <br />
+                <br />
+                <a href="/Login/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabın var mı? Hemen Giriş Yap.</a> <br />
+                @*<a href="/Register/InstructorRegister/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Eğitmen mi olmak istiyorsunuz? Hemen Kayıt Ol.</a>*@
             </div>
 
-            <div class="text-danger" asp-validation-summary="ModelOnly">
-
-            </div>
-
-            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
-        </form>
-        <br />
-        <br />
-        <a href="/Register/Index/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Bir hesabın yok mu? Hemen Kayıt Ol.</a> <br />
-        <a href="/Register/InstructorRegister/" style="color: #5D3FD3; text-decoration: none; cursor: pointer;">>Eğitmen mi olmak istiyorsunuz? Hemen Kayıt Ol.</a>
+        </div>
     </div>
-
 
     <script>
         // Şifreleri göster/gizle

@@ -6,7 +6,7 @@
     <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
         @foreach (var item in Model)
         {
-            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
+            <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="/Course/CourseDetails/@item.courseID">
                 <img class="img-fluid" src="@item.imageUrl" alt="">
                 <div class="courses-text">
                     <h4 class="text-center text-white px-3">

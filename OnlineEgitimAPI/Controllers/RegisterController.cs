@@ -3,6 +3,7 @@ using BusinessLayer.Abstract;
 using DtoLayer.DTOs.AppUserDto;
 using EntityLayer.Concrete;
 using EntityLayer.Concrete.identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -96,6 +97,15 @@ namespace OnlineEgitimAPI.Controllers
                     return BadRequest(result.Errors);
                 }
             }
+        }
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<IActionResult> AddInstructor(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            await _userManager.AddToRoleAsync(user, "Instructor");
+            return Ok("Eğitmen Oluşturuldu");
         }
 
     }

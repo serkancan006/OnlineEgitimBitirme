@@ -5,21 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     string filePath = ViewBag.FilePath;
-    if (filePath == null)
+    if (filePath == null && Model != null && Model.Count > 0)
+    {
         filePath = Model[0].filePath;
+    }
 }
 
-
 <div class="container-fluid mt-5">
-    @if (Model != null)
+    @if (Model != null && Model.Any() && filePath != null)
     {
         <div class="row">
             <div class="col-lg-9">
-                <div>
-                    <video width="100%" height="100%" controls autoplay>
-                        <source id="videoPlayer" src="@filePath">
-                    </video>
-                </div>
+                @if (filePath != null)
+                {
+                    <div>
+                        <video width="100%" height="100%" controls autoplay>
+                            <source id="videoPlayer" src="@filePath">
+                        </video>
+                    </div>
+                }
             </div>
             <div class="col-lg-3 mt-5 mt-lg-0">
                 <div class="sticky-top">
@@ -28,9 +32,9 @@
                         @foreach (var item in Model)
                         {
                             <li class="list-group-item">
-                              <a href="@Url.Action("CourseContent", "PurchasedCourse", new { id = item.courseID, video = item.id })" class="text-decoration-none">
-                                  <i class="fas fa-play-circle"></i>@item.fileDisplayName
-                              </a>
+                                <a href="@Url.Action("CourseContent", "PurchasedCourse", new { id = item.courseID, video = item.id })" class="text-decoration-none">
+                                    <i class="fas fa-play-circle"></i>@item.fileDisplayName
+                                </a>
                             </li>
                         }
                     </ul>
@@ -40,6 +44,6 @@
     }
     else
     {
-        <h2>Erişiminiz Yok</h2>
+        <h2>Kursda Video Yok</h2>
     }
 </div>

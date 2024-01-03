@@ -1,0 +1,21 @@
+﻿@model AppUserDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Profilim</h1>
+    <br />
+    <h4>@Model.Mail</h4>
+    <h4>@Model.UserName</h4>
+    <br />
+    <form method="post">
+        <input type="text" class="form-control" asp-for="Name" />
+        <br />
+        <input type="text" class="form-control" asp-for="Surname" />
+        <br />
+        <button type="submit" class="btn btn-success">Profili Güncelle</button>
+    </form>
+</div>
+

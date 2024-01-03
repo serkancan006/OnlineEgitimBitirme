@@ -100,9 +100,9 @@ namespace OnlineEgitimAPI.Controllers
 
         [Authorize]
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetCourseVideoFileWithUser(int courseId, string username)
+        public async Task<IActionResult> GetCourseVideoFileWithUser(int courseId, string userid)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userManager.FindByIdAsync(userid);
             if (user != null)
             {
                 bool hasAccess = _userCourseAccessService.HasAccessToCourse(user.Id, courseId);

@@ -1,4 +1,5 @@
-﻿using EntityLayer.Concrete.identity;
+﻿using DtoLayer.DTOs.AppUserDto;
+using EntityLayer.Concrete.identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +33,31 @@ namespace OnlineEgitimAPI.Controllers
 
             return Ok(usersInRole);
         }
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            AppUserDto value = new AppUserDto()
+            {
+                Mail = user.Email,
+                Name = user.Name,
+                Surname = user.Surname,
+                UserName = user.UserName
+            };
+            return Ok(value);
+        }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> GetUser(AppUserDto model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            await _userManager.UpdateAsync(user);
+            return Ok("Profil güncellemesi başarılı");
+        }
 
     }
 }

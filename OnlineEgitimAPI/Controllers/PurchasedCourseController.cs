@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLayer.Abstract;
+using BusinessLayer.Abstract.ExternalService;
 using DataAccessLayer.Concrete;
 using DtoLayer.DTOs.PurchasedCourseDto;
 using EntityLayer.Concrete;
@@ -21,11 +22,13 @@ namespace OnlineEgitimAPI.Controllers
         private readonly IPurchasedCourseService _PurchasedCourseService;
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
-        public PurchasedCourseController(IPurchasedCourseService PurchasedCourseService, IMapper mapper, UserManager<AppUser> userManager)
+        private readonly IFileOperationsService _fileOperationsService;
+        public PurchasedCourseController(IPurchasedCourseService PurchasedCourseService, IMapper mapper, UserManager<AppUser> userManager, IFileOperationsService fileOperationsService)
         {
             _PurchasedCourseService = PurchasedCourseService;
             _mapper = mapper;
             _userManager = userManager;
+            _fileOperationsService = fileOperationsService;
         }
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -81,10 +84,11 @@ namespace OnlineEgitimAPI.Controllers
             var values = _PurchasedCourseService.TCourseListInclude().Where(x => x.AppUserID == user?.Id).Select(x => new
             {
                 x.CourseID,
-                x.Course.ImageUrl,
+                ImageUrl = _fileOperationsService.GetFileConvertUrl(x.Course.ImageUrl),
                 x.Course.Title,
                 x.Course.Description
             });
+            
             return Ok(values);
         }
     }

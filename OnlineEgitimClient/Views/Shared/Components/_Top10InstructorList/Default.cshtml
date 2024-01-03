@@ -10,7 +10,7 @@
             @foreach (var item in Model)
             {
                 <div class="team-item">
-                    <img class="img-fluid w-100" src="@item.ImageUrl" style="min-height: 300px; object-fit:cover" alt="">
+                    <img class="img-fluid w-100" src="@item.ImageUrl" style="height: 300px; object-fit:cover;" alt="">
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">@item.Name @item.Surname</h5>
                         <p class="mb-2">@item?.Profession</p>
