@@ -25,8 +25,8 @@ namespace OnlineEgitimClient.Controllers
         {
            
             Options options = new Options();
-            options.ApiKey = "sandbox-KQwrxCOR3MJMtODwGWItpeDtsu5N4Bty";
-            options.SecretKey = "sandbox-AJxgH1pVSADUoBqst4ivdKPcLbTYPDT8";
+            options.ApiKey = "sandbox-KQwrxCOR3MJMtODwItpeDtsu5N4Bty";
+            options.SecretKey = "sandbox-AJxgH1pVSADUoBqsivdKPcLbTYPDT8";
             options.BaseUrl = "https://sandbox-api.iyzipay.com";
 
             CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
